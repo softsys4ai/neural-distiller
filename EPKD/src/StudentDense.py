@@ -14,7 +14,10 @@ from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv
 from keras.models import Sequential
 from keras.losses import categorical_crossentropy as logloss
 from keras.metrics import categorical_accuracy
-from HelperUtil import HelpfulFunctions
+from keras.models import model_from_json
+from HelperUtil2 import acc
+from HelperUtil2 import knowledge_distillation_loss
+import datetime
 
 class StudentModel:
     def __init__(self):
@@ -22,37 +25,75 @@ class StudentModel:
         self.input_shape = (28, 28, 1) # Input shape of each image
         self.nb_filters = 64 # number of convolutional filters to use
         self.dropoutVal = 0.2
-        self.student = None
+        self.student = Sequential()
         self.epochs = 4
         self.batchSize = 256
         self.alpha = 0.1
         self.temp = 7
+        self.name = "StudentDense"
     
     def printSummary(self):
-        student.summary()
+        self.student.summary()
 
     def getModel(self):
-        return student
+        return self.student
 
     def buildAndCompile(self):
-        input_shape = (28, 28, 1)
-        student = Sequential()
-        student.add(Flatten(input_shape=input_shape))
-        student.add(Dense(32, activation='relu'))
-        student.add(Dropout(dropoutVal))
-        student.add(Dense(nb_classes))
-        student.add(Activation('softmax'))
+        self.student.add(Flatten(input_shape=self.input_shape))
+        self.student.add(Dense(32, activation='relu'))
+        self.student.add(Dropout(self.dropoutVal))
+        self.student.add(Dense(self.nb_classes))
+        self.student.add(Activation('softmax'))
+        # Remove the softmax layer from the student network
+        self.student.layers.pop()
+        # Now collect the logits from the last layer
+        logits = self.student.layers[
+            -1].output  # This is going to be a tensor. And hence it needs to pass through a Activation layer
+        probs = Activation('softmax')(logits)
+        # softed probabilities at raised temperature
+        logits_T = Lambda(lambda x: x / self.temp)(logits)
+        probs_T = Activation('softmax')(logits_T)
+        output = concatenate([probs, probs_T])
+        # This is our new student model
+        self.student = Model(self.student.input, output)
         #sgd = keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-        student.compile(
+        self.student.compile(
             #optimizer=optimizers.SGD(lr=1e-1, momentum=0.9, nesterov=True),
             optimizer='adadelta',
-            loss=lambda y_true, y_pred: HelpfulFunctions.knowledge_distillation_loss(y_true, y_pred, alpha),
+            loss=lambda y_true, y_pred: knowledge_distillation_loss(y_true, y_pred, self.alpha),
             #loss='categorical_crossentropy',
-            metrics=[HelpfulFunctions.acc])
+            metrics=[acc])
 
     def train(self, X_train, Y_train_new, X_test, Y_test_new):
-        student.fit(X_train, Y_train_new,
-            batch_size=batchSize,
-            epochs=epochs,
+        self.student.fit(X_train, Y_train_new,
+            batch_size=self.batchSize,
+            epochs=self.epochs,
             verbose=1,
             validation_data=(X_test, Y_test_new))
+
+    def save(self):
+        now = datetime.datetime.now()
+        # serialize model to JSON
+        model_json = self.student.to_json()
+        with open("{}.json".format(now.strftime("%Y-%m-%d_%H:%M:%S")), "w") as json_file:
+            json_file.write(model_json)
+        # serialize weights to HDF5
+        self.student.save_weights("{}_{}.h5".format(now.strftime(self.name, "%Y-%m-%d_%H:%M:%S")))
+        print("[INFO] Saved model to disk")
+        
+        # later...
+
+    def load(self, model_filename, weights_filename):  
+        # load json and create model
+        json_file = open(model_filename, 'r')
+        loaded_model_json = json_file.read()
+        json_file.close()
+        loaded_model = model_from_json(loaded_model_json)
+        # load weights into new model
+        loaded_model.load_weights(weights_filename)
+        print("[INFO] Loaded model from disk")
+        
+        # evaluate loaded model on test data
+        loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+        score = loaded_model.evaluate(X, Y, verbose=0)
+        print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1]*100))

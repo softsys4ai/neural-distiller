@@ -16,8 +16,18 @@ from keras.losses import categorical_crossentropy as logloss
 from keras.metrics import categorical_accuracy
 from TeacherCNN import TeacherModel
 from StudentDense import StudentModel
+import argparse
+
 
 def main():
+    # reading command line input
+    parser = argparse.ArgumentParser(description='add params to run.')
+    parser.add_argument('-m', '--model_filename', default=None, type=str,
+                    help='filename of model configuration')
+    parser.add_argument('-w', '--weights_filename', default=None, type=str,
+                    help='filename of model weights')
+    args = parser.parse_args()
+
     # preparing the MNIST dataset for training teacher and student models
     nb_classes = 10
     input_shape = (28, 28, 1)
@@ -38,19 +48,23 @@ def main():
     # compiling and training teacher network
     teacher = TeacherModel()
     teacher.__init__()
-    teacher.buildAndCompile()
-    teacher.train(X_train, Y_train, X_test, Y_test)
-    
+    if args.model_filename is not None:
+        teacher.load(args.model_filename, args.weights_filename)
+    else:
+        teacher.buildAndCompile()
+        teacher.train(X_train, Y_train, X_test, Y_test)
+        teacher.save() # persisting trained teacher network
+
     print('[INFO] creating hybrid targets for student model training')
     # retreiving soft targets for student model training
-    Y_train_new, Y_test_new = teacher.createStudentTrainingData()
+    Y_train_new, Y_test_new = teacher.createStudentTrainingData(X_train, Y_train, X_test, Y_test)
 
     print('[INFO] creating and training student model')
     # compiling and training student network
     student = StudentModel()
     student.__init__()
     student.buildAndCompile()
-    student.train(X_train, Y_train, Y_train_new, Y_test_new)
+    student.train(X_train, Y_train_new, X_test, Y_test_new)
 
     print('-- done')
 

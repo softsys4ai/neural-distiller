@@ -14,8 +14,10 @@ from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv
 from keras.models import Sequential
 from keras.losses import categorical_crossentropy as logloss
 from keras.metrics import categorical_accuracy
+from keras.models import model_from_json
 from HelperUtil import HelpfulFunctions
-
+import datetime
+helpful = HelpfulFunctions()
 # teacher model class
 class TeacherModel:
     # TODO add CL arguments to change the teacher's hyperparameters
@@ -25,62 +27,87 @@ class TeacherModel:
         self.nb_filters = 64 # number of convolutional filters to use
         self.pool_size = (2, 2) # size of pooling area for max pooling
         self.kernel_size = (3, 3) # convolution kernel size
-        self.teacher = None
+        self.teacher = Sequential()
         self.teacher_WO_Softmax = None
-        self.epochs = 4
+        self.epochs = 1
         self.batch_size = 256
         self.temp = 7
-	
+        self.name = "TeacherCNN"
+
     def printSummary(self):
-        teacher.summary()
+        self.teacher.summary()
 
     def getModel(self):
-        return teacher
+        return self.teacher
 
     def createTeacherWOSoftmax(self):
-        teacher_WO_Softmax = Model(teacher.input, teacher.get_layer('dense_6').output)
+        self.teacher_WO_Softmax = Model(self.teacher.input, self.teacher.get_layer('dense', 7).output)
 
     def buildAndCompile(self):
-        nb_classes = 10
-        input_shape = (28, 28, 1)
-        teacher = Sequential()
-        teacher.add(Conv2D(32, kernel_size=(3, 3),
+        self.teacher.add(Conv2D(32, kernel_size=(3, 3),
                         activation='relu',
-                        input_shape=input_shape))
-        teacher.add(Conv2D(64, (3, 3), activation='relu'))
-        teacher.add(MaxPooling2D(pool_size=(2, 2)))
+                        input_shape=self.input_shape))
+        self.teacher.add(Conv2D(64, (3, 3), activation='relu'))
+        self.teacher.add(MaxPooling2D(pool_size=(2, 2)))
 
-        teacher.add(Dropout(0.25)) # For reguralization
+        self.teacher.add(Dropout(0.25)) # For reguralization
 
-        teacher.add(Flatten())
-        teacher.add(Dense(128, activation='relu'))
-        teacher.add(Dropout(0.5)) # For reguralization
+        self.teacher.add(Flatten())
+        self.teacher.add(Dense(128, activation='relu'))
+        self.teacher.add(Dropout(0.5)) # For reguralization
 
-        teacher.add(Dense(nb_classes))
-        teacher.add(Activation('softmax')) # Note that we add a normal softmax layer to begin with
+        self.teacher.add(Dense(self.nb_classes))
+        self.teacher.add(Activation('softmax')) # Note that we add a normal softmax layer to begin with
 
-        teacher.compile(loss='categorical_crossentropy',
+        self.teacher.compile(loss='categorical_crossentropy',
                     optimizer='adadelta',
                     metrics=['accuracy'])
         self.createTeacherWOSoftmax()
-        return t
+        return self.teacher
         
-    def train(self, model, X_train, Y_train, X_test, Y_test):
-        teacher.fit(X_train, Y_train,
-          batch_size=batch_size,
-          epochs=epochs,
+    def train(self, X_train, Y_train, X_test, Y_test):
+        self.teacher.fit(X_train, Y_train,
+          batch_size=self.batch_size,
+          epochs=self.epochs,
           verbose=1,
           validation_data=(X_test, Y_test))
 
     def createStudentTrainingData(self, X_train, Y_train, X_test, Y_test):
-        teacher_train_logits = teacher_WO_Softmax.predict(X_train)
-        teacher_test_logits = teacher_WO_Softmax.predict(X_test) # This model directly gives the logits ( see the teacher_WO_softmax model above)
+        teacher_train_logits = self.teacher_WO_Softmax.predict(X_train)
+        teacher_test_logits = self.teacher_WO_Softmax.predict(X_test) # This model directly gives the logits ( see the teacher_WO_softmax model above)
         # Perform a manual softmax at raised temperature
-        train_logits_T = teacher_train_logits/temp
-        test_logits_T = teacher_test_logits / temp 
-        Y_train_soft = HelpfulFunctions.softmax(train_logits_T)
-        Y_test_soft = HelpfulFunctions.softmax(test_logits_T)
+        train_logits_T = teacher_train_logits / self.temp
+        test_logits_T = teacher_test_logits / self.temp
+        Y_train_soft = helpful.softmax(train_logits_T)
+        Y_test_soft = helpful.softmax(test_logits_T)
         # Concatenate so that this becomes a 10 + 10 dimensional vector
         Y_train_new = np.concatenate([Y_train, Y_train_soft], axis=1)
-        Y_test_new =  np.concatenate([Y_test, Y_test_soft], axis =1)
+        Y_test_new = np.concatenate([Y_test, Y_test_soft], axis=1)
         return Y_train_new, Y_test_new
+
+    def save(self):
+        now = datetime.datetime.now()
+        # serialize model to JSON
+        model_json = self.teacher.to_json()
+        with open("{}_{}.json".format(self.name, now.strftime("%Y-%m-%d_%H:%M:%S")), "w") as json_file:
+            json_file.write(model_json)
+        # serialize weights to HDF5
+        self.teacher.save_weights("{}_{}.h5".format(self.name, now.strftime("%Y-%m-%d_%H:%M:%S")))
+        print("[INFO] Saved model to disk")
+        
+        # later...
+
+    def load(self, model_filename, weights_filename):  
+        # load json and create model
+        with open(model_filename, 'rb') as json_file:
+            loaded_model_json = json_file.read()
+            json_file.close()
+            self.teacher = model_from_json(loaded_model_json)
+            # load weights into new model
+            self.teacher.load_weights(weights_filename)
+            print("[INFO] Loaded model from disk")
+            # evaluate loaded model on test data
+            self.teacher.compile(loss='categorical_crossentropy',
+                        optimizer='adadelta',
+                        metrics=['accuracy'])
+            self.createTeacherWOSoftmax()
