@@ -29,7 +29,7 @@ class StudentModel:
         self.epochs = 4
         self.batchSize = 256
         self.alpha = 0.1
-        self.temp = 7
+        self.temp = 50
         self.name = "StudentDense"
     
     def printSummary(self):
@@ -46,16 +46,13 @@ class StudentModel:
         self.student.add(Activation('softmax'))
         # Remove the softmax layer from the student network
         self.student.layers.pop()
-        # Now collect the logits from the last layer
-        logits = self.student.layers[
-            -1].output  # This is going to be a tensor. And hence it needs to pass through a Activation layer
+        logits = self.student.layers[-1].output
         probs = Activation('softmax')(logits)
         # softed probabilities at raised temperature
         logits_T = Lambda(lambda x: x / self.temp)(logits)
         probs_T = Activation('softmax')(logits_T)
         output = concatenate([probs, probs_T])
-        # This is our new student model
-        self.student = Model(self.student.input, output)
+        self.student = Model(self.student.input, output) # final student model
         #sgd = keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
         self.student.compile(
             #optimizer=optimizers.SGD(lr=1e-1, momentum=0.9, nesterov=True),
