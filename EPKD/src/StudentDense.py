@@ -1,3 +1,4 @@
+import os
 import keras
 from keras.datasets import mnist
 from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
@@ -26,10 +27,10 @@ class StudentModel:
         self.nb_filters = 64 # number of convolutional filters to use
         self.dropoutVal = 0.2
         self.student = Sequential()
-        self.epochs = 4
+        self.epochs = 10
         self.batchSize = 256
         self.alpha = 0.1
-        self.temp = 50
+        self.temp = 7
         self.name = "StudentDense"
     
     def printSummary(self):
@@ -44,11 +45,9 @@ class StudentModel:
         self.student.add(Dropout(self.dropoutVal))
         self.student.add(Dense(self.nb_classes))
         self.student.add(Activation('softmax'))
-        # Remove the softmax layer from the student network
         self.student.layers.pop()
         logits = self.student.layers[-1].output
         probs = Activation('softmax')(logits)
-        # softed probabilities at raised temperature
         logits_T = Lambda(lambda x: x / self.temp)(logits)
         probs_T = Activation('softmax')(logits_T)
         output = concatenate([probs, probs_T])
@@ -68,29 +67,32 @@ class StudentModel:
             verbose=1,
             validation_data=(X_test, Y_test_new))
 
-    def save(self):
+    def save(self, X_test, Y_test):
         now = datetime.datetime.now()
+        # evaluating model
+        score = self.student.evaluate(X_test, Y_test, verbose=0)
         # serialize model to JSON
         model_json = self.student.to_json()
-        with open("{}.json".format(now.strftime("%Y-%m-%d_%H:%M:%S")), "w") as json_file:
+        with open("saved_models/{}_{}_{}.json".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")), "w") as json_file:
             json_file.write(model_json)
         # serialize weights to HDF5
-        self.student.save_weights("{}_{}.h5".format(now.strftime(self.name, "%Y-%m-%d_%H:%M:%S")))
+        self.student.save_weights("saved_models/{}_{}_{}.h5".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")))
         print("[INFO] Saved model to disk")
-        
-        # later...
 
-    def load(self, model_filename, weights_filename):  
+    def load(self, model_filename, weights_filename):
         # load json and create model
-        json_file = open(model_filename, 'r')
-        loaded_model_json = json_file.read()
-        json_file.close()
-        loaded_model = model_from_json(loaded_model_json)
-        # load weights into new model
-        loaded_model.load_weights(weights_filename)
-        print("[INFO] Loaded model from disk")
-        
-        # evaluate loaded model on test data
-        loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-        score = loaded_model.evaluate(X, Y, verbose=0)
-        print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1]*100))
+        model_filename = os.path.join("saved_models", model_filename)
+        weights_filename = os.path.join("saved_models", weights_filename)
+        with open(model_filename, 'rb') as json_file:
+            loaded_model_json = json_file.read()
+            json_file.close()
+            self.student = model_from_json(loaded_model_json)
+            # load weights into new model
+            self.student.load_weights(weights_filename)
+            print("[INFO] Loaded model from disk")
+            self.student.compile(
+                # optimizer=optimizers.SGD(lr=1e-1, momentum=0.9, nesterov=True),
+                optimizer='adadelta',
+                loss=lambda y_true, y_pred: knowledge_distillation_loss(y_true, y_pred, self.alpha),
+                # loss='categorical_crossentropy',
+                metrics=[acc])

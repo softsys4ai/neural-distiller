@@ -53,7 +53,7 @@ def main():
     else:
         teacher.buildAndCompile()
         teacher.train(X_train, Y_train, X_test, Y_test)
-        teacher.save() # persisting trained teacher network
+        teacher.save(X_test, Y_test) # persisting trained teacher network
 
     print('[INFO] creating hybrid targets for student model training')
     # retreiving soft targets for student model training
@@ -65,6 +65,7 @@ def main():
     student.__init__()
     student.buildAndCompile()
     student.train(X_train, Y_train_new, X_test, Y_test_new)
+    student.save(X_test, Y_test_new)
 
     print('-- done')
 

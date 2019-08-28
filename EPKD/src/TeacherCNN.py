@@ -1,3 +1,4 @@
+import os
 import keras
 from keras.datasets import mnist
 from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
@@ -29,7 +30,7 @@ class TeacherModel:
         self.kernel_size = (3, 3) # convolution kernel size
         self.teacher = Sequential()
         self.teacher_WO_Softmax = None
-        self.epochs = 1
+        self.epochs = 4
         self.batch_size = 256
         self.temp = 7
         self.name = "TeacherCNN"
@@ -72,6 +73,7 @@ class TeacherModel:
           verbose=1,
           validation_data=(X_test, Y_test))
 
+
     def createStudentTrainingData(self, X_train, Y_train, X_test, Y_test):
         teacher_train_logits = self.teacher_WO_Softmax.predict(X_train)
         teacher_test_logits = self.teacher_WO_Softmax.predict(X_test) # This model directly gives the logits ( see the teacher_WO_softmax model above)
@@ -85,20 +87,24 @@ class TeacherModel:
         Y_test_new = np.concatenate([Y_test, Y_test_soft], axis=1)
         return Y_train_new, Y_test_new
 
-    def save(self):
+    def save(self, X_test, Y_test):
         now = datetime.datetime.now()
+        # evaluating the model
+        score = self.teacher.evaluate(X_test, Y_test, verbose=0)
         # serialize model to JSON
         model_json = self.teacher.to_json()
-        with open("{}_{}.json".format(self.name, now.strftime("%Y-%m-%d_%H:%M:%S")), "w") as json_file:
+        with open("saved_models/{}_{}_{}.json".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")), "w") as json_file:
             json_file.write(model_json)
         # serialize weights to HDF5
-        self.teacher.save_weights("{}_{}.h5".format(self.name, now.strftime("%Y-%m-%d_%H:%M:%S")))
+        self.teacher.save_weights("saved_models/{}_{}_{}.h5".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")))
         print("[INFO] Saved model to disk")
         
         # later...
 
     def load(self, model_filename, weights_filename):  
         # load json and create model
+        model_filename = os.path.join("saved_models", model_filename)
+        weights_filename = os.path.join("saved_models", weights_filename)
         with open(model_filename, 'rb') as json_file:
             loaded_model_json = json_file.read()
             json_file.close()
