@@ -1,21 +1,6 @@
 import os
-import keras
-from keras.datasets import mnist
-from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
-from keras.models import Model
-import numpy as np
-from keras.utils import np_utils
-from keras.layers.core import Dense, Dropout, Activation
-from keras import backend as K
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import SGD, Adam, RMSprop
-from keras.constraints import max_norm
-from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
-from keras.models import Sequential
-from keras.losses import categorical_crossentropy as logloss
-from keras.metrics import categorical_accuracy
-from keras.models import model_from_json
+from tensorflow.python.keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate, MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
+from tensorflow.python.keras.models import Model, Sequential, model_from_json
 from HelperUtil2 import acc
 from HelperUtil2 import knowledge_distillation_loss
 import datetime

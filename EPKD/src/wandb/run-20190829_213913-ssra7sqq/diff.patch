@@ -1,0 +1,897 @@
+diff --git a/EPKD/.idea/workspace.xml b/EPKD/.idea/workspace.xml
+index 0ab908c..b20d4de 100644
+--- a/EPKD/.idea/workspace.xml
++++ b/EPKD/.idea/workspace.xml
+@@ -11,25 +11,32 @@
+   </component>
+   <component name="FileEditorManager">
+     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+-      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
++      <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
+         <entry file="file://$PROJECT_DIR$/src/train.py">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="1219">
+-              <caret line="53" selection-start-line="53" selection-end-line="53" />
++            <state relative-caret-position="452">
++              <caret line="62" column="29" lean-forward="true" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
+               <folding>
+-                <element signature="e#0#12#0" expanded="true" />
++                <element signature="e#0#9#0" expanded="true" />
+               </folding>
+             </state>
+           </provider>
+         </entry>
+       </file>
+-      <file leaf-file-name="PrunePipeline.py" pinned="false" current-in-tab="true">
++      <file leaf-file-name="debug.log" pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/wandb/debug.log">
++          <provider selected="true" editor-type-id="LogFileEditorProvider">
++            <state relative-caret-position="-32706" />
++          </provider>
++        </entry>
++      </file>
++      <file leaf-file-name="PrunePipeline.py" pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="1086">
+-              <caret line="61" column="34" selection-start-line="61" selection-start-column="34" selection-end-line="61" selection-end-column="34" />
++            <state relative-caret-position="920">
++              <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+               <folding>
+-                <element signature="e#0#9#0" expanded="true" />
++                <element signature="e#0#18#0" expanded="true" />
+               </folding>
+             </state>
+           </provider>
+@@ -38,8 +45,8 @@
+       <file leaf-file-name="TeacherCNN.py" pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="741">
+-              <caret line="122" column="45" lean-forward="true" selection-start-line="120" selection-start-column="33" selection-end-line="122" selection-end-column="45" />
++            <state relative-caret-position="644">
++              <caret line="34" selection-start-line="34" selection-end-line="34" />
+               <folding>
+                 <element signature="e#0#9#0" expanded="true" />
+               </folding>
+@@ -50,11 +57,8 @@
+       <file leaf-file-name="StudentDense.py" pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/StudentDense.py">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="-427">
+-              <caret line="26" column="66" lean-forward="true" selection-start-line="26" selection-start-column="66" selection-end-line="26" selection-end-column="66" />
+-              <folding>
+-                <element signature="e#0#9#0" expanded="true" />
+-              </folding>
++            <state>
++              <caret column="9" selection-start-column="9" selection-end-column="9" />
+             </state>
+           </provider>
+         </entry>
+@@ -62,8 +66,8 @@
+       <file leaf-file-name="HelperUtil2.py" pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/HelperUtil2.py">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="207">
+-              <caret line="9" column="44" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
++            <state relative-caret-position="138">
++              <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+               <folding>
+                 <element signature="e#0#18#0" expanded="true" />
+               </folding>
+@@ -101,26 +105,32 @@
+       <find>save</find>
+       <find>knowledge_distillation_loss</find>
+       <find>fit</find>
++      <find>temp</find>
++      <find>tb</find>
++      <find>log</find>
+       <find>compile</find>
++      <find>callbacks</find>
+     </findStrings>
+   </component>
+   <component name="IdeDocumentHistory">
+     <option name="CHANGED_PATHS">
+       <list>
+         <option value="$PROJECT_DIR$/src/HelperUtil.py" />
+-        <option value="$PROJECT_DIR$/src/HelperUtil2.py" />
+         <option value="$PROJECT_DIR$/src/outline.txt" />
+-        <option value="$PROJECT_DIR$/src/TeacherCNN.py" />
+-        <option value="$PROJECT_DIR$/src/StudentDense.py" />
+         <option value="$PROJECT_DIR$/src/sparse_pruning.py" />
+-        <option value="$PROJECT_DIR$/src/train.py" />
++        <option value="$PROJECT_DIR$/src/HelperUtil2.py" />
++        <option value="$PROJECT_DIR$/src/StudentDense.py" />
++        <option value="$PROJECT_DIR$/src/TeacherCNN.py" />
+         <option value="$PROJECT_DIR$/src/PrunePipeline.py" />
++        <option value="$PROJECT_DIR$/src/train.py" />
+       </list>
+     </option>
+   </component>
+   <component name="ProjectFrameBounds" fullScreen="true">
+-    <option name="width" value="1680" />
+-    <option name="height" value="1050" />
++    <option name="x" value="-1920" />
++    <option name="y" value="-584" />
++    <option name="width" value="1920" />
++    <option name="height" value="1080" />
+   </component>
+   <component name="ProjectView">
+     <navigator proportions="" version="1">
+@@ -140,6 +150,12 @@
+               <item name="EPKD" type="462c0819:PsiDirectoryNode" />
+               <item name="src" type="462c0819:PsiDirectoryNode" />
+             </path>
++            <path>
++              <item name="EPKD" type="b2602c69:ProjectViewProjectNode" />
++              <item name="EPKD" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="wandb" type="462c0819:PsiDirectoryNode" />
++            </path>
+           </expand>
+           <select />
+         </subPane>
+@@ -176,7 +192,7 @@
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/train.py" />
+-      <option name="PARAMETERS" value="-m 98.56_TeacherCNN_2019-08-28_08-58-34.json -w 98.56_TeacherCNN_2019-08-28_08-58-34.h5" />
++      <option name="PARAMETERS" value="-m 99.2_TeacherCNN_2019-08-29_17-25-46" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="true" />
+       <option name="MODULE_MODE" value="false" />
+@@ -218,38 +234,187 @@
+     <servers />
+   </component>
+   <component name="ToolWindowManager">
+-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
++    <frame x="-1920" y="-584" width="1920" height="1080" extended-state="0" />
+     <editor active="true" />
+     <layout>
+-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17179024" />
+-      <window_info anchor="bottom" id="TODO" order="6" />
+-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
++      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17535545" />
++      <window_info anchor="bottom" id="TODO" order="5" />
++      <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
++      <window_info anchor="bottom" id="Run" order="10" weight="0.29850745" />
+       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+-      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32923076" />
+-      <window_info anchor="bottom" id="Run" order="2" weight="0.31076923" />
++      <window_info anchor="bottom" id="Python Console" order="8" weight="0.32923076" />
+       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.31384614" />
++      <window_info anchor="bottom" id="Terminal" order="9" weight="0.31384614" />
++      <window_info anchor="bottom" id="Debug" order="2" weight="0.4" />
+       <window_info id="Favorites" order="2" side_tool="true" />
+-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+       <window_info anchor="bottom" id="Message" order="0" />
+-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
++      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
++      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
+       <window_info anchor="bottom" id="Find" order="1" />
+     </layout>
+   </component>
+   <component name="VcsContentAnnotationSettings">
+     <option name="myLimit" value="2678400000" />
+   </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <option name="time" value="2" />
++    </breakpoint-manager>
++  </component>
+   <component name="editorHistoryManager">
++    <entry file="file://$PROJECT_DIR$/src/train.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="1449">
++          <caret line="73" column="36" selection-start-line="73" selection-start-column="36" selection-end-line="73" selection-end-column="36" />
++          <folding>
++            <element signature="e#0#9#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="920">
++          <caret line="42" column="20" lean-forward="true" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
++          <folding>
++            <element signature="e#0#18#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="644">
++          <caret line="34" selection-start-line="34" selection-end-line="34" />
++          <folding>
++            <element signature="e#0#9#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/StudentDense.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state>
++          <caret column="9" selection-start-column="9" selection-end-column="9" />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/HelperUtil2.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="138">
++          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
++          <folding>
++            <element signature="e#0#18#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/wandb/debug.log">
++      <provider selected="true" editor-type-id="LogFileEditorProvider" />
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/train.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="1035">
++          <caret line="53" selection-start-line="53" selection-end-line="53" />
++          <folding>
++            <element signature="e#0#9#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="2369">
++          <caret line="122" column="45" selection-start-line="120" selection-start-column="33" selection-end-line="122" selection-end-column="45" />
++          <folding>
++            <element signature="e#0#9#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/StudentDense.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="138">
++          <caret line="26" column="66" selection-start-line="26" selection-start-column="66" selection-end-line="26" selection-end-column="66" />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/HelperUtil2.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="138">
++          <caret line="9" column="44" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
++          <folding>
++            <element signature="e#0#18#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="437">
++          <caret line="39" column="31" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
++          <folding>
++            <element signature="e#0#18#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/train.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="1035">
++          <caret line="53" selection-start-line="53" selection-end-line="53" />
++          <folding>
++            <element signature="e#0#9#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="2369">
++          <caret line="122" column="45" lean-forward="true" selection-start-line="120" selection-start-column="33" selection-end-line="122" selection-end-column="45" />
++          <folding>
++            <element signature="e#0#9#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/StudentDense.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="138">
++          <caret line="26" column="66" lean-forward="true" selection-start-line="26" selection-start-column="66" selection-end-line="26" selection-end-column="66" />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/HelperUtil2.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="138">
++          <caret line="9" column="44" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
++          <folding>
++            <element signature="e#0#18#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="437">
++          <caret line="39" column="31" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
++          <folding>
++            <element signature="e#0#18#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
+     <entry file="file://$PROJECT_DIR$/src/train.py">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="943">
+           <caret line="59" column="46" selection-start-line="59" selection-start-column="46" selection-end-line="59" selection-end-column="46" />
+           <folding>
+-            <element signature="e#0#12#0" expanded="true" />
++            <element signature="e#0#9#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+@@ -268,9 +433,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="1311">
+           <caret line="77" column="41" selection-start-line="77" selection-start-column="41" selection-end-line="77" selection-end-column="41" />
+-          <folding>
+-            <element signature="e#0#9#0" expanded="true" />
+-          </folding>
+         </state>
+       </provider>
+     </entry>
+@@ -303,7 +465,7 @@
+         <state relative-caret-position="874">
+           <caret line="56" selection-start-line="56" selection-end-line="56" />
+           <folding>
+-            <element signature="e#0#12#0" expanded="true" />
++            <element signature="e#0#9#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+@@ -312,9 +474,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="253">
+           <caret line="31" column="24" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+-          <folding>
+-            <element signature="e#0#9#0" expanded="true" />
+-          </folding>
+         </state>
+       </provider>
+     </entry>
+@@ -350,7 +509,7 @@
+         <state relative-caret-position="874">
+           <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+           <folding>
+-            <element signature="e#0#12#0" expanded="true" />
++            <element signature="e#0#9#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+@@ -386,9 +545,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="207">
+           <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+-          <folding>
+-            <element signature="e#0#9#0" expanded="true" />
+-          </folding>
+         </state>
+       </provider>
+     </entry>
+@@ -397,7 +553,7 @@
+         <state>
+           <caret column="4" selection-start-column="4" selection-end-column="4" />
+           <folding>
+-            <element signature="e#0#12#0" expanded="true" />
++            <element signature="e#0#9#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+@@ -426,9 +582,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="782">
+           <caret line="53" column="55" selection-start-line="53" selection-start-column="45" selection-end-line="53" selection-end-column="55" />
+-          <folding>
+-            <element signature="e#0#9#0" expanded="true" />
+-          </folding>
+         </state>
+       </provider>
+     </entry>
+@@ -453,16 +606,6 @@
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/HelperUtil2.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="207">
+-          <caret line="9" column="44" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+-          <folding>
+-            <element signature="e#0#18#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+     <entry file="file://$PROJECT_DIR$/virtual-env/lib/python3.6/site-packages/keras/engine/training.py">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="579">
+@@ -470,40 +613,55 @@
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/train.py">
++    <entry file="file://$PROJECT_DIR$/src/HelperUtil2.py">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1219">
+-          <caret line="53" selection-start-line="53" selection-end-line="53" />
++        <state relative-caret-position="138">
++          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+           <folding>
+-            <element signature="e#0#12#0" expanded="true" />
++            <element signature="e#0#18#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+     </entry>
+     <entry file="file://$PROJECT_DIR$/src/StudentDense.py">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-427">
+-          <caret line="26" column="66" lean-forward="true" selection-start-line="26" selection-start-column="66" selection-end-line="26" selection-end-column="66" />
++        <state>
++          <caret column="9" selection-start-column="9" selection-end-column="9" />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="920">
++          <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+           <folding>
+-            <element signature="e#0#9#0" expanded="true" />
++            <element signature="e#0#18#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+     </entry>
+     <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="741">
+-          <caret line="122" column="45" lean-forward="true" selection-start-line="120" selection-start-column="33" selection-end-line="122" selection-end-column="45" />
++        <state relative-caret-position="644">
++          <caret line="34" selection-start-line="34" selection-end-line="34" />
+           <folding>
+             <element signature="e#0#9#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
++    <entry file="file://$PROJECT_DIR$/src/wandb/debug.log">
++      <provider editor-type-id="text-editor">
++        <state relative-caret-position="-32706" />
++      </provider>
++      <provider selected="true" editor-type-id="LogFileEditorProvider">
++        <state relative-caret-position="-32706" />
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/train.py">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1086">
+-          <caret line="61" column="34" selection-start-line="61" selection-start-column="34" selection-end-line="61" selection-end-column="34" />
++        <state relative-caret-position="452">
++          <caret line="62" column="29" lean-forward="true" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
+           <folding>
+             <element signature="e#0#9#0" expanded="true" />
+           </folding>
+diff --git a/EPKD/src/HelperUtil2.py b/EPKD/src/HelperUtil2.py
+index 463b6c2..dc476de 100644
+--- a/EPKD/src/HelperUtil2.py
++++ b/EPKD/src/HelperUtil2.py
+@@ -1,7 +1,6 @@
+ import numpy as np
+-import keras
+-from keras.losses import categorical_crossentropy as logloss
+-from keras.metrics import categorical_accuracy
++from tensorflow.python.keras.losses import categorical_crossentropy as logloss
++from tensorflow.python.keras.metrics import categorical_accuracy
+ nb_classes = 10
+ 
+ def softmax(x):
+diff --git a/EPKD/src/PrunePipeline.py b/EPKD/src/PrunePipeline.py
+index 8fe136d..845a337 100644
+--- a/EPKD/src/PrunePipeline.py
++++ b/EPKD/src/PrunePipeline.py
+@@ -1,44 +1,27 @@
+-import os
+-import keras
+-from keras.datasets import mnist
+-from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
+-from keras.models import Model
+ import numpy as np
+-from keras.utils import np_utils
+-from keras.layers.core import Dense, Dropout, Activation
+-from keras import backend as K
+-from keras.models import Sequential
+-from keras.layers import Dense
+-from keras.optimizers import SGD, Adam, RMSprop
+-from keras.constraints import max_norm
+-from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
+-from keras.models import Sequential
+-from keras.losses import categorical_crossentropy as logloss
+-from keras.metrics import categorical_accuracy
+-from keras.models import model_from_json
+ from tensorflow_model_optimization.sparsity import keras as sparsity
+ from HelperUtil import HelpfulFunctions
+-import datetime
+ helpful = HelpfulFunctions()
+ 
+ 
+-def prune(model, numTrainingSamples, batchSize, epochs, logdir):
++def prune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, logdir):
+     print('[info] applying pruning techniques to the provided model')
+     # TODO use all pruning techniques on the teacher model
+-    studentOne = sparsePrune(model, numTrainingSamples, batchSize, epochs, logdir)
++    studentOne = sparsePrune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, logdir)
++    return studentOne
+ 
+ def sparsePrune(model, X_train, Y_train, X_test, Y_test, num_train_samples, batch_size, epochs, logdir):
+     end_step = np.ceil(1.0 * num_train_samples / batch_size).astype(np.int32) * epochs
+     # TODO determine how to limit this pruning to retain 90% of the network weights / size
+     new_pruning_params = {
+-        'pruning_schedule': sparsity.PolynomialDecay(initial_sparsity=0.50,
+-                                                     final_sparsity=0.90,
++        'pruning_schedule': sparsity.PolynomialDecay(initial_sparsity=0.01,
++                                                     final_sparsity=0.1,
+                                                      begin_step=0,
+                                                      end_step=end_step,
+                                                      frequency=100)
+     }
+-    new_pruned_model = sparsity.prune_low_magnitude(model, **new_pruning_params)
+-    new_pruned_model.compile(
++    new_model = sparsity.prune_low_magnitude(model, **new_pruning_params)
++    new_model.compile(
+         loss='categorical_crossentropy',
+         optimizer='adadelta',
+         metrics=['accuracy'])
+@@ -46,17 +29,17 @@ def sparsePrune(model, X_train, Y_train, X_test, Y_test, num_train_samples, batc
+         sparsity.UpdatePruningStep(),
+         sparsity.PruningSummaries(log_dir=logdir, profile_batch=0)
+     ]
+-    new_pruned_model.fit(X_train, Y_train,
++    new_model.fit(X_train, Y_train,
+                          batch_size=batch_size,
+                          epochs=epochs,
+                          verbose=1,
+                          callbacks=callbacks,
+                          validation_data=(X_test, Y_test))
+ 
+-    score = new_pruned_model.evaluate(X_test, Y_test, verbose=0)
++    score = new_model.evaluate(X_test, Y_test, verbose=0)
+     print('Sparsely Pruned Network Results')
+     print('Test loss:', score[0])
+     print('Test accuracy:', score[1])
+-    return new_pruned_model
++    return new_model
+ 
+ # TODO add more pruning techniques
+\ No newline at end of file
+diff --git a/EPKD/src/StudentDense.py b/EPKD/src/StudentDense.py
+index 0e71d14..af9aa0b 100644
+--- a/EPKD/src/StudentDense.py
++++ b/EPKD/src/StudentDense.py
+@@ -1,21 +1,6 @@
+ import os
+-import keras
+-from keras.datasets import mnist
+-from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
+-from keras.models import Model
+-import numpy as np
+-from keras.utils import np_utils
+-from keras.layers.core import Dense, Dropout, Activation
+-from keras import backend as K
+-from keras.models import Sequential
+-from keras.layers import Dense
+-from keras.optimizers import SGD, Adam, RMSprop
+-from keras.constraints import max_norm
+-from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
+-from keras.models import Sequential
+-from keras.losses import categorical_crossentropy as logloss
+-from keras.metrics import categorical_accuracy
+-from keras.models import model_from_json
++from tensorflow.python.keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate, MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
++from tensorflow.python.keras.models import Model, Sequential, model_from_json
+ from HelperUtil2 import acc
+ from HelperUtil2 import knowledge_distillation_loss
+ import datetime
+diff --git a/EPKD/src/TeacherCNN.py b/EPKD/src/TeacherCNN.py
+index e8acada..ef45593 100644
+--- a/EPKD/src/TeacherCNN.py
++++ b/EPKD/src/TeacherCNN.py
+@@ -1,24 +1,12 @@
+ import os
+-import keras
+-from keras.datasets import mnist
+-from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
+-from keras.models import Model
++from tensorflow.python.keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
++from tensorflow.python.keras.models import Model, Sequential, model_from_json
++from tensorflow.python.keras.optimizers import adadelta
+ import numpy as np
+-from keras.utils import np_utils
+-from keras.layers.core import Dense, Dropout, Activation
+-from keras import backend as K
+-from keras.models import Sequential
+-from keras.layers import Dense
+-from keras.optimizers import SGD, Adam, RMSprop
+-from keras.constraints import max_norm
+-from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
+-from keras.models import Sequential
+-from keras.losses import categorical_crossentropy as logloss
+-from keras.metrics import categorical_accuracy
+-from keras.models import model_from_json
+ from HelperUtil import HelpfulFunctions
+ import datetime
+ helpful = HelpfulFunctions()
++
+ # teacher model class
+ class TeacherModel:
+     # TODO add CL arguments to change the teacher's hyperparameters
+@@ -31,9 +19,9 @@ class TeacherModel:
+         self.kernel_size = (3, 3) # convolution kernel size
+         self.teacher = Sequential()
+         self.teacher_WO_Softmax = None
+-        self.epochs = 4
++        self.epochs = 10
+         self.batch_size = 256
+-        self.temp = 2
++        self.temp = 40
+         self.name = "TeacherCNN"
+ 
+     def printSummary(self):
+@@ -61,19 +49,20 @@ class TeacherModel:
+         self.teacher.add(Dense(self.nb_classes))
+         self.teacher.add(Activation('softmax')) # Note that we add a normal softmax layer to begin with
+ 
++
+         self.teacher.compile(loss='categorical_crossentropy',
+-                    optimizer='adadelta',
++                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                     metrics=['accuracy'])
+         self.createTeacherWOSoftmax()
+         return self.teacher
+         
+     def train(self, X_train, Y_train, X_test, Y_test):
+         self.teacher.fit(X_train, Y_train,
+-          batch_size=self.batch_size,
+-          epochs=self.epochs,
+-          verbose=1,
+-          callbacks=self.callbacks,
+-          validation_data=(X_test, Y_test))
++            batch_size=self.batch_size,
++            epochs=self.epochs,
++            verbose=1,
++            callbacks=self.callbacks,
++            validation_data=(X_test, Y_test))
+         score = self.teacher.evaluate(X_test, Y_test, verbose=0)
+         print('Test loss:', score[0])
+         print('Test accuracy:', score[1])
+diff --git a/EPKD/src/__pycache__/HelperUtil2.cpython-36.pyc b/EPKD/src/__pycache__/HelperUtil2.cpython-36.pyc
+index 9000462..037a7ee 100644
+Binary files a/EPKD/src/__pycache__/HelperUtil2.cpython-36.pyc and b/EPKD/src/__pycache__/HelperUtil2.cpython-36.pyc differ
+diff --git a/EPKD/src/__pycache__/StudentDense.cpython-36.pyc b/EPKD/src/__pycache__/StudentDense.cpython-36.pyc
+index 2010198..5f9782f 100644
+Binary files a/EPKD/src/__pycache__/StudentDense.cpython-36.pyc and b/EPKD/src/__pycache__/StudentDense.cpython-36.pyc differ
+diff --git a/EPKD/src/__pycache__/TeacherCNN.cpython-36.pyc b/EPKD/src/__pycache__/TeacherCNN.cpython-36.pyc
+index 4dae75e..b326f34 100644
+Binary files a/EPKD/src/__pycache__/TeacherCNN.cpython-36.pyc and b/EPKD/src/__pycache__/TeacherCNN.cpython-36.pyc differ
+diff --git a/EPKD/src/saved_models/82.6_StudentDense_2019-08-28_09-08-41.h5 b/EPKD/src/saved_models/82.6_StudentDense_2019-08-28_09-08-41.h5
+deleted file mode 100644
+index 087d285..0000000
+Binary files a/EPKD/src/saved_models/82.6_StudentDense_2019-08-28_09-08-41.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/82.6_StudentDense_2019-08-28_09-08-41.json b/EPKD/src/saved_models/82.6_StudentDense_2019-08-28_09-08-41.json
+deleted file mode 100644
+index e6fb362..0000000
+--- a/EPKD/src/saved_models/82.6_StudentDense_2019-08-28_09-08-41.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjUAAABz\nAAAAAA==\n", null, [7]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/93.75_StudentDense_2019-08-28_09-11-13.h5 b/EPKD/src/saved_models/93.75_StudentDense_2019-08-28_09-11-13.h5
+deleted file mode 100644
+index 532a25c..0000000
+Binary files a/EPKD/src/saved_models/93.75_StudentDense_2019-08-28_09-11-13.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/93.75_StudentDense_2019-08-28_09-11-13.json b/EPKD/src/saved_models/93.75_StudentDense_2019-08-28_09-11-13.json
+deleted file mode 100644
+index 57374d8..0000000
+--- a/EPKD/src/saved_models/93.75_StudentDense_2019-08-28_09-11-13.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [7]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/94.58_StudentDense_2019-08-29_12-45-26.h5 b/EPKD/src/saved_models/94.58_StudentDense_2019-08-29_12-45-26.h5
+deleted file mode 100644
+index 69427bd..0000000
+Binary files a/EPKD/src/saved_models/94.58_StudentDense_2019-08-29_12-45-26.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/94.58_StudentDense_2019-08-29_12-45-26.json b/EPKD/src/saved_models/94.58_StudentDense_2019-08-29_12-45-26.json
+deleted file mode 100644
+index 5759462..0000000
+--- a/EPKD/src/saved_models/94.58_StudentDense_2019-08-29_12-45-26.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjkAAABz\nAAAAAA==\n", null, [75]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/94.77_StudentDense_2019-08-28_10-55-28.h5 b/EPKD/src/saved_models/94.77_StudentDense_2019-08-28_10-55-28.h5
+deleted file mode 100644
+index c1047f0..0000000
+Binary files a/EPKD/src/saved_models/94.77_StudentDense_2019-08-28_10-55-28.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/94.77_StudentDense_2019-08-28_10-55-28.json b/EPKD/src/saved_models/94.77_StudentDense_2019-08-28_10-55-28.json
+deleted file mode 100644
+index 59c7fcd..0000000
+--- a/EPKD/src/saved_models/94.77_StudentDense_2019-08-28_10-55-28.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [75]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/94.87_StudentDense_2019-08-28_09-14-16.h5 b/EPKD/src/saved_models/94.87_StudentDense_2019-08-28_09-14-16.h5
+deleted file mode 100644
+index 17ee202..0000000
+Binary files a/EPKD/src/saved_models/94.87_StudentDense_2019-08-28_09-14-16.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/94.87_StudentDense_2019-08-28_09-14-16.json b/EPKD/src/saved_models/94.87_StudentDense_2019-08-28_09-14-16.json
+deleted file mode 100644
+index 57374d8..0000000
+--- a/EPKD/src/saved_models/94.87_StudentDense_2019-08-28_09-14-16.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [7]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/95.02_StudentDense_2019-08-28_09-12-38.h5 b/EPKD/src/saved_models/95.02_StudentDense_2019-08-28_09-12-38.h5
+deleted file mode 100644
+index e34f709..0000000
+Binary files a/EPKD/src/saved_models/95.02_StudentDense_2019-08-28_09-12-38.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/95.02_StudentDense_2019-08-28_09-12-38.json b/EPKD/src/saved_models/95.02_StudentDense_2019-08-28_09-12-38.json
+deleted file mode 100644
+index 9e4e95d..0000000
+--- a/EPKD/src/saved_models/95.02_StudentDense_2019-08-28_09-12-38.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [50]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/95.4_StudentDense_2019-08-28_09-17-06.h5 b/EPKD/src/saved_models/95.4_StudentDense_2019-08-28_09-17-06.h5
+deleted file mode 100644
+index b4bab63..0000000
+Binary files a/EPKD/src/saved_models/95.4_StudentDense_2019-08-28_09-17-06.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/95.4_StudentDense_2019-08-28_09-17-06.json b/EPKD/src/saved_models/95.4_StudentDense_2019-08-28_09-17-06.json
+deleted file mode 100644
+index 9e4e95d..0000000
+--- a/EPKD/src/saved_models/95.4_StudentDense_2019-08-28_09-17-06.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [50]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/95.75_StudentDense_2019-08-28_09-21-04.h5 b/EPKD/src/saved_models/95.75_StudentDense_2019-08-28_09-21-04.h5
+deleted file mode 100644
+index 96e1036..0000000
+Binary files a/EPKD/src/saved_models/95.75_StudentDense_2019-08-28_09-21-04.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/95.75_StudentDense_2019-08-28_09-21-04.json b/EPKD/src/saved_models/95.75_StudentDense_2019-08-28_09-21-04.json
+deleted file mode 100644
+index 9e4e95d..0000000
+--- a/EPKD/src/saved_models/95.75_StudentDense_2019-08-28_09-21-04.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [50]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/95.86_StudentDense_2019-08-28_14-20-37.h5 b/EPKD/src/saved_models/95.86_StudentDense_2019-08-28_14-20-37.h5
+deleted file mode 100644
+index d6322e8..0000000
+Binary files a/EPKD/src/saved_models/95.86_StudentDense_2019-08-28_14-20-37.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/95.86_StudentDense_2019-08-28_14-20-37.json b/EPKD/src/saved_models/95.86_StudentDense_2019-08-28_14-20-37.json
+deleted file mode 100644
+index 34c37b2..0000000
+--- a/EPKD/src/saved_models/95.86_StudentDense_2019-08-28_14-20-37.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAADz\nAAAAAA==\n", null, [75]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/95.91_StudentDense_2019-08-28_10-58-37.h5 b/EPKD/src/saved_models/95.91_StudentDense_2019-08-28_10-58-37.h5
+deleted file mode 100644
+index 6e6ed51..0000000
+Binary files a/EPKD/src/saved_models/95.91_StudentDense_2019-08-28_10-58-37.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/95.91_StudentDense_2019-08-28_10-58-37.json b/EPKD/src/saved_models/95.91_StudentDense_2019-08-28_10-58-37.json
+deleted file mode 100644
+index 59c7fcd..0000000
+--- a/EPKD/src/saved_models/95.91_StudentDense_2019-08-28_10-58-37.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [75]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/saved_models/95.97_StudentDense_2019-08-28_11-02-01.h5 b/EPKD/src/saved_models/95.97_StudentDense_2019-08-28_11-02-01.h5
+deleted file mode 100644
+index 065e4d6..0000000
+Binary files a/EPKD/src/saved_models/95.97_StudentDense_2019-08-28_11-02-01.h5 and /dev/null differ
+diff --git a/EPKD/src/saved_models/95.97_StudentDense_2019-08-28_11-02-01.json b/EPKD/src/saved_models/95.97_StudentDense_2019-08-28_11-02-01.json
+deleted file mode 100644
+index 59c7fcd..0000000
+--- a/EPKD/src/saved_models/95.97_StudentDense_2019-08-28_11-02-01.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"class_name": "Model", "config": {"name": "model_2", "layers": [{"name": "flatten_1_input", "class_name": "InputLayer", "config": {"batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "sparse": false, "name": "flatten_1_input"}, "inbound_nodes": []}, {"name": "flatten_1", "class_name": "Flatten", "config": {"name": "flatten_1", "trainable": true, "batch_input_shape": [null, 28, 28, 1], "dtype": "float32", "data_format": "channels_last"}, "inbound_nodes": [[["flatten_1_input", 0, 0, {}]]]}, {"name": "dense_1", "class_name": "Dense", "config": {"name": "dense_1", "trainable": true, "dtype": "float32", "units": 32, "activation": "relu", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["flatten_1", 0, 0, {}]]]}, {"name": "dropout_1", "class_name": "Dropout", "config": {"name": "dropout_1", "trainable": true, "dtype": "float32", "rate": 0.2, "noise_shape": null, "seed": null}, "inbound_nodes": [[["dense_1", 0, 0, {}]]]}, {"name": "dense_2", "class_name": "Dense", "config": {"name": "dense_2", "trainable": true, "dtype": "float32", "units": 10, "activation": "linear", "use_bias": true, "kernel_initializer": {"class_name": "VarianceScaling", "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform", "seed": null}}, "bias_initializer": {"class_name": "Zeros", "config": {}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}, "inbound_nodes": [[["dropout_1", 0, 0, {}]]]}, {"name": "activation_1", "class_name": "Activation", "config": {"name": "activation_1", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["dense_2", 0, 0, {}]]]}, {"name": "lambda_1", "class_name": "Lambda", "config": {"name": "lambda_1", "trainable": true, "dtype": "float32", "function": ["4wEAAAAAAAAAAQAAAAIAAAATAAAAcwgAAAB8AIgAGwBTACkBTqkAKQHaAXgpAdoIdGVtcFRlbXBy\nAQAAAPqWL1VzZXJzL2JsYWtlZWR3YXJkcy9Eb2N1bWVudHMvR29vZ2xlLURyaXZlL1VuaXZlcnNp\ndHktb2YtU291dGgtQ2Fyb2xpbmEvMm5kLXllYXIvUmVzZWFyY2gvSmFtc2hpZGktTGFiL1JlcG9z\nL25ldXJhbC1kaXN0aWxsZXIvRVBLRC9zcmMvU3R1ZGVudERlbnNlLnB52gg8bGFtYmRhPjcAAABz\nAAAAAA==\n", null, [75]], "function_type": "lambda", "output_shape": null, "output_shape_type": "raw", "arguments": {}}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_2", "class_name": "Activation", "config": {"name": "activation_2", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["activation_1", 0, 0, {}]]]}, {"name": "activation_3", "class_name": "Activation", "config": {"name": "activation_3", "trainable": true, "dtype": "float32", "activation": "softmax"}, "inbound_nodes": [[["lambda_1", 0, 0, {}]]]}, {"name": "concatenate_1", "class_name": "Concatenate", "config": {"name": "concatenate_1", "trainable": true, "dtype": "float32", "axis": -1}, "inbound_nodes": [[["activation_2", 0, 0, {}], ["activation_3", 0, 0, {}]]]}], "input_layers": [["flatten_1_input", 0, 0]], "output_layers": [["concatenate_1", 0, 0]]}, "keras_version": "2.2.5", "backend": "tensorflow"}
+\ No newline at end of file
+diff --git a/EPKD/src/train.py b/EPKD/src/train.py
+index c52030e..e156626 100644
+--- a/EPKD/src/train.py
++++ b/EPKD/src/train.py
+@@ -1,23 +1,27 @@
++import os
++from tensorflow.python.keras.datasets import mnist
++from tensorflow.python.keras.utils import np_utils
+ import keras
+-from keras.datasets import mnist
+-from keras.utils import np_utils
+ import tempfile
+-import tensorboard
+-import tensorflow as tf
+ from TeacherCNN import TeacherModel
+ from StudentDense import StudentModel
+ import argparse
+-
++from PrunePipeline import prune
++import wandb
++from wandb.keras import WandbCallback
++wandb.init(config={"hyper": "EPKD"})
+ 
+ def main():
+     # reading command line input
+     parser = argparse.ArgumentParser(description='add params to run.')
+     parser.add_argument('-m', '--model_filename', default=None, type=str,
+-                    help='filename of model configuration')
+-    parser.add_argument('-w', '--weights_filename', default=None, type=str,
+-                    help='filename of model weights')
++                    help='name of model configuration and weights files')
++    parser.add_argument("-g", "--gpus", type=int, default=1,
++                    help="# of GPUs to use for training")
+     args = parser.parse_args()
+ 
++    # grabbing the number of GPUs cores to use
++    numGPUCores = args.gpus
+     # preparing the MNIST dataset for training teacher and student models
+     nb_classes = 10
+     input_shape = (28, 28, 1)
+@@ -37,22 +41,26 @@ def main():
+     # setting up logs for tensorboard
+     logdir = tempfile.mkdtemp()
+     print('[INFO] writing training logs to ' + logdir)
+-    callbacks = [tf.keras.callbacks.TensorBoard(log_dir=logdir, profile_batch=0)]
++    #tbCallBack = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
++    callbacks = [WandbCallback()]
+ 
+     print('[INFO] creating teacher model')
+     # compiling and training teacher network
+     teacher = TeacherModel(callbacks)
+     teacher.__init__()
+     if args.model_filename is not None:
+-        teacher.load(args.model_filename, args.weights_filename)
++        teacher.load(os.path.join(args.model_filename, ".json"), os.path.join(args.model_filename, ".h5"))
+     else:
+         teacher.buildAndCompile()
+         teacher.train(X_train, Y_train, X_test, Y_test)
+         teacher.save(X_test, Y_test) # persisting trained teacher network
+ 
+     # TODO perform pruning operations
+-
+-
++    print("Attempting to prune teacher network")
++    pruningEpochs = 10
++    batchSize = 256
++    studentModel = prune(teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), batchSize, pruningEpochs, logdir)
++    print(type(studentModel))
+     print('[INFO] creating hybrid targets for student model training')
+     # retreiving soft targets for student model training
+     Y_train_new, Y_test_new = teacher.createStudentTrainingData(X_train, Y_train, X_test, Y_test)

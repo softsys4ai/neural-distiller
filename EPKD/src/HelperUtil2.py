@@ -1,7 +1,6 @@
 import numpy as np
-import keras
-from keras.losses import categorical_crossentropy as logloss
-from keras.metrics import categorical_accuracy
+from tensorflow.python.keras.losses import categorical_crossentropy as logloss
+from tensorflow.python.keras.metrics import categorical_accuracy
 nb_classes = 10
 
 def softmax(x):

@@ -1,24 +1,12 @@
 import os
-import keras
-from keras.datasets import mnist
-from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
-from keras.models import Model
+from tensorflow.python.keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
+from tensorflow.python.keras.models import Model, Sequential, model_from_json
+from tensorflow.python.keras.optimizers import adadelta
 import numpy as np
-from keras.utils import np_utils
-from keras.layers.core import Dense, Dropout, Activation
-from keras import backend as K
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import SGD, Adam, RMSprop
-from keras.constraints import max_norm
-from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
-from keras.models import Sequential
-from keras.losses import categorical_crossentropy as logloss
-from keras.metrics import categorical_accuracy
-from keras.models import model_from_json
 from HelperUtil import HelpfulFunctions
 import datetime
 helpful = HelpfulFunctions()
+
 # teacher model class
 class TeacherModel:
     # TODO add CL arguments to change the teacher's hyperparameters
@@ -31,9 +19,9 @@ class TeacherModel:
         self.kernel_size = (3, 3) # convolution kernel size
         self.teacher = Sequential()
         self.teacher_WO_Softmax = None
-        self.epochs = 4
+        self.epochs = 10
         self.batch_size = 256
-        self.temp = 2
+        self.temp = 40
         self.name = "TeacherCNN"
 
     def printSummary(self):
@@ -61,19 +49,20 @@ class TeacherModel:
         self.teacher.add(Dense(self.nb_classes))
         self.teacher.add(Activation('softmax')) # Note that we add a normal softmax layer to begin with
 
+
         self.teacher.compile(loss='categorical_crossentropy',
-                    optimizer='adadelta',
+                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                     metrics=['accuracy'])
         self.createTeacherWOSoftmax()
         return self.teacher
         
     def train(self, X_train, Y_train, X_test, Y_test):
         self.teacher.fit(X_train, Y_train,
-          batch_size=self.batch_size,
-          epochs=self.epochs,
-          verbose=1,
-          callbacks=self.callbacks,
-          validation_data=(X_test, Y_test))
+            batch_size=self.batch_size,
+            epochs=self.epochs,
+            verbose=1,
+            callbacks=self.callbacks,
+            validation_data=(X_test, Y_test))
         score = self.teacher.evaluate(X_test, Y_test, verbose=0)
         print('Test loss:', score[0])
         print('Test accuracy:', score[1])

@@ -1,0 +1,10 @@
+[INFO] writing training logs to /var/folders/9l/d0zb3ts905l4dznmv3zgsfs80000gn/T/tmp6h9q76_k
+[INFO] creating teacher model
+Traceback (most recent call last):
+  File "/Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/src/train.py", line 79, in <module>
+    main()
+  File "/Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/src/train.py", line 52, in main
+    teacher.load(os.path.join(args.model_filename, ".json"), os.path.join(args.model_filename, ".h5"))
+  File "/Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/src/TeacherCNN.py", line 102, in load
+    with open(model_filename, 'rb') as json_file:
+FileNotFoundError: [Errno 2] No such file or directory: 'saved_models/99.2_TeacherCNN_2019-08-29_17-25-46/.json'
