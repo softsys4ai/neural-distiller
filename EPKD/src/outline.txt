@@ -1,4 +1,3 @@
-
 // train all teacher models that are not pre-trained
 // load each teacher model configurations and weights
 // create a directory for each run of the program to contain all of the saved metrics and student models
