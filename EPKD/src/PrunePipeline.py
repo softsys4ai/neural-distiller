@@ -4,18 +4,18 @@ from HelperUtil import HelpfulFunctions
 helpful = HelpfulFunctions()
 
 
-def prune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, logdir):
+def prune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse, logdir):
     print('[info] applying pruning techniques to the provided model')
     # TODO use all pruning techniques on the teacher model
-    studentOne = sparsePrune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, logdir)
+    studentOne = sparsePrune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse, logdir)
     return studentOne
 
-def sparsePrune(model, X_train, Y_train, X_test, Y_test, num_train_samples, batch_size, epochs, logdir):
+def sparsePrune(model, X_train, Y_train, X_test, Y_test, num_train_samples, batch_size, epochs, initSparse, endSparse, logdir):
     end_step = np.ceil(1.0 * num_train_samples / batch_size).astype(np.int32) * epochs
     # TODO determine how to limit this pruning to retain 90% of the network weights / size
     new_pruning_params = {
-        'pruning_schedule': sparsity.PolynomialDecay(initial_sparsity=0.01,
-                                                     final_sparsity=0.1,
+        'pruning_schedule': sparsity.PolynomialDecay(initial_sparsity=initSparse,
+                                                     final_sparsity=endSparse,
                                                      begin_step=0,
                                                      end_step=end_step,
                                                      frequency=100)

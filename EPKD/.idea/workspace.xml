@@ -14,8 +14,8 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="62" column="29" lean-forward="true" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
+            <state relative-caret-position="450">
+              <caret line="81" column="20" lean-forward="true" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -23,18 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="debug.log" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/wandb/debug.log">
-          <provider selected="true" editor-type-id="LogFileEditorProvider">
-            <state relative-caret-position="-1334" />
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="PrunePipeline.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="920">
-              <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+            <state relative-caret-position="161">
+              <caret line="9" column="131" selection-start-line="9" selection-start-column="131" selection-end-line="9" selection-end-column="131" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -45,8 +38,8 @@
       <file leaf-file-name="TeacherCNN.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="241">
+              <caret line="67" column="41" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="67" selection-end-column="41" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -57,8 +50,11 @@
       <file leaf-file-name="StudentDense.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/StudentDense.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="9" selection-start-column="9" selection-end-column="9" />
+            <state relative-caret-position="322">
+              <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -110,6 +106,8 @@
       <find>log</find>
       <find>compile</find>
       <find>callbacks</find>
+      <find>optimix</find>
+      <find>eval</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -119,8 +117,8 @@
         <option value="$PROJECT_DIR$/src/outline.txt" />
         <option value="$PROJECT_DIR$/src/sparse_pruning.py" />
         <option value="$PROJECT_DIR$/src/HelperUtil2.py" />
-        <option value="$PROJECT_DIR$/src/StudentDense.py" />
         <option value="$PROJECT_DIR$/src/TeacherCNN.py" />
+        <option value="$PROJECT_DIR$/src/StudentDense.py" />
         <option value="$PROJECT_DIR$/src/PrunePipeline.py" />
         <option value="$PROJECT_DIR$/src/train.py" />
       </list>
@@ -149,18 +147,6 @@
               <item name="EPKD" type="b2602c69:ProjectViewProjectNode" />
               <item name="EPKD" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EPKD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="EPKD" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="saved_models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EPKD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="EPKD" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="wandb" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -246,7 +232,7 @@
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21379673" />
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.40696517" />
+      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.39104477" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.32923076" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -305,6 +291,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="9" selection-start-column="9" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -629,45 +618,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/wandb/debug.log">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-32706" />
+      </provider>
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-777" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/StudentDense.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="9" selection-start-column="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="920">
-          <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="322">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/wandb/debug.log">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="-32706" />
+    <entry file="file://$PROJECT_DIR$/src/TeacherCNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="67" column="41" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="67" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
-      <provider selected="true" editor-type-id="LogFileEditorProvider">
-        <state relative-caret-position="-1334" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PrunePipeline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="9" column="131" selection-start-line="9" selection-start-column="131" selection-end-line="9" selection-end-column="131" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="62" column="29" lean-forward="true" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
+        <state relative-caret-position="450">
+          <caret line="81" column="20" lean-forward="true" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

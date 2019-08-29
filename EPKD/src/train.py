@@ -7,9 +7,9 @@ from TeacherCNN import TeacherModel
 from StudentDense import StudentModel
 import argparse
 from PrunePipeline import prune
-import wandb
-from wandb.keras import WandbCallback
-wandb.init(config={"hyper": "EPKD"})
+# import wandb
+# from wandb.keras import WandbCallback
+# wandb.init(config={"hyper": "EPKD"})
 
 def main():
     # reading command line input
@@ -40,28 +40,34 @@ def main():
 
     # setting up logs for tensorboard
     logdir = tempfile.mkdtemp()
-    print('[INFO] writing training logs to ' + logdir)
+    print('[INFO] Writing training logs to ' + logdir)
     #tbCallBack = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
-    callbacks = [WandbCallback()]
+    #callbacks = [WandbCallback()]
+    callbacks = []
 
-    print('[INFO] creating teacher model')
+    print('[INFO] Creating teacher model')
     # compiling and training teacher network
     teacher = TeacherModel(callbacks)
     teacher.__init__()
     if args.model_filename is not None:
         teacher.load(args.model_filename + ".json", args.model_filename + ".h5")
+        score = teacher.getModel().evaluate(X_test, Y_test, verbose=0)
+        print('[INFO] Loaded teacher performance')
+        print('[INFO] Test loss:', score[0])
+        print('[INFO] Test accuracy:', score[1])
     else:
         teacher.buildAndCompile()
         teacher.train(X_train, Y_train, X_test, Y_test)
         teacher.save(X_test, Y_test) # persisting trained teacher network
 
-    # TODO perform pruning operations
     print("[INFO] Attempting to prune teacher network")
-    pruningEpochs = 10
+    pruningEpochs = 5
     batchSize = 256
-    studentModel = prune(teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), batchSize, pruningEpochs, logdir)
+    studentModel = prune(teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), batchSize, pruningEpochs, 0.01, 0.1, logdir)
     print(type(studentModel))
-    print('[INFO] creating hybrid targets for student model training')
+    # TODO perform all pruning operations here
+
+    print('[INFO] Creating hybrid targets for student model training')
     # retreiving soft targets for student model training
     Y_train_new, Y_test_new = teacher.createStudentTrainingData(X_train, Y_train, X_test, Y_test)
 

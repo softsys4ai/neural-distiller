@@ -3,10 +3,10 @@
     "program": "/Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/src/train.py",
     "git": {
         "remote": "git@github.com:softsys4ai/neural-distiller.git",
-        "commit": "444e6c8e240502d8db45d1a51886d1fdfb69408c"
+        "commit": "676e5386d88ae883f53afde9b0f177f9330dfe7a"
     },
     "email": "blakeedwards823@gmail.com",
-    "startedAt": "2019-08-29T21:39:51.466738",
+    "startedAt": "2019-08-29T21:56:27.422439",
     "host": "BTE-MB-Pro-2.local",
     "username": "blakeedwards",
     "os": "Darwin-18.7.0-x86_64-i386-64bit",
@@ -17,10 +17,9 @@
         "-m",
         "99.2_TeacherCNN_2019-08-29_17-25-46"
     ],
-    "state": "finished",
+    "state": "running",
     "jobType": null,
     "mode": "run",
     "project": "neural-distiller-EPKD_src",
-    "heartbeatAt": "2019-08-29T21:50:27.292535",
-    "exitcode": 0
+    "heartbeatAt": "2019-08-29T21:57:16.316755"
 }

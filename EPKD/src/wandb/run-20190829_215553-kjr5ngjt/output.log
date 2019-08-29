@@ -1,0 +1,20 @@
+[INFO] writing training logs to /var/folders/9l/d0zb3ts905l4dznmv3zgsfs80000gn/T/tmp3n2l_m0g
+[INFO] creating teacher model
+WARNING:tensorflow:From /Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/virtual-env/lib/python3.6/site-packages/tensorflow/python/ops/init_ops.py:97: calling GlorotUniform.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:From /Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/virtual-env/lib/python3.6/site-packages/tensorflow/python/ops/init_ops.py:1251: calling VarianceScaling.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:From /Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/virtual-env/lib/python3.6/site-packages/tensorflow/python/ops/init_ops.py:97: calling Zeros.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+2019-08-29 17:55:55.437214: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+[INFO] Loaded model from disk
+[INFO] Attempting to prune teacher network
+Traceback (most recent call last):
+  File "/Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/src/train.py", line 80, in <module>
+    main()
+  File "/Users/blakeedwards/Documents/Google-Drive/University-of-South-Carolina/2nd-year/Research/Jamshidi-Lab/Repos/neural-distiller/EPKD/src/train.py", line 61, in main
+    studentModel = prune(teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), batchSize, pruningEpochs, 0.01, 0.1, logdir)
+TypeError: prune() takes 9 positional arguments but 11 were given
