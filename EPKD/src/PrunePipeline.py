@@ -37,9 +37,15 @@ def sparsePrune(model, X_train, Y_train, X_test, Y_test, num_train_samples, batc
                          validation_data=(X_test, Y_test))
 
     score = new_model.evaluate(X_test, Y_test, verbose=0)
-    print('Sparsely Pruned Network Results')
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
+    print('[INFO] Sparsely Pruned Network Results')
+    print('[INFO] Test loss:', score[0])
+    print('[INFO] Test accuracy:', score[1])
     return new_model
+
+def L1RankPrune():
+    print("[INFO] Using L1 norm of the weights in each filter to rank them")
+
+def AbsDeltaCostPrune():
+    print("[INFO] Using the absolute change to the cost of the network to rank the importance of each filter")
 
 # TODO add more pruning techniques
