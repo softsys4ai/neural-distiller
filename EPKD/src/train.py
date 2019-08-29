@@ -1,19 +1,9 @@
 import keras
 from keras.datasets import mnist
-from keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate
-from keras.models import Model
-import numpy as np
 from keras.utils import np_utils
-from keras.layers.core import Dense, Dropout, Activation
-from keras import backend as K
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import SGD, Adam, RMSprop
-from keras.constraints import max_norm
-from keras.layers import MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
-from keras.models import Sequential
-from keras.losses import categorical_crossentropy as logloss
-from keras.metrics import categorical_accuracy
+import tempfile
+import tensorboard
+import tensorflow as tf
 from TeacherCNN import TeacherModel
 from StudentDense import StudentModel
 import argparse
@@ -43,10 +33,15 @@ def main():
     # Normalize the values
     X_train /= 255
     X_test /= 255
-    
-    print('[INFO] creating and training teacher model')
+
+    # setting up logs for tensorboard
+    logdir = tempfile.mkdtemp()
+    print('[INFO] writing training logs to ' + logdir)
+    callbacks = [tf.keras.callbacks.TensorBoard(log_dir=logdir, profile_batch=0)]
+
+    print('[INFO] creating teacher model')
     # compiling and training teacher network
-    teacher = TeacherModel()
+    teacher = TeacherModel(callbacks)
     teacher.__init__()
     if args.model_filename is not None:
         teacher.load(args.model_filename, args.weights_filename)
@@ -55,13 +50,16 @@ def main():
         teacher.train(X_train, Y_train, X_test, Y_test)
         teacher.save(X_test, Y_test) # persisting trained teacher network
 
+    # TODO perform pruning operations
+
+
     print('[INFO] creating hybrid targets for student model training')
     # retreiving soft targets for student model training
     Y_train_new, Y_test_new = teacher.createStudentTrainingData(X_train, Y_train, X_test, Y_test)
 
     print('[INFO] creating and training student model')
     # compiling and training student network
-    student = StudentModel()
+    student = StudentModel(callbacks)
     student.__init__()
     student.buildAndCompile()
     student.train(X_train, Y_train_new, X_test, Y_test_new)

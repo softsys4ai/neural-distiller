@@ -22,7 +22,8 @@ helpful = HelpfulFunctions()
 # teacher model class
 class TeacherModel:
     # TODO add CL arguments to change the teacher's hyperparameters
-    def __init__(self):
+    def __init__(self, callback=None):
+        self.callbacks = callback
         self.nb_classes = 10
         self.input_shape = (28, 28, 1) # Input shape of each image
         self.nb_filters = 64 # number of convolutional filters to use
@@ -32,7 +33,7 @@ class TeacherModel:
         self.teacher_WO_Softmax = None
         self.epochs = 4
         self.batch_size = 256
-        self.temp = 7
+        self.temp = 2
         self.name = "TeacherCNN"
 
     def printSummary(self):
@@ -71,7 +72,11 @@ class TeacherModel:
           batch_size=self.batch_size,
           epochs=self.epochs,
           verbose=1,
+          callbacks=self.callbacks,
           validation_data=(X_test, Y_test))
+        score = self.teacher.evaluate(X_test, Y_test, verbose=0)
+        print('Test loss:', score[0])
+        print('Test accuracy:', score[1])
 
 
     def createStudentTrainingData(self, X_train, Y_train, X_test, Y_test):

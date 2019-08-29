@@ -21,16 +21,17 @@ from HelperUtil2 import knowledge_distillation_loss
 import datetime
 
 class StudentModel:
-    def __init__(self):
+    def __init__(self, callback=None):
+        self.callbacks = callback
         self.nb_classes = 10
         self.input_shape = (28, 28, 1) # Input shape of each image
         self.nb_filters = 64 # number of convolutional filters to use
         self.dropoutVal = 0.2
         self.student = Sequential()
-        self.epochs = 10
+        self.epochs = 100
         self.batchSize = 256
         self.alpha = 0.1
-        self.temp = 7
+        self.temp = 75
         self.name = "StudentDense"
     
     def printSummary(self):
@@ -40,15 +41,20 @@ class StudentModel:
         return self.student
 
     def buildAndCompile(self):
+        # cannot reference self in lambda, or else error in model save
+        tempAlpha = self.alpha
+        tempTemp = self.temp
+        # constructing the student network
         self.student.add(Flatten(input_shape=self.input_shape))
         self.student.add(Dense(32, activation='relu'))
         self.student.add(Dropout(self.dropoutVal))
         self.student.add(Dense(self.nb_classes))
         self.student.add(Activation('softmax'))
+        # modifying student network for KD
         self.student.layers.pop()
         logits = self.student.layers[-1].output
         probs = Activation('softmax')(logits)
-        logits_T = Lambda(lambda x: x / self.temp)(logits)
+        logits_T = Lambda(lambda x: x / tempTemp)(logits)
         probs_T = Activation('softmax')(logits_T)
         output = concatenate([probs, probs_T])
         self.student = Model(self.student.input, output) # final student model
@@ -56,7 +62,7 @@ class StudentModel:
         self.student.compile(
             #optimizer=optimizers.SGD(lr=1e-1, momentum=0.9, nesterov=True),
             optimizer='adadelta',
-            loss=lambda y_true, y_pred: knowledge_distillation_loss(y_true, y_pred, self.alpha),
+            loss=lambda y_true, y_pred: knowledge_distillation_loss(y_true, y_pred, tempAlpha),
             #loss='categorical_crossentropy',
             metrics=[acc])
 
@@ -65,7 +71,11 @@ class StudentModel:
             batch_size=self.batchSize,
             epochs=self.epochs,
             verbose=1,
+            callbacks=self.callbacks,
             validation_data=(X_test, Y_test_new))
+        score = self.student.evaluate(X_test, Y_test_new, verbose=0)
+        print('Test loss:', score[0])
+        print('Test accuracy:', score[1])
 
     def save(self, X_test, Y_test):
         now = datetime.datetime.now()
