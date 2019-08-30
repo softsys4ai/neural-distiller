@@ -5,7 +5,6 @@ Description: n/a
 
 Notes:
 [!] Find easy way to tune hyperparams of pre-trained models.
-
 - https://keras.io/applications/#available-models
 	- if model is of sequential type (keras) it is easy to .pop() the last layer to re-purpose the network
 	- not a straightforward way of changing the layers within the sequential model
