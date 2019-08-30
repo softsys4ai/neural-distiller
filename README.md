@@ -1,9 +1,5 @@
-# neural-distiller
-Nueral Distillation Project
+# Evolutionary Pruning and Knowledge Distillation (EPK Distillation)
 
 Contributers: Blake Edwards
-
 References: Dr. Pooyan Jamshidi
-
-Description:
-Exploring the distillation and compression of deep neural networks.
+Description: n/a
