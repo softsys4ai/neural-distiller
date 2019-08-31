@@ -19,3 +19,15 @@ def acc(y_true, y_pred):
     y_true = y_true[:, :nb_classes]
     y_pred = y_pred[:, :nb_classes]
     return categorical_accuracy(y_true, y_pred)
+
+def calculate_weighted_score(logger, model, X_train, Y_train, X_test, Y_test):
+    logger.info('Calculating weighted model score')
+    train_acc = model.evaluate(X_train, Y_train, verbose=0)
+    val_acc = model.evaluate(X_test, Y_test, verbose=0)
+    return ((train_acc[0] + 3*val_acc[0])/4), ((train_acc[1] + 3*val_acc[1])/4)
+
+def calculate_score(logger, model, X_train, Y_train, X_test, Y_test):
+    logger.info('Calculating model score')
+    train_acc = model.evaluate(X_train, Y_train, verbose=0)
+    val_acc = model.evaluate(X_test, Y_test, verbose=0)
+    return ((train_acc[0] + val_acc[0])/2), ((train_acc[1] + val_acc[1])/2)

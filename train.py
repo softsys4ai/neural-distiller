@@ -8,6 +8,7 @@ from Configuration import Config as cfg
 from Data import LoadDataset
 from Models.ModelLoader import ModelLoader
 from Models import TeacherUtils
+from Utils import HelperUtil
 from Pruning import PruneUtil
 
 def config_option_parser(logger):
@@ -64,7 +65,7 @@ def config_logger():
     logger.setLevel(logging.INFO)
     logger = logging.LoggerAdapter(logger, extra)
     now = datetime.now()
-    logger.info("NEW TRAINING SESSION STARTED")
+    logger.info(cfg.spacer+"NEW TRAINING SESSION STARTED"+cfg.spacer)
     logger.info("Initialized logger")
     return logger
 
@@ -81,6 +82,11 @@ def main():
     # setting up teacher model
     stm = ModelLoader(logger, teacher_model_name)
     teacher = stm.get_loaded_model()
+    # evaluate teacher accuracy and performance
+    teacherLoss, teacherAcc = HelperUtil.calculate_weighted_score(logger, teacher, X_train, Y_train, X_test, Y_test)
+    logger.info('Teacher network weighted score, test loss: %ss, test accuracy: %s' % (teacherLoss, teacherAcc))
+
+    # TODO measure power consumption and inference time
 
     # TODO perform all pruning operations here
     # print("[INFO] Attempting to prune teacher network")
@@ -99,9 +105,9 @@ def main():
                      verbose=1,
                      callbacks=[],
                      validation_data=(X_test, Y_test_new))
-    score = student.evaluate(X_test, Y_test_new, verbose=0)
     logger.info('Completed student network training')
-    logger.info('Student network, test loss: %s, test accuracy: %s' % (score[0], score[1]))
+    studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, student, X_train, Y_train_new, X_test, Y_test_new)
+    logger.info('Student network weighted score, test loss: %s, test accuracy: %s' % (studentLoss, studentAcc))
     logger.info('-- done')
 
 if __name__ == "__main__":

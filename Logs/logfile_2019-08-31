@@ -1,0 +1,34 @@
+2019-08-31 15:12:55,262 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 15:12:55,262 INFO 10.30.163.212 Initialized logger
+2019-08-31 15:12:55,262 INFO 10.30.163.212 Parsed command line options
+2019-08-31 15:12:55,685 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 15:12:55,685 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 15:12:56,040 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 15:12:58,057 INFO 10.30.163.212 Teacher network, test loss: 0.02545930623252607, test accuracy: 0.992
+2019-08-31 15:13:13,151 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 15:13:13,387 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 15:13:13,387 INFO 10.30.163.212 Training student network
+2019-08-31 15:14:36,690 INFO 10.30.163.212 Completed student network training
+2019-08-31 15:14:36,690 INFO 10.30.163.212 Student network, test loss: 0.1517196532011032, test accuracy: 0.9502
+2019-08-31 15:14:36,690 INFO 10.30.163.212 -- done
+2019-08-31 15:27:41,980 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 15:27:41,981 INFO 10.30.163.212 Initialized logger
+2019-08-31 15:27:41,981 INFO 10.30.163.212 Parsed command line options
+2019-08-31 15:27:42,343 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 15:27:42,344 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 15:27:42,694 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 15:27:44,643 INFO 10.30.163.212 Teacher network, test loss: 0.02545930623252607s, test accuracy: 0.992
+2019-08-31 15:27:59,179 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 15:27:59,308 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 15:27:59,308 INFO 10.30.163.212 Training student network
+2019-08-31 15:29:22,063 INFO 10.30.163.212 Completed student network training
+2019-08-31 15:29:22,064 INFO 10.30.163.212 Student network, test loss: 0.15188648715019226, test accuracy: 0.9478
+2019-08-31 15:29:22,064 INFO 10.30.163.212 -- done
+2019-08-31 15:33:55,173 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 15:33:55,173 INFO 10.30.163.212 Initialized logger
+2019-08-31 15:33:55,173 INFO 10.30.163.212 Parsed command line options
+2019-08-31 15:33:55,564 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 15:33:55,564 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 15:33:55,840 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 15:33:55,840 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 15:34:11,218 INFO 10.30.163.212 Teacher network weighted score, test loss: 0.021800161905911258s, test accuracy: 0.9932291507720947

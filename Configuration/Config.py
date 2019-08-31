@@ -1,4 +1,5 @@
 # training
+spacer = "--------------------------------"
 temp = 50
 student_epochs = 100
 student_batch_size = 256
