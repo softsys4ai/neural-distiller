@@ -1,163 +1,98 @@
-2019-08-31 18:51:42,431 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 18:51:42,432 INFO 10.30.163.212 Initialized logger
-2019-08-31 18:51:42,432 INFO 10.30.163.212 Parsed command line options
-2019-08-31 18:51:42,762 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 18:51:42,762 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 18:51:42,970 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 18:51:42,970 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 18:51:54,622 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 18:51:54,623 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 18:52:07,289 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 18:52:07,420 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 18:52:07,445 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 18:52:07,531 INFO 10.30.163.212 Training student network
-2019-08-31 18:52:07,531 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
-2019-08-31 18:52:39,493 INFO 10.30.163.212 Completed student network training
-2019-08-31 18:52:39,493 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 18:52:39,592 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 18:55:24,519 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 18:55:24,519 INFO 10.30.163.212 Initialized logger
-2019-08-31 18:55:24,520 INFO 10.30.163.212 Parsed command line options
-2019-08-31 18:55:24,842 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 18:55:24,842 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 18:55:25,242 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 18:55:25,242 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 18:55:38,284 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 18:55:38,285 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 18:55:50,690 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 18:55:50,974 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 18:55:50,974 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 18:55:51,118 INFO 10.30.163.212 Training student network
-2019-08-31 18:55:51,118 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
-2019-08-31 18:56:31,764 INFO 10.30.163.212 Completed student network training
-2019-08-31 18:56:37,991 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 18:59:34,703 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 18:59:34,703 INFO 10.30.163.212 Initialized logger
-2019-08-31 18:59:34,704 INFO 10.30.163.212 Parsed command line options
-2019-08-31 18:59:35,024 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 18:59:35,024 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 18:59:35,397 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 18:59:35,398 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 18:59:46,852 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 18:59:46,852 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 18:59:57,117 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 18:59:57,375 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 18:59:57,375 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 18:59:57,508 INFO 10.30.163.212 Training student network
-2019-08-31 18:59:57,508 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
-2019-08-31 19:00:28,778 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:00:28,778 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:00:28,779 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:00:29,093 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:00:29,094 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:00:29,457 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:00:29,457 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:00:40,787 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 19:00:40,796 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 19:00:51,087 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:00:51,346 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 19:00:51,347 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 19:00:51,473 INFO 10.30.163.212 Training student network
-2019-08-31 19:00:51,473 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
-2019-08-31 19:01:29,183 INFO 10.30.163.212 Completed student network training
-2019-08-31 19:01:33,423 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 19:02:13,624 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:02:31,261 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:02:31,261 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:02:31,261 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:02:31,583 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:02:31,583 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:02:31,776 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:02:31,776 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:02:42,410 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 19:02:42,410 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 19:02:52,065 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:02:52,161 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 19:02:52,161 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 19:02:52,222 INFO 10.30.163.212 Training student network
-2019-08-31 19:02:52,222 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
-2019-08-31 19:03:17,468 INFO 10.30.163.212 Completed student network training
-2019-08-31 19:03:17,468 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 19:03:17,525 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:04:52,620 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:04:52,620 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:04:52,621 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:04:52,947 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:04:52,947 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:04:53,313 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:04:53,314 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:05:04,795 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 19:05:04,795 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 19:05:15,078 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:05:15,339 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 19:05:15,339 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 19:05:15,485 INFO 10.30.163.212 Training student network
-2019-08-31 19:05:15,485 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
-2019-08-31 19:05:49,756 INFO 10.30.163.212 Completed student network training
-2019-08-31 19:05:58,295 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 19:12:28,237 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:12:28,238 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:12:28,238 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:12:28,569 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:12:28,569 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:12:28,970 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:12:28,970 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:12:45,355 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:12:45,355 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:12:45,356 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:12:45,668 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:12:45,668 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:12:46,038 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:12:46,038 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:12:58,245 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 19:12:58,245 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 19:13:09,154 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:13:09,433 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 19:13:09,433 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 19:13:09,624 INFO 10.30.163.212 Training student network
-2019-08-31 19:13:09,627 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
-2019-08-31 19:13:45,206 INFO 10.30.163.212 Completed student network training
-2019-08-31 19:13:54,485 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 19:20:00,960 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:20:00,961 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:20:00,961 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:20:01,288 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:20:01,289 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:20:01,671 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:20:01,671 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:20:14,405 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 19:20:14,406 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 19:20:25,898 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:20:26,159 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 19:20:26,159 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 19:20:26,287 INFO 10.30.163.212 Training student network
-2019-08-31 19:20:26,287 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 10, 256)
-2019-08-31 19:20:33,984 INFO 10.30.163.212 Completed student network training
-2019-08-31 19:20:43,485 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 19:20:54,117 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:20:54,117 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:20:54,118 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:20:54,448 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:20:54,448 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:20:54,839 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:20:54,839 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:21:06,210 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-08-31 19:21:06,210 INFO 10.30.163.212 Initialized logger
-2019-08-31 19:21:06,211 INFO 10.30.163.212 Parsed command line options
-2019-08-31 19:21:06,538 INFO 10.30.163.212 Loaded MNIST dataset
-2019-08-31 19:21:06,538 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:21:06,899 INFO 10.30.163.212 Loaded custom_teacher
-2019-08-31 19:21:06,899 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:21:18,279 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
-2019-08-31 19:21:18,279 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
-2019-08-31 19:21:28,624 INFO 10.30.163.212 Initializing ModelLoader Class
-2019-08-31 19:21:28,882 INFO 10.30.163.212 Loaded custom_student
-2019-08-31 19:21:28,883 INFO 10.30.163.212 Applying KD modifications to student network
-2019-08-31 19:21:29,007 INFO 10.30.163.212 Training student network
-2019-08-31 19:21:29,007 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 10, 256)
-2019-08-31 19:21:36,531 INFO 10.30.163.212 Completed student network training
-2019-08-31 19:21:38,110 INFO 10.30.163.212 Reverting KD modifications to student network
-2019-08-31 19:22:34,947 INFO 10.30.163.212 Calculating weighted model score
-2019-08-31 19:22:36,778 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.90405, 1.573363597869873, 0.9086, 1.5685192331314086)
-2019-08-31 19:22:36,779 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.907462477684021, 1.5697303243160248)
-2019-08-31 19:22:36,779 INFO 10.30.163.212 -- COMPLETE
+2019-08-31 19:33:28,651 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 19:33:28,652 INFO 10.30.163.212 Initialized logger
+2019-08-31 19:33:28,652 INFO 10.30.163.212 Parsed command line options
+2019-08-31 19:33:28,959 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 19:33:28,959 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:33:29,154 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 19:33:29,155 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:33:39,737 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 19:33:39,746 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 19:33:49,708 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:33:49,708 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:33:49,809 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:33:49,809 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:33:49,870 INFO 10.30.163.212 Training student network
+2019-08-31 19:33:49,870 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (1, 50, 256)
+2019-08-31 19:34:15,082 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:34:15,082 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:34:15,135 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:34:16,050 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.94233334, 1.525387927055359, 0.9407, 1.5259317319869996)
+2019-08-31 19:34:16,050 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9411083310842514, 1.5257957807540894)
+2019-08-31 19:34:16,050 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:34:16,051 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:34:16,145 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:34:16,145 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:34:16,204 INFO 10.30.163.212 Training student network
+2019-08-31 19:34:16,204 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (2, 50, 256)
+2019-08-31 19:34:40,213 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:34:40,223 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:34:40,278 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:34:41,281 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.9379, 1.5288149349212647, 0.9371, 1.5297623672485352)
+2019-08-31 19:34:41,282 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9372999966144562, 1.5295255091667175)
+2019-08-31 19:34:41,282 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:34:41,282 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:34:41,376 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:34:41,376 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:34:41,436 INFO 10.30.163.212 Training student network
+2019-08-31 19:34:41,436 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (3, 50, 256)
+2019-08-31 19:35:06,442 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:35:06,443 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:35:06,573 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:35:07,693 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.93988335, 1.5268278635660808, 0.9382, 1.5274706392288209)
+2019-08-31 19:35:07,693 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9386208355426788, 1.5273099453131358)
+2019-08-31 19:35:07,693 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:35:07,693 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:35:07,791 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:35:07,791 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:35:07,853 INFO 10.30.163.212 Training student network
+2019-08-31 19:35:07,853 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (5, 50, 256)
+2019-08-31 19:35:32,964 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:35:32,964 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:35:33,018 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:35:34,178 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.93785, 1.5292849923451741, 0.9361, 1.5299963218688966)
+2019-08-31 19:35:34,179 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.936537504196167, 1.5298184894879658)
+2019-08-31 19:35:34,179 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:35:34,179 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:35:34,277 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:35:34,277 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:35:34,339 INFO 10.30.163.212 Training student network
+2019-08-31 19:35:34,339 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (10, 50, 256)
+2019-08-31 19:36:01,138 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:36:01,138 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:36:01,191 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:36:02,453 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.93745, 1.5292017141977945, 0.9365, 1.5291349334716797)
+2019-08-31 19:36:02,453 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9367375075817108, 1.5291516286532085)
+2019-08-31 19:36:02,453 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:36:02,453 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:36:02,546 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:36:02,546 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:36:02,698 INFO 10.30.163.212 Training student network
+2019-08-31 19:36:02,698 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (20, 50, 256)
+2019-08-31 19:36:28,394 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:36:28,394 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:36:28,447 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:36:29,797 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.9399167, 1.5272394599278767, 0.9385, 1.5271380836486816)
+2019-08-31 19:36:29,797 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9388541579246521, 1.5271634277184805)
+2019-08-31 19:36:29,797 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:36:29,797 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:36:29,894 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:36:29,894 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:36:29,956 INFO 10.30.163.212 Training student network
+2019-08-31 19:36:29,956 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (50, 50, 256)
+2019-08-31 19:36:57,295 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:36:57,295 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:36:57,351 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:36:58,972 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.9378667, 1.5298487297058105, 0.9372, 1.5297786567687988)
+2019-08-31 19:36:58,972 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9373666793107986, 1.5297961750030518)
+2019-08-31 19:36:58,972 INFO 10.30.163.212 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-08-31 19:36:58,972 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 19:36:59,072 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 19:36:59,072 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 19:36:59,134 INFO 10.30.163.212 Training student network
+2019-08-31 19:36:59,134 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (100, 50, 256)
+2019-08-31 19:37:26,580 INFO 10.30.163.212 Completed student network training
+2019-08-31 19:37:26,580 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 19:37:26,632 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 19:37:28,145 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.9411, 1.5260609632492066, 0.9407, 1.5261170555114747)
+2019-08-31 19:37:28,145 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9407999962568283, 1.5261030324459077)
+2019-08-31 19:37:28,146 INFO 10.30.163.212 -- COMPLETE
