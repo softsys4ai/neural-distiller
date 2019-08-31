@@ -35,7 +35,7 @@ def config_option_parser(logger):
                       dest="num_gpus",
                       help="# of GPUs to use for training")
     (options, args) = parser.parse_args()
-    logger.info("[STATUS]: Parsed command line options")
+    logger.info("Parsed command line options")
     return (options, usage)
 
 def config_logger():
@@ -63,7 +63,9 @@ def config_logger():
     # define log level
     logger.setLevel(logging.INFO)
     logger = logging.LoggerAdapter(logger, extra)
-    logger.info("[STATUS]: Initializing logger")
+    now = datetime.now()
+    logger.info("NEW TRAINING SESSION STARTED")
+    logger.info("Initialized logger")
     return logger
 
 def main():
@@ -90,7 +92,7 @@ def main():
     ssm = ModelLoader(logger, "custom_student")
     student = ssm.get_loaded_model()
     # training and evaluating the student model
-    logger.info('[STATUS]: Training student network')
+    logger.info('Training student network')
     student.fit(X_train, Y_train_new,
                      batch_size=cfg.student_batch_size,
                      epochs=cfg.student_epochs,
@@ -98,12 +100,9 @@ def main():
                      callbacks=[],
                      validation_data=(X_test, Y_test_new))
     score = student.evaluate(X_test, Y_test_new, verbose=0)
-    logger.info('[STATUS]: Completed student network training')
-    logger.info('[INFO]: Student network, test loss: '+score[0]+", test accuracy: "+score[1])
+    logger.info('Completed student network training')
+    logger.info('Student network, test loss: %s, test accuracy: %s' % (score[0], score[1]))
     logger.info('-- done')
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
-    print('-- done')
 
 if __name__ == "__main__":
     main()

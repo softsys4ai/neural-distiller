@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Configuration/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pruning/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/neural-distiller.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/neural-distiller.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/LoadDataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/Data/LoadDataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/logfile_2019-08-30" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ModelConfigs/94.89_StudentDense_2019-08-29_18-10-22.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ModelConfigs/94.89_StudentDense_2019-08-29_18-10-22.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/ModelLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ModelLoader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
@@ -29,18 +19,13 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="653">
-              <caret line="106" lean-forward="true" selection-start-line="106" selection-end-line="106" />
+            <state relative-caret-position="246">
+              <caret line="92" column="36" lean-forward="true" selection-start-line="92" selection-start-column="36" selection-end-line="92" selection-end-column="36" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logfile_2019-08-31" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -51,6 +36,11 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>[STATUS]:</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -103,11 +93,6 @@
             <path>
               <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
               <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
-              <item name="Logs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
               <item name="Models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -127,7 +112,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="Initializing&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="INFO&#9;null&#9;null&#10;Initializing&#9;null&#9;null" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -207,19 +192,26 @@
       <option name="project" value="LOCAL" />
       <updated>1567198573370</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Increased messages sent to log file">
+      <created>1567275271916</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1567275271916</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22603978" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22603978" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.093333334" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1774359" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -259,7 +251,8 @@
     <MESSAGE value="Changes to text files, addition to readme" />
     <MESSAGE value="Readme change, legacy directory deletion" />
     <MESSAGE value="Readme update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Readme update" />
+    <MESSAGE value="Increased messages sent to log file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Increased messages sent to log file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -358,13 +351,6 @@
         <state relative-caret-position="-797" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Models/CustomTeacher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Models/TeacherUtils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
@@ -394,27 +380,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Models/CustomStudent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="29" column="24" lean-forward="true" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/virtual-env/lib/python2.7/site-packages/tensorflow/python/training/checkpoint_management.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
           <caret line="686" column="10" selection-start-line="686" selection-start-column="10" selection-end-line="686" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/ModelLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="790">
-          <caret line="95" column="25" lean-forward="true" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -425,23 +394,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Data/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/CustomTeacher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="88" column="124" selection-start-line="88" selection-start-column="91" selection-end-line="88" selection-end-column="124" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/logging/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-595">
+          <caret line="1404" column="8" selection-start-line="1404" selection-start-column="8" selection-end-line="1404" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/CustomStudent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Data/LoadDataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        <state relative-caret-position="384">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Models/ModelLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="701">
+          <caret line="94" column="25" lean-forward="true" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="77" lean-forward="true" selection-start-line="9" selection-start-column="77" selection-end-line="9" selection-end-column="77" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="106" lean-forward="true" selection-start-line="106" selection-end-line="106" />
+        <state relative-caret-position="246">
+          <caret line="92" column="36" lean-forward="true" selection-start-line="92" selection-start-column="36" selection-end-line="92" selection-end-column="36" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

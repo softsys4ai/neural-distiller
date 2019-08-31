@@ -17,5 +17,5 @@ def load_mnist(logger):
     # Normalize the values
     X_train /= 255
     X_test /= 255
-    logger.info("[STATUS]: Loaded MNIST dataset")
+    logger.info("Loaded MNIST dataset")
     return X_train, Y_train, X_test, Y_test
