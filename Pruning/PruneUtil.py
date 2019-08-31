@@ -2,11 +2,13 @@ import numpy as np
 from tensorflow_model_optimization.sparsity import keras as sparsity
 from Utils import HelperUtil
 
-def prune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse):
+def prune(logger, model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse):
     print('[info] applying pruning techniques to the provided model')
+    student_nets = []
+    student_nets.append(sparsePrune(logger, model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse))
+    student_nets.append(L1RankPrune(logger, model, HelperUtil.find_layers_of_type(logger, model, "conv"), X_train, Y_train, X_test, Y_test, batchSize, epochs))
     # TODO use all pruning techniques on the teacher model
-    studentOne = sparsePrune(model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse)
-    return studentOne
+    return student_nets
 
 # weight removal method for all layer types
 def sparsePrune(logger, model, X_train, Y_train, X_test, Y_test, num_train_samples, batch_size, epochs, initSparse, endSparse):
@@ -41,10 +43,34 @@ def sparsePrune(logger, model, X_train, Y_train, X_test, Y_test, num_train_sampl
     logger.info('Test accuracy:', score[1])
     return new_model
 
+
+def rank_filters_l1(logger, model):
+    logger.info("Ranking filters by L1 norm")
+    rankedFiltersPerLayer = []
+    layersofinterest = HelperUtil.find_layers_of_type(logger, model, "conv")
+    conv_layers_weights = [model.layers[layer].get_weights()[0] for layer in layersofinterest]
+    for i in range(len(conv_layers_weights)):
+        weight = conv_layers_weights[i]
+        weights_dict = {}
+        num_filters = len(weight[0,0,0,:])
+        for j in range(num_filters):
+            w_s = np.sum(abs(weight[:,:,:,j]))
+            filt ='filt_{}'.format(j)
+            weights_dict[filt]=w_s
+        weights_dict_sort=sorted(weights_dict.items(), key=lambda kv: kv[1])
+        # plotting weight ranking
+        weights_value=[]
+        for elem in weights_dict_sort:
+            weights_value.append(elem[1])
+        rankedFiltersPerLayer.append(weights_value)
+    return rankedFiltersPerLayer
+
 # filter removal method for conv layers
-def L1RankPrune(logger, model, layersToPrune):
-    logger.info("Using L1 norm of the weights in each filter to rank them")
-    # TODO use HelperUtil.find_layer_of_type() to find layers of interest for pruning
+def L1RankPrune(logger, model, layersToPrune, X_train, Y_train, X_test, Y_test, batch_size, epochs):
+    logger.info("L1RankPrune: Using L1 norm of the weights in each filter to rank them")
+    rankedFilters = rank_filters_l1(logger, model)
+    # TODO remove 10% of global filters
+
 
 # filter removal method for conv layers
 def AbsDeltaCostPrune(logger):

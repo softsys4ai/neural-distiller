@@ -1,7 +1,8 @@
 # training
 spacer = "--------------------------------"
 random_seed=1
-temp = 100
+temp = 50
+alpha = 0.1
 student_epochs = 50
 student_batch_size = 256
 pruning_epochs = 100

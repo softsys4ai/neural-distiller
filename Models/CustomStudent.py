@@ -1,6 +1,6 @@
 import os
 from tensorflow.python.keras.layers import Activation, Input, Embedding, LSTM, Dense, Lambda, GaussianNoise, concatenate, MaxPooling2D, Dropout, Dense, Flatten, Activation, Conv2D
-from tensorflow.python.keras.models import Model, Sequential, model_from_json
+from tensorflow.python.keras.models import Sequential, model_from_json
 from tensorflow.python.keras.optimizers import adadelta
 from Utils.HelperUtil import acc
 from Utils.HelperUtil import knowledge_distillation_loss
@@ -36,20 +36,12 @@ class StudentDense:
         self.student.add(Dropout(self.dropoutVal))
         self.student.add(Dense(self.nb_classes))
         self.student.add(Activation('softmax'))
-        # modifying student network for KD
-        self.student.layers.pop()
-        logits = self.student.layers[-1].output
-        probs = Activation('softmax')(logits)
-        logits_T = Lambda(lambda x: x / tempTemp)(logits)
-        probs_T = Activation('softmax')(logits_T)
-        output = concatenate([probs, probs_T])
-        self.student = Model(self.student.input, output) # final student model
-        #sgd = keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+        # sgd = keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
         self.student.compile(
-            #optimizer=optimizers.SGD(lr=1e-1, momentum=0.9, nesterov=True),
+            # optimizer=optimizers.SGD(lr=1e-1, momentum=0.9, nesterov=True),
             optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
             loss=lambda y_true, y_pred: knowledge_distillation_loss(y_true, y_pred, tempAlpha),
-            #loss='categorical_crossentropy',
+            # loss='categorical_crossentropy',
             metrics=[acc])
 
     def train(self, X_train, Y_train_new, X_test, Y_test_new):

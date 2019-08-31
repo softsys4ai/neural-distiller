@@ -48,7 +48,6 @@ class TeacherCNN:
         self.teacher.add(Dense(self.nb_classes))
         self.teacher.add(Activation('softmax')) # Note that we add a normal softmax layer to begin with
 
-
         self.teacher.compile(loss='categorical_crossentropy',
                     optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                     metrics=['accuracy'])

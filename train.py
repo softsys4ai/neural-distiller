@@ -2,6 +2,7 @@ import os
 import socket
 import logging
 import sys
+import numpy as np
 from optparse import OptionParser
 from datetime import datetime
 from Configuration import Config as cfg
@@ -93,18 +94,16 @@ def main():
     # TODO measure power consumption and inference time
 
     # TODO perform all pruning operations here
-    convLayers = HelperUtil.find_layers_of_type(logger, teacher, "conv")
-    print(convLayers)
-    pruneableLayers = PruneUtil.FindPruneableLayers(logger, teacher)
-    PruneUtil.L1RankPrune(logger, teacher, pruneableLayers)
-    # print("[INFO] Attempting to prune teacher network")
-    # studentModel = PruneUtil.prune(logger, teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), cfg.pruning_batch_size, cfg.pruning_epochs, 0.01, 0.1)
+    # logger.info("Pruning the teacher network")
+    # studentModels = PruneUtil.prune(logger, teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), cfg.pruning_batch_size, cfg.pruning_epochs, 0.01, 0.1)
 
-    # retreiving soft targets for student model training
+    # retrieving soft targets for student model training
     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(teacher, X_train, Y_train, X_test, Y_test)
     # setting up custom student network
     ssm = ModelLoader(logger, "custom_student")
     student = ssm.get_loaded_model()
+    # TODO perform generic modification to student network here
+    student = HelperUtil.apply_knowledge_distillation_modifications(logger, student)
     # training and evaluating the student model
     logger.info('Training student network')
     logger.info('Student params: (temperature, epochs, batch_size) --> (%s, %s, %s)' % (cfg.temp, cfg.student_epochs, cfg.student_batch_size))
@@ -115,6 +114,8 @@ def main():
                      callbacks=[],
                      validation_data=(X_test, Y_test_new))
     logger.info('Completed student network training')
+    # TODO perform generic reversal of training modifcation to student network here
+    student = HelperUtil.revert_knowledge_distillation_modifications(logger, student)
     studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, student, X_train, Y_train_new, X_test, Y_test_new)
     logger.info('Student weighted score: (acc, loss) --> (%s, %s)' % (studentAcc, studentLoss))
     logger.info('-- COMPLETE')

@@ -149,3 +149,191 @@
 2019-08-31 17:16:02,142 INFO 10.30.163.212 Finding convolutional layers
 2019-08-31 17:16:02,143 INFO 10.30.163.212 Finding pruneable layers
 2019-08-31 17:16:02,164 INFO 10.30.163.212 Using L1 norm of the weights in each filter to rank them
+2019-08-31 17:28:53,062 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:28:53,062 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:28:53,062 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:28:53,462 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:28:53,462 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:28:53,831 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:28:53,831 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:29:07,051 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:29:07,051 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:29:07,051 INFO 10.30.163.212 Pruning the teacher network
+2019-08-31 17:29:21,440 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:29:21,596 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 17:29:21,596 INFO 10.30.163.212 Training student network
+2019-08-31 17:29:21,596 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (200, 50, 256)
+2019-08-31 17:30:03,554 INFO 10.30.163.212 Completed student network training
+2019-08-31 17:30:03,554 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:30:04,989 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.94235, 0.152578049214681, 0.9408, 0.15282501628398895)
+2019-08-31 17:30:04,989 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9411875009536743, 0.15276327451666197)
+2019-08-31 17:30:04,990 INFO 10.30.163.212 -- COMPLETE
+2019-08-31 17:33:08,569 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:33:08,569 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:33:08,569 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:33:08,961 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:33:08,961 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:33:09,189 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:33:09,189 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:33:22,681 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:33:22,681 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:33:22,681 INFO 10.30.163.212 Pruning the teacher network
+2019-08-31 17:33:34,261 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:33:34,379 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 17:33:34,379 INFO 10.30.163.212 Training student network
+2019-08-31 17:33:34,379 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (50, 50, 256)
+2019-08-31 17:34:07,245 INFO 10.30.163.212 Completed student network training
+2019-08-31 17:34:07,245 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:34:09,049 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.94235, 0.152578049214681, 0.9408, 0.15282501628398895)
+2019-08-31 17:34:09,049 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.9411875009536743, 0.15276327451666197)
+2019-08-31 17:34:09,049 INFO 10.30.163.212 -- COMPLETE
+2019-08-31 17:48:51,834 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:48:51,834 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:48:51,834 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:48:52,200 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:48:52,200 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:48:52,421 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:48:52,421 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:49:05,376 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:49:05,377 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:49:05,377 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 17:50:59,839 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:50:59,839 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:50:59,840 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:51:00,232 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:51:00,232 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:51:00,673 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:51:00,674 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:51:14,011 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:51:14,011 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:51:14,012 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 17:52:37,194 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:52:37,194 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:52:37,195 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:52:37,569 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:52:37,570 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:52:37,986 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:52:37,986 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:52:50,732 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:52:50,732 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:52:50,732 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 17:53:31,126 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:53:31,127 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:53:31,127 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:53:35,723 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:53:35,723 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:53:35,723 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:53:36,059 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:53:36,059 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:53:36,339 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:53:36,339 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:53:48,819 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:53:48,819 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:53:48,820 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 17:54:36,596 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:54:36,596 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:54:36,597 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:54:36,950 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:54:36,950 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:54:37,147 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:54:37,147 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:54:48,805 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:54:48,806 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:54:48,806 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 17:55:20,866 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:55:20,866 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:55:20,866 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:55:21,202 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:55:21,202 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:55:21,475 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:55:21,475 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:55:33,837 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:55:33,837 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:55:33,837 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 17:57:59,887 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 17:57:59,887 INFO 10.30.163.212 Initialized logger
+2019-08-31 17:57:59,887 INFO 10.30.163.212 Parsed command line options
+2019-08-31 17:58:00,424 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 17:58:00,424 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 17:58:00,935 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 17:58:00,936 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 17:58:15,343 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 17:58:15,344 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 17:58:15,344 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 18:01:29,049 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 18:01:29,049 INFO 10.30.163.212 Initialized logger
+2019-08-31 18:01:29,049 INFO 10.30.163.212 Parsed command line options
+2019-08-31 18:01:29,432 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 18:01:29,433 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:01:29,660 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 18:01:29,660 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 18:01:42,329 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 18:01:42,329 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 18:01:42,329 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 18:02:04,532 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 18:02:04,532 INFO 10.30.163.212 Initialized logger
+2019-08-31 18:02:04,532 INFO 10.30.163.212 Parsed command line options
+2019-08-31 18:02:04,917 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 18:02:04,917 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:02:05,431 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 18:02:05,431 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 18:02:19,208 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 18:02:19,209 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 18:02:19,209 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 18:03:53,643 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 18:03:53,643 INFO 10.30.163.212 Initialized logger
+2019-08-31 18:03:53,643 INFO 10.30.163.212 Parsed command line options
+2019-08-31 18:03:54,636 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 18:03:54,636 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:03:54,998 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 18:03:54,998 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 18:04:09,472 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 18:04:09,484 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 18:04:09,484 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 18:04:38,467 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 18:04:38,467 INFO 10.30.163.212 Initialized logger
+2019-08-31 18:04:38,467 INFO 10.30.163.212 Parsed command line options
+2019-08-31 18:04:38,817 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 18:04:38,818 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:04:39,092 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 18:04:39,092 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 18:04:51,714 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 18:04:51,714 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 18:04:51,714 INFO 10.30.163.212 Finding convolutional layers
+2019-08-31 18:39:44,720 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 18:39:44,720 INFO 10.30.163.212 Initialized logger
+2019-08-31 18:39:44,720 INFO 10.30.163.212 Parsed command line options
+2019-08-31 18:39:45,074 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 18:39:45,074 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:39:45,396 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 18:39:45,396 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 18:39:57,727 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 18:39:57,727 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 18:39:57,727 INFO 10.30.163.212 Pruning the teacher network
+2019-08-31 18:40:10,576 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:40:10,687 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 18:40:10,687 INFO 10.30.163.212 Applying network knowledge distillation output format
+2019-08-31 18:40:10,757 INFO 10.30.163.212 Training student network
+2019-08-31 18:40:10,757 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (50, 50, 256)
+2019-08-31 18:40:44,054 INFO 10.30.163.212 Completed student network training
+2019-08-31 18:40:44,054 INFO 10.30.163.212 Reverting network from knowledge distillation output format
+2019-08-31 18:44:11,517 INFO 10.30.163.212 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-08-31 18:44:11,517 INFO 10.30.163.212 Initialized logger
+2019-08-31 18:44:11,517 INFO 10.30.163.212 Parsed command line options
+2019-08-31 18:44:11,827 INFO 10.30.163.212 Loaded MNIST dataset
+2019-08-31 18:44:11,827 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:44:12,023 INFO 10.30.163.212 Loaded custom_teacher
+2019-08-31 18:44:12,023 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 18:44:24,091 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.99691665, 0.010822728926066824, 0.992, 0.02545930623252607)
+2019-08-31 18:44:24,092 INFO 10.30.163.212 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-08-31 18:44:35,446 INFO 10.30.163.212 Initializing ModelLoader Class
+2019-08-31 18:44:35,551 INFO 10.30.163.212 Loaded custom_student
+2019-08-31 18:44:35,551 INFO 10.30.163.212 Applying KD modifications to student network
+2019-08-31 18:44:35,614 INFO 10.30.163.212 Training student network
+2019-08-31 18:44:35,614 INFO 10.30.163.212 Student params: (temperature, epochs, batch_size) --> (50, 50, 256)
+2019-08-31 18:45:02,415 INFO 10.30.163.212 Completed student network training
+2019-08-31 18:45:02,416 INFO 10.30.163.212 Reverting KD modifications to student network
+2019-08-31 18:45:02,474 INFO 10.30.163.212 Calculating weighted model score
+2019-08-31 18:45:03,531 INFO 10.30.163.212 Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (0.94238335, 2.8748798458099367, 0.9407, 2.8752566692352297)
+2019-08-31 18:45:03,532 INFO 10.30.163.212 Student weighted score: (acc, loss) --> (0.941120833158493, 2.8751624633789064)
+2019-08-31 18:45:03,532 INFO 10.30.163.212 -- COMPLETE

@@ -1,7 +1,41 @@
 import numpy as np
+from Configuration import Config as cfg
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.metrics import categorical_accuracy
+from tensorflow.python.keras.optimizers import adadelta
+from tensorflow.python.keras.layers import Lambda, concatenate, Activation
+from tensorflow.python.keras.models import Model, Sequential
 nb_classes = 10
+
+def apply_knowledge_distillation_modifications(logger, model):
+    logger.info("Applying KD modifications to student network")
+    # modifying student network for KD
+    model.layers.pop()
+    logits = model.layers[-1].output
+    probs = Activation('softmax')(logits)
+    logits_T = Lambda(lambda x: x / cfg.temp)(logits)
+    probs_T = Activation('softmax')(logits_T)
+    output = concatenate([probs, probs_T])
+    model = Model(model.input, output)  # modified student model
+    # sgd = keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    model.compile(
+        # optimizer=optimizers.SGD(lr=1e-1, momentum=0.9, nesterov=True),
+        optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+        loss=lambda y_true, y_pred: knowledge_distillation_loss(y_true, y_pred, cfg.alpha),
+        metrics=[acc])
+    return model
+
+def revert_knowledge_distillation_modifications(logger, model):
+    logger.info("Reverting KD modifications to student network")
+    model.layers.pop()
+    logits = model.layers[-1].output
+    output = Activation('softmax')(logits)
+    model = Model(model.input, output)  # reverted student model
+    # sgd = keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    model.compile(loss='categorical_crossentropy',
+                         optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                         metrics=['accuracy'])
+    return model
 
 def softmax(x):
     return np.exp(x)/(np.exp(x).sum())
@@ -50,3 +84,4 @@ def find_trainable_layers(logger, model):
         if len(modelWeights[i]) != 0:
             trainableLayers.append(i)
     return trainableLayers
+
