@@ -28,40 +28,46 @@ class ModelLoader(object):
                          Model InceptionV3:               python train.py -o inceptionv3
                 """
         try:
+
             # resnet50
             if self.model_name == "resnet50":
                 from tensorflow.python.keras.applications import ResNet50
                 from tensorflow.python.keras.applications.resnet50 import preprocess_input
                 self.preprocess = preprocess_input
                 self.model = ResNet50()
+                self.logger.error("[STATUS]: Loaded " + self.model_name)
             # vgg16
             elif self.model_name == "vgg16":
                 from tensorflow.python.keras.applications import VGG16
                 from tensorflow.python.keras.applications.vgg16 import preprocess_input
                 self.preprocess = preprocess_input
                 self.model = VGG16()
+                self.logger.error("[STATUS]: Loaded " + self.model_name)
             # vgg19
             elif self.model_name == "lenet5":
                 from tensorflow.python.keras.applications import VGG19
                 from tensorflow.python.keras.applications.vgg19 import preprocess_input
                 self.preprocess = preprocess_input
                 self.model = VGG19()
+                self.logger.error("[STATUS]: Loaded " + self.model_name)
             # xception
             elif self.model_name == "xception":
                 from tensorflow.python.keras.applications import Xception
                 from tensorflow.python.keras.applications.xception import preprocess_input
                 self.preprocess = preprocess_input
                 self.model = Xception()
+                self.logger.error("[STATUS]: Loaded " + self.model_name)
             # inceptionv3
             elif self.model_name == "inceptionv3":
                 from tensorflow.python.keras.applications import InceptionV3
                 from tensorflow.python.keras.applications.inception_v3 import preprocess_input
                 self.preprocess = preprocess_input
                 self.model = InceptionV3()
+                self.logger.error("[STATUS]: Loaded " + self.model_name)
             # alexnet
             elif self.model_name == "alexnet":
                 # TODO get a pre-trained alexnet model
-                print("[ERROR]: Not yet implemented")
+                self.logger.error("[ERROR]: Not yet implemented")
             # custom teacher model
             elif self.model_name == "custom_teacher":
                 # compiling and training teacher network
@@ -69,19 +75,22 @@ class ModelLoader(object):
                 teacher.__init__()
                 teacher.load(cfg.custom_teacher_config + ".json", cfg.custom_teacher_config + ".h5")
                 self.model = teacher.getModel()
+                self.logger.error("[STATUS]: Loaded " + self.model_name)
                 # custom CNN teacher model
             # custom student model
             elif self.model_name == "custom_student":
                 # compiling and training teacher network
                 student = StudentDense()
                 student.__init__()
+                student.buildAndCompile()
                 # todo change student class to load config but not pre-trained weights
-                student.load(cfg.custom_student_config + ".json")
+                # student.load(cfg.custom_student_config + ".json")
                 self.model = student.getModel()
+                self.logger.error("[STATUS]: Loaded " + self.model_name)
             else:
-                self.logger.error("[ERROR]: invalid model")
+                self.logger.error("[ERROR]: Invalid model name")
         except Exception as e:
-            self.logger.error("[ERROR]: teacher model load failed due to {0}".format(str(e)))
+            self.logger.error("[ERROR]: Loading of model failed due to {0}".format(str(e)))
 
     def get_loaded_model(self):
         return self.model

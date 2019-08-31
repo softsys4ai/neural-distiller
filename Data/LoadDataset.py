@@ -1,7 +1,7 @@
-from tensorflow.python.keras.datasets import mnist
+from keras.datasets import mnist
 from tensorflow.python.keras.utils import np_utils
 
-def load_mnist():
+def load_mnist(logger):
     # preparing the MNIST dataset for training teacher and student models
     nb_classes = 10
     input_shape = (28, 28, 1)
@@ -17,4 +17,5 @@ def load_mnist():
     # Normalize the values
     X_train /= 255
     X_test /= 255
+    logger.info("[STATUS]: Loaded MNIST dataset")
     return X_train, Y_train, X_test, Y_test

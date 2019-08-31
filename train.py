@@ -10,7 +10,7 @@ from Models.ModelLoader import ModelLoader
 from Models import TeacherUtils
 from Pruning import PruneUtil
 
-def config_option_parser():
+def config_option_parser(logger):
     # reading command line input
     usage = """USAGE: %python train.py -m [model]
                  Model ResNet50:                  python train.py -m resnet50
@@ -35,6 +35,7 @@ def config_option_parser():
                       dest="num_gpus",
                       help="# of GPUs to use for training")
     (options, args) = parser.parse_args()
+    logger.info("[STATUS]: Parsed command line options")
     return (options, usage)
 
 def config_logger():
@@ -62,17 +63,17 @@ def config_logger():
     # define log level
     logger.setLevel(logging.INFO)
     logger = logging.LoggerAdapter(logger, extra)
-    logger.info("[STATUS]: Start RunTest")
+    logger.info("[STATUS]: Initializing logger")
     return logger
 
 def main():
-    # command line input
-    (options, usage) = config_option_parser()
-    teacher_model_name = str(options.model)
     # logging
     logger = config_logger()
+    # command line input
+    (options, usage) = config_option_parser(logger)
+    teacher_model_name = str(options.model)
     # loading training data
-    X_train, Y_train, X_test, Y_test = LoadDataset.load_mnist()
+    X_train, Y_train, X_test, Y_test = LoadDataset.load_mnist(logger)
     # config callbacks
     callbacks = []
     # setting up teacher model
@@ -89,6 +90,7 @@ def main():
     ssm = ModelLoader(logger, "custom_student")
     student = ssm.get_loaded_model()
     # training and evaluating the student model
+    logger.info('[STATUS]: Training student network')
     student.fit(X_train, Y_train_new,
                      batch_size=cfg.student_batch_size,
                      epochs=cfg.student_epochs,
@@ -96,9 +98,11 @@ def main():
                      callbacks=[],
                      validation_data=(X_test, Y_test_new))
     score = student.evaluate(X_test, Y_test_new, verbose=0)
+    logger.info('[STATUS]: Completed student network training')
+    logger.info('[INFO]: Student network, test loss: '+score[0]+", test accuracy: "+score[1])
+    logger.info('-- done')
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
-
     print('-- done')
 
 if __name__ == "__main__":
