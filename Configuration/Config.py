@@ -1,9 +1,10 @@
-# training
+# logging
 spacer = "--------------------------------"
-random_seed=1
-temp = 50
+#  training
+random_seed = 1
+temp = 5
 alpha = 0.1
-student_epochs = 50
+student_epochs = 10
 student_batch_size = 256
 pruning_epochs = 100
 pruning_batch_size = 256

@@ -102,7 +102,7 @@ def main():
     # setting up custom student network
     ssm = ModelLoader(logger, "custom_student")
     student = ssm.get_loaded_model()
-    # TODO perform generic modification to student network here
+    # generic pre-KD modification to student network
     student = HelperUtil.apply_knowledge_distillation_modifications(logger, student)
     # training and evaluating the student model
     logger.info('Training student network')
@@ -114,9 +114,10 @@ def main():
                      callbacks=[],
                      validation_data=(X_test, Y_test_new))
     logger.info('Completed student network training')
-    # TODO perform generic reversal of training modifcation to student network here
-    student = HelperUtil.revert_knowledge_distillation_modifications(logger, student)
-    studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, student, X_train, Y_train_new, X_test, Y_test_new)
+    # generic reversal of pre-KD modification to student network
+    finalStudent = HelperUtil.revert_knowledge_distillation_modifications(logger, student)
+    # evaluating student performance
+    studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, finalStudent, X_train, Y_train, X_test, Y_test)
     logger.info('Student weighted score: (acc, loss) --> (%s, %s)' % (studentAcc, studentLoss))
     logger.info('-- COMPLETE')
 

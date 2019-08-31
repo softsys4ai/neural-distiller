@@ -27,15 +27,15 @@ def apply_knowledge_distillation_modifications(logger, model):
 
 def revert_knowledge_distillation_modifications(logger, model):
     logger.info("Reverting KD modifications to student network")
-    model.layers.pop()
-    logits = model.layers[-1].output
+    logits = model.layers[-5].output  # last 4 layers are KD modified, forget them
     output = Activation('softmax')(logits)
-    model = Model(model.input, output)  # reverted student model
+    model2 = Model(model.input, output)  # reverted student model
     # sgd = keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-    model.compile(loss='categorical_crossentropy',
+    model2.compile(loss='categorical_crossentropy',
                          optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                          metrics=['accuracy'])
-    return model
+
+    return model2
 
 def softmax(x):
     return np.exp(x)/(np.exp(x).sum())
