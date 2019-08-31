@@ -84,7 +84,7 @@ def main():
     teacher = stm.get_loaded_model()
     # evaluate teacher accuracy and performance
     teacherLoss, teacherAcc = HelperUtil.calculate_weighted_score(logger, teacher, X_train, Y_train, X_test, Y_test)
-    logger.info('Teacher network weighted score, test loss: %ss, test accuracy: %s' % (teacherLoss, teacherAcc))
+    logger.info('Teacher weighted score: (loss, acc) --> (%s, %s)' % (teacherLoss, teacherAcc))
 
     # TODO measure power consumption and inference time
 
@@ -107,7 +107,7 @@ def main():
                      validation_data=(X_test, Y_test_new))
     logger.info('Completed student network training')
     studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, student, X_train, Y_train_new, X_test, Y_test_new)
-    logger.info('Student network weighted score, test loss: %s, test accuracy: %s' % (studentLoss, studentAcc))
+    logger.info('Student weighted score: (loss, acc) --> (%s, %s)' % (studentLoss, studentAcc))
     logger.info('-- done')
 
 if __name__ == "__main__":
