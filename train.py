@@ -90,35 +90,38 @@ def main():
     # evaluate teacher accuracy and performance
     teacherLoss, teacherAcc = HelperUtil.calculate_weighted_score(logger, teacher, X_train, Y_train, X_test, Y_test)
     logger.info('Teacher weighted score: (acc, loss) --> (%s, %s)' % (teacherAcc, teacherLoss))
+    # retrieving soft targets for student model training
+    Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(teacher, X_train, Y_train, X_test, Y_test)
 
     # TODO measure power consumption and inference time
-
     # TODO perform all pruning operations here
     # logger.info("Pruning the teacher network")
     # studentModels = PruneUtil.prune(logger, teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), cfg.pruning_batch_size, cfg.pruning_epochs, 0.01, 0.1)
 
-    # retrieving soft targets for student model training
-    Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(teacher, X_train, Y_train, X_test, Y_test)
-    # setting up custom student network
-    ssm = ModelLoader(logger, "custom_student")
-    student = ssm.get_loaded_model()
-    # generic pre-KD modification to student network
-    student = HelperUtil.apply_knowledge_distillation_modifications(logger, student)
-    # training and evaluating the student model
-    logger.info('Training student network')
-    logger.info('Student params: (temperature, epochs, batch_size) --> (%s, %s, %s)' % (cfg.temp, cfg.student_epochs, cfg.student_batch_size))
-    student.fit(X_train, Y_train_new,
-                     batch_size=cfg.student_batch_size,
-                     epochs=cfg.student_epochs,
-                     verbose=1,
-                     callbacks=[],
-                     validation_data=(X_test, Y_test_new))
-    logger.info('Completed student network training')
-    # generic reversal of pre-KD modification to student network
-    finalStudent = HelperUtil.revert_knowledge_distillation_modifications(logger, student)
-    # evaluating student performance
-    studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, finalStudent, X_train, Y_train, X_test, Y_test)
-    logger.info('Student weighted score: (acc, loss) --> (%s, %s)' % (studentAcc, studentLoss))
+    # training student network at a range of temperatures
+    for temp in cfg.test_temperatures:
+        logger.info(cfg.student_train_spacer + "NEW STUDENT TRAINING SESSION" + cfg.student_train_spacer)
+        cfg.temp = temp
+        # setting up custom student network
+        ssm = ModelLoader(logger, "custom_student")
+        student = ssm.get_loaded_model()
+        # generic pre-KD modification to student network
+        student = HelperUtil.apply_knowledge_distillation_modifications(logger, student)
+        # training and evaluating the student model
+        logger.info('Training student network')
+        logger.info('Student params: (temperature, epochs, batch_size) --> (%s, %s, %s)' % (cfg.temp, cfg.student_epochs, cfg.student_batch_size))
+        student.fit(X_train, Y_train_new,
+                         batch_size=cfg.student_batch_size,
+                         epochs=cfg.student_epochs,
+                         verbose=1,
+                         callbacks=[],
+                         validation_data=(X_test, Y_test_new))
+        logger.info('Completed student network training')
+        # generic reversal of pre-KD modification to student network
+        finalStudent = HelperUtil.revert_knowledge_distillation_modifications(logger, student)
+        # evaluating student performance
+        studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, finalStudent, X_train, Y_train, X_test, Y_test)
+        logger.info('Student weighted score: (acc, loss) --> (%s, %s)' % (studentAcc, studentLoss))
     logger.info('-- COMPLETE')
 
 if __name__ == "__main__":
