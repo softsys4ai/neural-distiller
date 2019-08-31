@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="Added weighted model scoring.">
+    <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/logfile_2019-08-31" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/logfile_2019-08-31" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/Config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/logfile_2019-08-31" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pruning/PruneUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pruning/PruneUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Utils/HelperUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utils/HelperUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utils/HelperUtil2.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,32 +19,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="808">
-              <caret line="110" column="26" lean-forward="true" selection-start-line="110" selection-start-column="26" selection-end-line="110" selection-end-column="26" />
+            <state relative-caret-position="284">
+              <caret line="97" column="4" selection-start-line="97" selection-start-column="4" selection-end-line="97" selection-end-column="4" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#356#1653#0" />
+                <element signature="e#1680#2663#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="logfile_2019-08-31" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="22" column="67" lean-forward="true" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HelperUtil.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HelperUtil.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Utils/HelperUtil.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="26" column="99" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="99" />
+            <state relative-caret-position="276">
+              <caret line="12" column="27" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -58,6 +57,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>[STATUS]:</find>
+      <find>HelperUtil</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -73,9 +73,12 @@
         <option value="$PROJECT_DIR$/Configuration/__init__.py" />
         <option value="$PROJECT_DIR$/Data/LoadDataset.py" />
         <option value="$PROJECT_DIR$/Models/ModelLoader.py" />
+        <option value="$PROJECT_DIR$/Models/CustomStudent.py" />
+        <option value="$PROJECT_DIR$/Logs/logfile_2019-08-31" />
         <option value="$PROJECT_DIR$/Configuration/Config.py" />
-        <option value="$PROJECT_DIR$/Utils/HelperUtil.py" />
         <option value="$PROJECT_DIR$/train.py" />
+        <option value="$PROJECT_DIR$/Pruning/PruneUtil.py" />
+        <option value="$PROJECT_DIR$/Utils/HelperUtil.py" />
       </list>
     </option>
   </component>
@@ -107,17 +110,7 @@
             <path>
               <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
               <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
-              <item name="Data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
               <item name="Logs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
-              <item name="ModelConfigs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
@@ -242,19 +235,27 @@
       <option name="project" value="LOCAL" />
       <updated>1567280057316</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Final log update, weighted score log changes">
+      <created>1567280400288</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1567280400288</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22724533" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22724533" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32923076" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.6646154" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.40307692" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -265,7 +266,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -297,7 +297,8 @@
     <MESSAGE value="Increased messages sent to log file" />
     <MESSAGE value="Updated log formatting" />
     <MESSAGE value="Added weighted model scoring." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added weighted model scoring." />
+    <MESSAGE value="Final log update, weighted score log changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final log update, weighted score log changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -311,6 +312,8 @@
           <caret line="82" column="38" lean-forward="true" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#356#1653#0" />
+            <element signature="e#1680#2663#0" />
           </folding>
         </state>
       </provider>
@@ -321,6 +324,8 @@
           <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#356#1653#0" />
+            <element signature="e#1680#2663#0" />
           </folding>
         </state>
       </provider>
@@ -341,6 +346,8 @@
           <caret line="16" column="37" lean-forward="true" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#356#1653#0" />
+            <element signature="e#1680#2663#0" />
           </folding>
         </state>
       </provider>
@@ -374,13 +381,6 @@
         <state split_layout="SPLIT">
           <first_editor />
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pruning/PruneUtil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
@@ -454,28 +454,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Models/ModelLoader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="701">
-          <caret line="94" column="25" lean-forward="true" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="25" />
+        <state relative-caret-position="559">
+          <caret line="83" column="31" selection-start-line="83" selection-start-column="31" selection-end-line="83" selection-end-column="31" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Models/CustomTeacher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="54" column="37" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="54" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Models/CustomStudent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="37" column="47" lean-forward="true" selection-start-line="33" selection-start-column="8" selection-end-line="37" selection-end-column="47" />
+        <state relative-caret-position="138">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -484,31 +474,63 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Configuration/Config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="3" lean-forward="true" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="4" />
+        <state relative-caret-position="161">
+          <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="22" column="67" lean-forward="true" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
+        <state relative-caret-position="390">
+          <caret line="82" column="31" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/HelperUtil.py">
+    <entry file="file://$PROJECT_DIR$/Models/CustomTeacher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="26" column="99" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="99" />
+        <state relative-caret-position="335">
+          <caret line="47" column="42" lean-forward="true" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pruning/PruneUtil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="808">
-          <caret line="110" column="26" lean-forward="true" selection-start-line="110" selection-start-column="26" selection-end-line="110" selection-end-column="26" />
+        <state relative-caret-position="284">
+          <caret line="97" column="4" selection-start-line="97" selection-start-column="4" selection-end-line="97" selection-end-column="4" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#356#1653#0" />
+            <element signature="e#1680#2663#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/HelperUtil2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" selection-start-line="1" selection-end-line="3" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/HelperUtil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

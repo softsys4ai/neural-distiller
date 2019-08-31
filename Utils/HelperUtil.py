@@ -1,9 +1,8 @@
 import numpy as np
-import keras
-from keras.losses import categorical_crossentropy as logloss
-from keras.metrics import categorical_accuracy
-
+from tensorflow.python.keras.losses import categorical_crossentropy as logloss
+from tensorflow.python.keras.metrics import categorical_accuracy
 nb_classes = 10
+
 def softmax(x):
     return np.exp(x)/(np.exp(x).sum())
 
@@ -33,3 +32,21 @@ def calculate_score(logger, model, X_train, Y_train, X_test, Y_test):
     train_acc = model.evaluate(X_train, Y_train, verbose=0)
     val_acc = model.evaluate(X_test, Y_test, verbose=0)
     return ((train_acc[0] + val_acc[0])/2), ((train_acc[1] + val_acc[1])/2)
+
+def find_layers_of_type(logger, model, layertype):
+    logger.info("Finding convolutional layers")
+    layerNames = [layer.name for layer in model.layers]
+    convLayers = []
+    for i in range(len(layerNames)):
+        if layertype in layerNames[i]:
+            convLayers.append(i)
+    return convLayers
+
+def find_trainable_layers(logger, model):
+    logger.info("Finding all layers with weights")
+    modelWeights = [x.get_weights() for x in model.layers]
+    trainableLayers = []
+    for i in range(len(modelWeights)):
+        if len(modelWeights[i]) != 0:
+            trainableLayers.append(i)
+    return trainableLayers

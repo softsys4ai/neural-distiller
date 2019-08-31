@@ -10,6 +10,10 @@ from Models.ModelLoader import ModelLoader
 from Models import TeacherUtils
 from Utils import HelperUtil
 from Pruning import PruneUtil
+from numpy.random import seed
+seed(cfg.random_seed)
+from tensorflow import set_random_seed
+set_random_seed(cfg.random_seed)
 
 def config_option_parser(logger):
     # reading command line input
@@ -84,13 +88,17 @@ def main():
     teacher = stm.get_loaded_model()
     # evaluate teacher accuracy and performance
     teacherLoss, teacherAcc = HelperUtil.calculate_weighted_score(logger, teacher, X_train, Y_train, X_test, Y_test)
-    logger.info('Teacher weighted score: (loss, acc) --> (%s, %s)' % (teacherLoss, teacherAcc))
+    logger.info('Teacher weighted score: (acc, loss) --> (%s, %s)' % (teacherAcc, teacherLoss))
 
     # TODO measure power consumption and inference time
 
     # TODO perform all pruning operations here
+    convLayers = HelperUtil.find_layers_of_type(logger, teacher, "conv")
+    print(convLayers)
+    pruneableLayers = PruneUtil.FindPruneableLayers(logger, teacher)
+    PruneUtil.L1RankPrune(logger, teacher, pruneableLayers)
     # print("[INFO] Attempting to prune teacher network")
-    # studentModel = PruneUtil.prune(teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), cfg.pruning_batch_size, cfg.pruning_epochs, 0.01, 0.1)
+    # studentModel = PruneUtil.prune(logger, teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), cfg.pruning_batch_size, cfg.pruning_epochs, 0.01, 0.1)
 
     # retreiving soft targets for student model training
     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(teacher, X_train, Y_train, X_test, Y_test)
@@ -99,6 +107,7 @@ def main():
     student = ssm.get_loaded_model()
     # training and evaluating the student model
     logger.info('Training student network')
+    logger.info('Student params: (temperature, epochs, batch_size) --> (%s, %s, %s)' % (cfg.temp, cfg.student_epochs, cfg.student_batch_size))
     student.fit(X_train, Y_train_new,
                      batch_size=cfg.student_batch_size,
                      epochs=cfg.student_epochs,
@@ -107,8 +116,8 @@ def main():
                      validation_data=(X_test, Y_test_new))
     logger.info('Completed student network training')
     studentLoss, studentAcc = HelperUtil.calculate_weighted_score(logger, student, X_train, Y_train_new, X_test, Y_test_new)
-    logger.info('Student weighted score: (loss, acc) --> (%s, %s)' % (studentLoss, studentAcc))
-    logger.info('-- done')
+    logger.info('Student weighted score: (acc, loss) --> (%s, %s)' % (studentAcc, studentLoss))
+    logger.info('-- COMPLETE')
 
 if __name__ == "__main__":
     main()
