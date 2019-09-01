@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Models/LeNet5.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configuration/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/Config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/logfile_2019-08-31" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/logfile_2019-08-31" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/CustomTeacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/CustomTeacher.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/ModelLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ModelLoader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,25 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.py">
+      <file leaf-file-name="Config.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Configuration/Config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="89" column="48" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="48" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-                <element signature="e#499#1796#0" />
-                <element signature="e#1823#2806#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logfile_2019-08-31" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="242" column="84" lean-forward="true" selection-start-line="242" selection-start-column="84" selection-end-line="242" selection-end-column="84" />
+            <state relative-caret-position="408">
+              <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -86,9 +68,9 @@
         <option value="$PROJECT_DIR$/Models/LeNet5.py" />
         <option value="$PROJECT_DIR$/Models/CustomTeacher.py" />
         <option value="$PROJECT_DIR$/Models/CustomStudent.py" />
-        <option value="$PROJECT_DIR$/Configuration/Config.py" />
         <option value="$PROJECT_DIR$/Models/ModelLoader.py" />
         <option value="$PROJECT_DIR$/train.py" />
+        <option value="$PROJECT_DIR$/Configuration/Config.py" />
       </list>
     </option>
   </component>
@@ -316,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567294751755</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Added LeNet, bug fixes">
+      <created>1567297851824</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1567297851824</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -328,7 +317,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32923076" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.46051282" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.46051282" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32923076" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -376,7 +365,8 @@
     <MESSAGE value="Generalized KD training method for modifying and reverting the student network." />
     <MESSAGE value=" Bug fix for generalized KD revert modification" />
     <MESSAGE value="Automated training of student network at different temperatures" />
-    <option name="LAST_COMMIT_MESSAGE" value="Automated training of student network at different temperatures" />
+    <MESSAGE value="Added LeNet, bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added LeNet, bug fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -656,17 +646,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Configuration/Config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="89" column="48" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="48" />
+        <state relative-caret-position="231">
+          <caret line="85" column="69" lean-forward="true" selection-start-line="85" selection-start-column="69" selection-end-line="85" selection-end-column="69" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#499#1796#0" />
@@ -677,8 +660,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="242" column="84" lean-forward="true" selection-start-line="242" selection-start-column="84" selection-end-line="242" selection-end-column="84" />
+        <state relative-caret-position="248">
+          <caret line="405" column="59" selection-start-line="405" selection-start-column="59" selection-end-line="405" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configuration/Config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
         </state>
       </provider>
     </entry>
