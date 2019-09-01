@@ -3,6 +3,7 @@ spacer = "--------------------------------"
 student_train_spacer = "-----------------"
 #  training
 random_seed = 1
+teacher_epochs = 50
 temp = 1
 test_temperatures = [1, 2, 3, 5, 10, 20, 50, 100, 200]
 alpha = 0.1
@@ -11,6 +12,7 @@ student_batch_size = 256
 pruning_epochs = 100
 pruning_batch_size = 256
 # logging and system
+lenet_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_teacher_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_student_config="94.89_StudentDense_2019-08-29_18-10-22"
 log_dir="/Logs/"

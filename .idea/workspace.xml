@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/Models/LeNet5.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configuration/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/Config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/logfile_2019-08-31" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/logfile_2019-08-31" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/logfile_2019-08-31" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/CustomTeacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/CustomTeacher.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/ModelLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ModelLoader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,14 +19,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="100" column="57" selection-start-line="100" selection-start-column="57" selection-end-line="100" selection-end-column="57" />
+            <state relative-caret-position="323">
+              <caret line="89" column="48" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="48" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#499#1796#0" />
+                <element signature="e#1823#2806#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logfile_2019-08-31" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="438">
+              <caret line="242" column="84" lean-forward="true" selection-start-line="242" selection-start-column="84" selection-end-line="242" selection-end-column="84" />
             </state>
           </provider>
         </entry>
@@ -43,9 +57,12 @@
       <find>HelperUtil</find>
       <find>self.student</find>
       <find>new train</find>
+      <find>model</find>
+      <find>train</find>
     </findStrings>
     <replaceStrings>
       <replace>model</replace>
+      <replace>self.teacher</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -60,13 +77,17 @@
         <option value="$PROJECT_DIR$/src/train.py" />
         <option value="$PROJECT_DIR$/Configuration/__init__.py" />
         <option value="$PROJECT_DIR$/Data/LoadDataset.py" />
-        <option value="$PROJECT_DIR$/Models/ModelLoader.py" />
         <option value="$PROJECT_DIR$/Logs/logfile_2019-08-31" />
         <option value="$PROJECT_DIR$/Pruning/PruneUtil.py" />
-        <option value="$PROJECT_DIR$/Models/CustomStudent.py" />
-        <option value="$PROJECT_DIR$/Models/CustomTeacher.py" />
         <option value="$PROJECT_DIR$/Utils/HelperUtil.py" />
+        <option value="$PROJECT_DIR$/Models/ModelStructs.py" />
+        <option value="$PROJECT_DIR$/Models/LeNet5Teacher.py" />
+        <option value="$PROJECT_DIR$/Models/LeNet.py" />
+        <option value="$PROJECT_DIR$/Models/LeNet5.py" />
+        <option value="$PROJECT_DIR$/Models/CustomTeacher.py" />
+        <option value="$PROJECT_DIR$/Models/CustomStudent.py" />
         <option value="$PROJECT_DIR$/Configuration/Config.py" />
+        <option value="$PROJECT_DIR$/Models/ModelLoader.py" />
         <option value="$PROJECT_DIR$/train.py" />
       </list>
     </option>
@@ -100,6 +121,21 @@
               <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
               <item name="Logs" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
+              <item name="ModelConfigs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller" type="462c0819:PsiDirectoryNode" />
+              <item name="Pruning" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -113,15 +149,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Utils" />
-      <recent name="$PROJECT_DIR$/Pruning" />
-      <recent name="$PROJECT_DIR$/Models" />
-      <recent name="$PROJECT_DIR$/Data" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Models" />
+      <recent name="$PROJECT_DIR$/Utils" />
+      <recent name="$PROJECT_DIR$/Pruning" />
+      <recent name="$PROJECT_DIR$/Data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -136,7 +172,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.train-lenet-cs">
     <configuration name="train-ct-cs" type="PythonConfigurationType" factoryName="Python">
       <module name="neural-distiller" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -155,6 +191,28 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="train-lenet-cs" type="PythonConfigurationType" factoryName="Python">
+      <module name="neural-distiller" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/virtual-env/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
+      <option name="PARAMETERS" value="-m lenet5" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.train-ct-cs" />
+      <item itemvalue="Python.train-lenet-cs" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -237,23 +295,44 @@
       <option name="project" value="LOCAL" />
       <updated>1567293892663</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Automated training of student network at different temperatures">
+      <created>1567294714939</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1567294714939</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Automated training of student network at different temperatures">
+      <created>1567294742188</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1567294742188</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Automated training of student network at different temperatures">
+      <created>1567294751755</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1567294751755</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22603978" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25075346" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32923076" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.61333334" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.46051282" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32923076" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.5928205" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.51384616" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -296,7 +375,8 @@
     <MESSAGE value="New helper methods for pruning techniques" />
     <MESSAGE value="Generalized KD training method for modifying and reverting the student network." />
     <MESSAGE value=" Bug fix for generalized KD revert modification" />
-    <option name="LAST_COMMIT_MESSAGE" value=" Bug fix for generalized KD revert modification" />
+    <MESSAGE value="Automated training of student network at different temperatures" />
+    <option name="LAST_COMMIT_MESSAGE" value="Automated training of student network at different temperatures" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -307,7 +387,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="16" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -317,6 +397,8 @@
           <caret line="120" column="30" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#499#1796#0" />
+            <element signature="e#1823#2806#0" />
           </folding>
         </state>
       </provider>
@@ -373,6 +455,8 @@
           <caret line="82" column="38" lean-forward="true" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#499#1796#0" />
+            <element signature="e#1823#2806#0" />
           </folding>
         </state>
       </provider>
@@ -383,6 +467,8 @@
           <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#499#1796#0" />
+            <element signature="e#1823#2806#0" />
           </folding>
         </state>
       </provider>
@@ -403,6 +489,8 @@
           <caret line="16" column="37" lean-forward="true" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#499#1796#0" />
+            <element signature="e#1823#2806#0" />
           </folding>
         </state>
       </provider>
@@ -444,13 +532,6 @@
         <state relative-caret-position="-797" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Models/TeacherUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="16" column="38" selection-start-line="16" selection-start-column="38" selection-end-line="16" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -489,32 +570,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Utils/HelperUtil2.py" />
-    <entry file="file://$PROJECT_DIR$/Models/ModelLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="83" column="31" lean-forward="true" selection-start-line="83" selection-start-column="31" selection-end-line="83" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Pruning/PruneUtil.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
           <folding>
             <element signature="e#900#2279#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/CustomTeacher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="989">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -528,13 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Models/CustomStudent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/virtual-env/lib/python2.7/site-packages/tensorflow/python/keras/engine/training_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -542,37 +596,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Models/TeacherUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Utils/HelperUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6">
-          <caret line="40" column="8" lean-forward="true" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
+        <state relative-caret-position="23">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
+    <entry file="file://$PROJECT_DIR$/Models/ModelStructs.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/CustomStudent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-775">
-          <caret line="12" column="61" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
+        <state relative-caret-position="345">
+          <caret line="34" column="33" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/CustomTeacher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="96" column="8" selection-start-line="96" selection-start-column="8" selection-end-line="96" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/LeNet5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="812">
+          <caret line="113" column="41" lean-forward="true" selection-start-line="113" selection-start-column="41" selection-end-line="113" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/ModelLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="52" column="26" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Configuration/Config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="21" column="32" lean-forward="true" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
+        <state relative-caret-position="207">
+          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="100" column="57" selection-start-line="100" selection-start-column="57" selection-end-line="100" selection-end-column="57" />
+        <state relative-caret-position="323">
+          <caret line="89" column="48" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="48" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#499#1796#0" />
+            <element signature="e#1823#2806#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-08-31">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="242" column="84" lean-forward="true" selection-start-line="242" selection-start-column="84" selection-end-line="242" selection-end-column="84" />
         </state>
       </provider>
     </entry>

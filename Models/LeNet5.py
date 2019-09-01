@@ -8,7 +8,7 @@ import datetime
 from Configuration import Config as cfg
 
 # teacher model class
-class TeacherCNN:
+class LeNet5Teacher:
     # TODO add CL arguments to change the teacher's hyperparameters
     def __init__(self, callback=None):
         self.callbacks = callback
@@ -22,7 +22,7 @@ class TeacherCNN:
         self.epochs = 10
         self.batch_size = 256
         self.temp = 40
-        self.name = "TeacherCNN"
+        self.name = "LeNet5"
 
     def printSummary(self):
         self.teacher.summary()
@@ -34,21 +34,23 @@ class TeacherCNN:
         self.teacher_WO_Softmax = Model(self.teacher.input, self.teacher.get_layer('dense', 7).output)
 
     def buildAndCompile(self):
-        self.teacher.add(Conv2D(32, kernel_size=(3, 3),
-                        activation='relu',
-                        input_shape=self.input_shape))
-        self.teacher.add(Conv2D(64, (3, 3), activation='relu'))
-        self.teacher.add(MaxPooling2D(pool_size=(2, 2)))
-
-        self.teacher.add(Dropout(0.25)) # For reguralization
-
+        self.teacher = Sequential()
+        self.teacher.add(Conv2D(filters=6,
+                         kernel_size=5,
+                         strides=1,
+                         activation='relu',
+                         input_shape=(28, 28, 1)))
+        self.teacher.add(MaxPooling2D(pool_size=2, strides=2))
+        self.teacher.add(Conv2D(filters=16,
+                         kernel_size=5,
+                         strides=1,
+                         activation='relu',
+                         input_shape=(14, 14, 6)))
+        self.teacher.add(MaxPooling2D(pool_size=2, strides=2))
         self.teacher.add(Flatten())
-        self.teacher.add(Dense(128, activation='relu'))
-        self.teacher.add(Dropout(0.5)) # For reguralization
-
-        self.teacher.add(Dense(self.nb_classes))
-        self.teacher.add(Activation('softmax')) # Note that we add a normal softmax layer to begin with
-
+        self.teacher.add(Dense(units=120, activation='relu'))
+        self.teacher.add(Dense(units=84, activation='relu'))
+        self.teacher.add(Dense(units=10, activation='softmax'))
         self.teacher.compile(loss='categorical_crossentropy',
                     optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                     metrics=['accuracy'])

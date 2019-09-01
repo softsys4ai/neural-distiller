@@ -16,6 +16,8 @@ seed(cfg.random_seed)
 from tensorflow import set_random_seed
 set_random_seed(cfg.random_seed)
 
+from Models.LeNet5 import LeNet5Teacher
+
 def config_option_parser(logger):
     # reading command line input
     usage = """USAGE: %python train.py -m [model]
@@ -86,6 +88,7 @@ def main():
     callbacks = []
     # setting up teacher model
     stm = ModelLoader(logger, teacher_model_name)
+    stm.compile_loaded_model()
     teacher = stm.get_loaded_model()
     # evaluate teacher accuracy and performance
     teacherLoss, teacherAcc = HelperUtil.calculate_weighted_score(logger, teacher, X_train, Y_train, X_test, Y_test)

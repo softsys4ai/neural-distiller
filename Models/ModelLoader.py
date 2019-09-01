@@ -1,8 +1,11 @@
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
+from tensorflow.python.keras.optimizers import adadelta
 from Configuration import Config as cfg
 from Models.CustomTeacher import TeacherCNN
 from Models.CustomStudent import StudentDense
+from Models.LeNet5 import LeNet5Teacher
+
 
 class ModelLoader(object):
     """This class is used to initialize teacher models
@@ -44,10 +47,11 @@ class ModelLoader(object):
                 self.logger.info("Loaded " + self.model_name)
             # vgg19
             elif self.model_name == "lenet5":
-                from tensorflow.python.keras.applications import VGG19
-                from tensorflow.python.keras.applications.vgg19 import preprocess_input
-                self.preprocess = preprocess_input
-                self.model = VGG19()
+                # compiling and training teacher network
+                teacher = LeNet5Teacher()
+                teacher.__init__()
+                teacher.load(cfg.lenet_config + ".json", cfg.lenet_config + ".h5")
+                self.model = teacher.getModel()
                 self.logger.info("Loaded " + self.model_name)
             # xception
             elif self.model_name == "xception":
@@ -90,6 +94,15 @@ class ModelLoader(object):
                 self.logger.error("Invalid model name")
         except Exception as e:
             self.logger.error("Loading of model failed due to {0}".format(str(e)))
+
+    def compile_loaded_model(self):
+        try:
+            self.logger.info('Attempting to compile '+self.model_name+" model")
+            self.model.compile(loss='categorical_crossentropy',
+                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                    metrics=['accuracy'])
+        except Exception as e:
+            self.logger.error("Compilation of model failed due to {0}".format(str(e)))
 
     def get_loaded_model(self):
         return self.model
