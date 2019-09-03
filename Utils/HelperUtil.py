@@ -5,6 +5,8 @@ from tensorflow.python.keras.metrics import categorical_accuracy
 from tensorflow.python.keras.optimizers import adadelta
 from tensorflow.python.keras.layers import Lambda, concatenate, Activation
 from tensorflow.python.keras.models import Model, Sequential
+import os
+import csv
 nb_classes = 10
 
 def apply_knowledge_distillation_modifications(logger, model):
@@ -85,3 +87,13 @@ def find_trainable_layers(logger, model):
             trainableLayers.append(i)
     return trainableLayers
 
+# def WriteDictToCSV(csv_file,csv_columns,dict_data):
+#     try:
+#         with open(csv_file, 'w') as csvfile:
+#             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+#             writer.writeheader()
+#             for data in dict_data:
+#                 writer.writerow(data)
+#     except IOError as (errnum, strerror):
+#             print("I/O error({0}): {1}".format(errnum, strerror))
+#     return

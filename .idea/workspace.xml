@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/neural-distiller.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/neural-distiller.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/Config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/logfile_2019-08-31" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/logfile_2019-08-31" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pruning/PruneUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pruning/PruneUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utils/HelperUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utils/HelperUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,10 +19,43 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+            <state relative-caret-position="60">
+              <caret line="105" column="59" lean-forward="true" selection-start-line="105" selection-start-column="59" selection-end-line="105" selection-end-column="59" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LeNet5.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Models/LeNet5.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="61">
+              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PruneUtil.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pruning/PruneUtil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-line="1" selection-end-column="67" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HelperUtil.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/HelperUtil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -47,6 +78,7 @@
       <find>new train</find>
       <find>model</find>
       <find>train</find>
+      <find>compile</find>
     </findStrings>
     <replaceStrings>
       <replace>model</replace>
@@ -69,8 +101,6 @@
         <option value="$PROJECT_DIR$/Configuration/__init__.py" />
         <option value="$PROJECT_DIR$/Data/LoadDataset.py" />
         <option value="$PROJECT_DIR$/Logs/logfile_2019-08-31" />
-        <option value="$PROJECT_DIR$/Pruning/PruneUtil.py" />
-        <option value="$PROJECT_DIR$/Utils/HelperUtil.py" />
         <option value="$PROJECT_DIR$/Models/ModelStructs.py" />
         <option value="$PROJECT_DIR$/Models/LeNet5Teacher.py" />
         <option value="$PROJECT_DIR$/Models/LeNet.py" />
@@ -79,13 +109,15 @@
         <option value="$PROJECT_DIR$/Models/CustomStudent.py" />
         <option value="$PROJECT_DIR$/Models/ModelLoader.py" />
         <option value="$PROJECT_DIR$/Configuration/Config.py" />
-        <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Utils/HelperUtil.py" />
+        <option value="$PROJECT_DIR$/Pruning/PruneUtil.py" />
+        <option value="$PROJECT_DIR$/train.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1680" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="width" value="834" />
     <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -106,7 +138,17 @@
             <path>
               <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
               <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
-              <item name="Logs" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
+              <item name="Pruning" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
+              <item name="Utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -321,17 +363,24 @@
       <option name="project" value="LOCAL" />
       <updated>1567298582164</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="now working with &gt;python3.5 for keras surgeon library use">
+      <created>1567548470531</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1567548470531</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="0" width="1167" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25075346" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21902269" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50030136" side_tool="true" weight="0.5641026" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4996986" weight="0.5641026" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996986" visible="true" weight="0.5641026" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32923076" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -383,7 +432,8 @@
     <MESSAGE value="Automated training of student network at different temperatures" />
     <MESSAGE value="Added LeNet, bug fixes" />
     <MESSAGE value="Student trained with LeNet5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Student trained with LeNet5" />
+    <MESSAGE value="now working with &gt;python3.5 for keras surgeon library use" />
+    <option name="LAST_COMMIT_MESSAGE" value="now working with &gt;python3.5 for keras surgeon library use" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -394,7 +444,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="16" />
+      <option name="time" value="17" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -412,6 +462,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1173">
           <caret line="57" selection-start-line="57" selection-end-line="57" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -629,13 +682,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Utils/HelperUtil2.py" />
-    <entry file="file://$PROJECT_DIR$/Pruning/PruneUtil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/virtual-env/lib/python2.7/site-packages/tensorflow/python/keras/engine/training_utils.py" />
     <entry file="file://$PROJECT_DIR$/Models/TeacherUtils.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -662,13 +708,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1426">
           <caret line="69" column="18" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Models/LeNet5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="40" column="41" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -709,20 +748,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Logs/logfile_2019-09-03">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-821" />
+        <state relative-caret-position="-3832" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Utils/HelperUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
+        <state relative-caret-position="266">
+          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/l1_rank.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pruning/PruneUtil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="1" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/LeNet5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="61">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+        <state relative-caret-position="60">
+          <caret line="105" column="59" lean-forward="true" selection-start-line="105" selection-start-column="59" selection-end-line="105" selection-end-column="59" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

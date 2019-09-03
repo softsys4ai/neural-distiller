@@ -1,6 +1,9 @@
+from tfkerassurgeon import identify
+from tfkerassurgeon.operations import delete_channels, delete_layer
 import numpy as np
 from tensorflow_model_optimization.sparsity import keras as sparsity
 from Utils import HelperUtil
+
 
 def prune(logger, model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse):
     print('[info] applying pruning techniques to the provided model')
@@ -46,29 +49,34 @@ def sparsePrune(logger, model, X_train, Y_train, X_test, Y_test, num_train_sampl
 
 def rank_filters_l1(logger, model):
     logger.info("Ranking filters by L1 norm")
-    rankedFiltersPerLayer = []
     layersofinterest = HelperUtil.find_layers_of_type(logger, model, "conv")
     conv_layers_weights = [model.layers[layer].get_weights()[0] for layer in layersofinterest]
+    rankedFiltersPerLayer = [] * len(layersofinterest)
+    # rank filters in eah layer
     for i in range(len(conv_layers_weights)):
         weight = conv_layers_weights[i]
         weights_dict = {}
         num_filters = len(weight[0,0,0,:])
         for j in range(num_filters):
             w_s = np.sum(abs(weight[:,:,:,j]))
-            filt ='filt_{}'.format(j)
+            filt ='{}'.format(j)
             weights_dict[filt]=w_s
+        # sorting the weights
         weights_dict_sort=sorted(weights_dict.items(), key=lambda kv: kv[1])
-        # plotting weight ranking
+        filter_num = []
         weights_value=[]
         for elem in weights_dict_sort:
+            filter_num.append(elem[0])
             weights_value.append(elem[1])
-        rankedFiltersPerLayer.append(weights_value)
+        layer_rankings = zip(filter_num, weights_value)
+        rankedFiltersPerLayer.append(layer_rankings)
     return rankedFiltersPerLayer
 
 # filter removal method for conv layers
 def L1RankPrune(logger, model, layersToPrune, X_train, Y_train, X_test, Y_test, batch_size, epochs):
     logger.info("L1RankPrune: Using L1 norm of the weights in each filter to rank them")
     rankedFilters = rank_filters_l1(logger, model)
+
     # TODO remove 10% of global filters
 
 
