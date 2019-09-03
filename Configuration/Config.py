@@ -2,10 +2,11 @@
 spacer = "--------------------------------"
 student_train_spacer = "-----------------"
 #  training
-random_seed = 1
+random_seed = 3
 teacher_epochs = 50
 temp = 1
-test_temperatures = [1, 2, 3, 5, 10, 20, 50, 100, 200]
+test_temperatures = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+#test_temperatures = [20, 30, 40, 50, 60, 70, 80, 90, 100, 110]
 alpha = 0.1
 student_epochs = 100
 student_batch_size = 256
