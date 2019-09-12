@@ -79,6 +79,20 @@ def L1RankPrune(logger, model, layersToPrune, X_train, Y_train, X_test, Y_test, 
 
     # TODO remove 10% of global filters
 
+# integrate L1 rank pruning with keras surgeon
+def KerasSurgeonExample(logger, teacher, X_train, Y_train, X_test, Y_test):
+    from tfkerassurgeon.operations import delete_channels, delete_layer
+    from tensorflow.python.keras.optimizers import adadelta
+    layersofinterest = HelperUtil.find_layers_of_type(logger, teacher, "conv")
+    layer_0 = teacher.layers[0]
+    model_new = delete_channels(teacher, layer_0, [4,15,6,26,9,24,21,17,3,23,14,10,13])
+    layer_1 = model_new.layers[1]
+    model_new_two = delete_channels(model_new, layer_1, [11,7,37,13,48,56,41,23,16,35])
+    model_new_two.compile(loss='categorical_crossentropy',
+                      optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                      metrics=['accuracy'])
+    prunedLoss, prunedAcc = HelperUtil.calculate_weighted_score(logger, model_new_two, X_train, Y_train, X_test, Y_test)
+    logger.info('Teacher weighted score: (acc, loss) --> (%s, %s)' % (prunedLoss, prunedAcc))
 
 # filter removal method for conv layers
 def AbsDeltaCostPrune(logger):

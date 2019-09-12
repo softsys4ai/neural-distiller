@@ -86,18 +86,18 @@ class TeacherCNN:
         score = self.teacher.evaluate(X_test, Y_test, verbose=0)
         # serialize model to JSON
         model_json = self.teacher.to_json()
-        with open("ModelConfigs/{}_{}_{}.json".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")), "w") as json_file:
+        with open(os.path.join(cfg.teacher_model_dir, "{}_{}_{}.json".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S"))), "w") as json_file:
             json_file.write(model_json)
         # serialize weights to HDF5
-        self.teacher.save_weights("ModelConfigs/{}_{}_{}.h5".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")))
+        self.teacher.save_weights(os.path.join(cfg.teacher_model_dir, "{}_{}_{}.h5".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S"))))
         print("[INFO] Saved model to disk")
         
         # later...
 
     def load(self, model_filename, weights_filename):  
         # load json and create model
-        model_filename = os.path.join("ModelConfigs", model_filename)
-        weights_filename = os.path.join("ModelConfigs", weights_filename)
+        model_filename = os.path.join(cfg.teacher_model_dir, model_filename)
+        weights_filename = os.path.join(cfg.teacher_model_dir, weights_filename)
         with open(model_filename, 'rb') as json_file:
             loaded_model_json = json_file.read()
             json_file.close()

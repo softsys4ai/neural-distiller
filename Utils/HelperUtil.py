@@ -59,8 +59,8 @@ def calculate_weighted_score(logger, model, X_train, Y_train, X_test, Y_test):
     logger.info('Calculating weighted model score')
     train_score = model.evaluate(X_train, Y_train, verbose=0)
     val_score = model.evaluate(X_test, Y_test, verbose=0)
-    logger.info('Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (%s, %s, %s, %s)'
-                % (train_score[1], train_score[0], val_score[1], val_score[0]))
+    # logger.info('Raw model scores: (train_acc, train_loss, val_acc, val_loss) --> (%s, %s, %s, %s)'
+    #             % (train_score[1], train_score[0], val_score[1], val_score[0]))
     return ((train_score[0] + 3*val_score[0])/4), ((train_score[1] + 3*val_score[1])/4)
 
 def calculate_score(logger, model, X_train, Y_train, X_test, Y_test):

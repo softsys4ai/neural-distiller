@@ -5,6 +5,7 @@ from tensorflow.python.keras.optimizers import adadelta
 from Utils.HelperUtil import acc
 from Utils.HelperUtil import knowledge_distillation_loss
 import datetime
+import Configuration as cfg
 
 class StudentDense:
     def __init__(self, callback=None):
@@ -61,17 +62,17 @@ class StudentDense:
         score = self.student.evaluate(X_test, Y_test, verbose=0)
         # serialize model to JSON
         model_json = self.student.to_json()
-        with open("ModelConfigs/{}_{}_{}.json".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")), "w") as json_file:
+        with open(os.path.join(cfg.teacher_model_dir, "{}_{}_{}.json".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S"))), "w") as json_file:
             json_file.write(model_json)
         # serialize weights to HDF5
-        self.student.save_weights("ModelConfigs/{}_{}_{}.h5".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S")))
+        self.student.save_weights(os.path.join(cfg.teacher_model_dir, "{}_{}_{}.h5".format(round(score[1] * 100, 2), self.name, now.strftime("%Y-%m-%d_%H-%M-%S"))))
         print("[INFO] Saved student model to disk")
 
     def load(self, model_filename, weights_filename):
         print('[INFO] creating custom student model')
         # load json and create model
-        model_filename = os.path.join("ModelConfigs", model_filename)
-        weights_filename = os.path.join("ModelConfigs", weights_filename)
+        model_filename = os.path.join(cfg.teacher_model_dir, model_filename)
+        weights_filename = os.path.join(cfg.teacher_model_dir, weights_filename)
         with open(model_filename, 'rb') as json_file:
             loaded_model_json = json_file.read()
             json_file.close()
@@ -85,7 +86,7 @@ class StudentDense:
             print("[INFO] Loaded student model from disk w/ weights")
 
     def load(self, model_filename):
-        model_filename = os.path.join("ModelConfigs", model_filename)
+        model_filename = os.path.join(cfg.teacher_model_dir, model_filename)
         with open(model_filename, 'rb') as json_file:
             loaded_model_json = json_file.read()
             json_file.close()

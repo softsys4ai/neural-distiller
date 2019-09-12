@@ -12,6 +12,9 @@ student_epochs = 100
 student_batch_size = 256
 pruning_epochs = 100
 pruning_batch_size = 256
+# model configurations
+teacher_model_dir = "ModelConfigs/TeacherModelConfigs"
+student_model_dir = "ModelConfigs/StudentModelConfigs"
 # logging and system
 lenet_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_teacher_config="99.2_TeacherCNN_2019-08-29_17-25-46"
