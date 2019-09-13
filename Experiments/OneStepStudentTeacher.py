@@ -9,6 +9,7 @@ from tensorflow import set_random_seed
 set_random_seed(cfg.random_seed)
 
 def run(logger, options):
+    logger.info(cfg.student_train_spacer + "ONE STEP STUDENT-TEACHER EXPERIMENT" + cfg.student_train_spacer)
     teacher_model_name = str(options.model)
     # loading training data
     X_train, Y_train, X_test, Y_test = LoadDataset.load_mnist(logger)
@@ -28,7 +29,7 @@ def run(logger, options):
     logger.info(cfg.student_train_spacer + "NEW STUDENT TRAINING SESSION" + cfg.student_train_spacer)
     cfg.temp = 10
     # setting up custom student network
-    ssm = ModelLoader(logger, "custom_student")
+    ssm = ModelLoader(logger, "custom_student_32")
     student = ssm.get_loaded_model()
     # generic pre-KD modification to student network
     student = HelperUtil.apply_knowledge_distillation_modifications(logger, student)

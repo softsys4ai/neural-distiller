@@ -3,12 +3,15 @@ from keras.preprocessing.image import img_to_array
 from tensorflow.python.keras.optimizers import adadelta
 from Configuration import Config as cfg
 from Models.CustomTeacher import TeacherCNN
-from Models.CustomStudent import StudentDense
+from Models.CustomStudent32 import StudentDense32
+from Models.CustomStudent64 import StudentDense64
+from Models.CustomStudent128 import StudentDense128
 from Models.LeNet5 import LeNet5Teacher
 
 
 class ModelLoader(object):
-    """This class is used to initialize teacher models
+    """
+    This class is used to load all student and teacher models
     """
     def __init__(self,
                  logger,
@@ -18,6 +21,10 @@ class ModelLoader(object):
         self.model = None
         self.model_name = model_name
         self.load_model()
+
+    # allows re-use of the same model loader in experiments
+    def set_model_name(self, newName):
+        self.model_name = newName
 
     def load_model(self):
         """This function is used to load pretrained model
@@ -79,11 +86,27 @@ class ModelLoader(object):
                 teacher.load(cfg.custom_teacher_config + ".json", cfg.custom_teacher_config + ".h5")
                 self.model = teacher.getModel()
                 self.logger.info("Loaded " + self.model_name)
-                # custom CNN teacher model
-            # custom student model
-            elif self.model_name == "custom_student":
+            elif self.model_name == "custom_student_128":
                 # compiling and training teacher network
-                student = StudentDense()
+                student = StudentDense128()
+                student.__init__()
+                student.buildAndCompile()
+                # todo change student class to load config but not pre-trained weights
+                # student.load(cfg.custom_student_config + ".json")
+                self.model = student.getModel()
+                self.logger.info("Loaded " + self.model_name)
+            elif self.model_name == "custom_student_64":
+                # compiling and training teacher network
+                student = StudentDense64()
+                student.__init__()
+                student.buildAndCompile()
+                # todo change student class to load config but not pre-trained weights
+                # student.load(cfg.custom_student_config + ".json")
+                self.model = student.getModel()
+                self.logger.info("Loaded " + self.model_name)
+            elif self.model_name == "custom_student_32":
+                # compiling and training teacher network
+                student = StudentDense32()
                 student.__init__()
                 student.buildAndCompile()
                 # todo change student class to load config but not pre-trained weights

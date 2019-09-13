@@ -1,0 +1,49 @@
+2019-09-12 20:33:54,238 INFO 10.1.28.50 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-09-12 20:33:54,238 INFO 10.1.28.50 Initialized logger
+2019-09-12 20:33:54,240 INFO 10.1.28.50 Parsed command line options
+2019-09-12 20:33:54,240 INFO 10.1.28.50 -----------------THREE STEP STUDENT-TEACHER EXPERIMENT-----------------
+2019-09-12 20:33:54,754 INFO 10.1.28.50 Loaded MNIST dataset
+2019-09-12 20:33:54,754 INFO 10.1.28.50 Initializing ModelLoader Class
+2019-09-12 20:33:55,060 INFO 10.1.28.50 Loaded lenet5
+2019-09-12 20:33:55,061 INFO 10.1.28.50 Attempting to compile lenet5 model
+2019-09-12 20:33:55,133 INFO 10.1.28.50 Calculating weighted model score
+2019-09-12 20:34:07,297 INFO 10.1.28.50 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-09-12 20:34:18,992 INFO 10.1.28.50 -----------------custom_student_128 TRAINING SESSION STARTED-----------------
+2019-09-12 20:34:19,001 INFO 10.1.28.50 Initializing ModelLoader Class
+2019-09-12 20:34:19,106 INFO 10.1.28.50 Loaded custom_student_128
+2019-09-12 20:34:19,106 INFO 10.1.28.50 Applying KD modifications to student network
+2019-09-12 20:34:19,175 INFO 10.1.28.50 Intermediate student dense layer size --> 128
+2019-09-12 20:34:19,175 INFO 10.1.28.50 Training intermediate student network
+2019-09-12 20:34:19,175 INFO 10.1.28.50 Intermediate student params: (temperature, epochs, batch_size) --> (10, 100, 256)
+2019-09-12 20:36:56,026 INFO 10.1.28.50 Completed intermediate student network training
+2019-09-12 20:36:56,026 INFO 10.1.28.50 Calculating weighted model score
+2019-09-12 20:36:57,112 INFO 10.1.28.50 Intermediate student weighted score before revert: (acc, loss) --> (0.9749458283185959, 0.1490751425723235)
+2019-09-12 20:36:57,112 INFO 10.1.28.50 Reverting KD modifications to student network
+2019-09-12 20:36:57,164 INFO 10.1.28.50 Calculating weighted model score
+2019-09-12 20:36:58,225 INFO 10.1.28.50 Intermediate student weighted score after revert: (acc, loss) --> (0.9749458283185959, 1.4889289011796316)
+2019-09-12 20:36:58,965 INFO 10.1.28.50 -----------------custom_student_64 TRAINING SESSION STARTED-----------------
+2019-09-12 20:36:58,965 INFO 10.1.28.50 Initializing ModelLoader Class
+2019-09-12 20:36:59,057 INFO 10.1.28.50 Loaded custom_student_64
+2019-09-12 20:36:59,057 INFO 10.1.28.50 Applying KD modifications to student network
+2019-09-12 20:36:59,125 INFO 10.1.28.50 Intermediate student dense layer size --> 64
+2019-09-12 20:36:59,125 INFO 10.1.28.50 Training intermediate student network
+2019-09-12 20:36:59,125 INFO 10.1.28.50 Intermediate student params: (temperature, epochs, batch_size) --> (10, 100, 256)
+2019-09-12 20:39:06,901 INFO 10.1.28.50 Completed intermediate student network training
+2019-09-12 20:39:06,901 INFO 10.1.28.50 Calculating weighted model score
+2019-09-12 20:39:07,944 INFO 10.1.28.50 Intermediate student weighted score before revert: (acc, loss) --> (0.9719083160161972, 0.1495203672528267)
+2019-09-12 20:39:07,944 INFO 10.1.28.50 Reverting KD modifications to student network
+2019-09-12 20:39:07,994 INFO 10.1.28.50 Calculating weighted model score
+2019-09-12 20:39:09,155 INFO 10.1.28.50 Intermediate student weighted score after revert: (acc, loss) --> (0.9719083160161972, 1.4933804690519967)
+2019-09-12 20:39:09,891 INFO 10.1.28.50 -----------------custom_student_32 TRAINING SESSION STARTED-----------------
+2019-09-12 20:39:09,985 INFO 10.1.28.50 Loaded custom_student_32
+2019-09-12 20:39:09,986 INFO 10.1.28.50 Applying KD modifications to student network
+2019-09-12 20:39:10,049 INFO 10.1.28.50 Target student dense layer size --> 32
+2019-09-12 20:39:10,049 INFO 10.1.28.50 Training target student network
+2019-09-12 20:39:10,050 INFO 10.1.28.50 Target student params: (temperature, epochs, batch_size) --> (10, 100, 256)
+2019-09-12 20:41:14,868 INFO 10.1.28.50 Completed target student network training
+2019-09-12 20:41:14,868 INFO 10.1.28.50 Calculating weighted model score
+2019-09-12 20:41:15,964 INFO 10.1.28.50 Target student weighted score before revert: (acc, loss) --> (0.9605874866247177, 0.15048493947386743)
+2019-09-12 20:41:15,965 INFO 10.1.28.50 Reverting KD modifications to student network
+2019-09-12 20:41:16,017 INFO 10.1.28.50 Calculating weighted model score
+2019-09-12 20:41:17,283 INFO 10.1.28.50 Target student weighted score after revert: (acc, loss) --> (0.9605874866247177, 1.5030261901537578)
+2019-09-12 20:41:17,304 INFO 10.1.28.50 -- COMPLETE

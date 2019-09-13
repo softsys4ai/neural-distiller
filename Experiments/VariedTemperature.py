@@ -29,7 +29,7 @@ def run(logger, options):
         logger.info(cfg.student_train_spacer + "NEW STUDENT TRAINING SESSION" + cfg.student_train_spacer)
         cfg.temp = temp
         # setting up custom student network
-        ssm = ModelLoader(logger, "custom_student")
+        ssm = ModelLoader(logger, "custom_student_32")
         student = ssm.get_loaded_model()
         # generic pre-KD modification to student network
         student = HelperUtil.apply_knowledge_distillation_modifications(logger, student)

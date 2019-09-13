@@ -5,15 +5,15 @@ from tensorflow.python.keras.optimizers import adadelta
 from Utils.HelperUtil import acc
 from Utils.HelperUtil import knowledge_distillation_loss
 import datetime
-import Configuration as cfg
+from Configuration import Config as cfg
 
-class StudentDense:
+class StudentDense32:
     def __init__(self, callback=None):
         self.callbacks = callback
         self.nb_classes = 10
         self.input_shape = (28, 28, 1) # Input shape of each image
         self.nb_filters = 64 # number of convolutional filters to use
-        self.dropoutVal = 0.2
+        self.dropoutVal = 0.0
         self.student = Sequential()
         self.epochs = 100
         self.batchSize = 256
@@ -30,10 +30,9 @@ class StudentDense:
     def buildAndCompile(self):
         # cannot reference self in lambda, or else error in model save
         tempAlpha = self.alpha
-        tempTemp = self.temp
         # constructing the student network
         self.student.add(Flatten(input_shape=self.input_shape))
-        self.student.add(Dense(32, activation='relu'))
+        self.student.add(Dense(cfg.student_dense_32_size, activation='relu'))
         self.student.add(Dropout(self.dropoutVal))
         self.student.add(Dense(self.nb_classes))
         self.student.add(Activation('softmax'))
