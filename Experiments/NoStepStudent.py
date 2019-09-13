@@ -16,9 +16,9 @@ def run(logger, options):
 
     # training student network at a range of temperatures
     logger.info(cfg.student_train_spacer + "NEW STUDENT TRAINING SESSION" + cfg.student_train_spacer)
-    cfg.temp = 10
+    cfg.temp = 1
     # setting up custom student network
-    ssm = ModelLoader(logger, "custom_student_128")
+    ssm = ModelLoader(logger, "custom_student_32")
     student = ssm.get_loaded_model()
     # training and evaluating the student model
     logger.info('Training student network')

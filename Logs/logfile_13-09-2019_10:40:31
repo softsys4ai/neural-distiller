@@ -1,0 +1,23 @@
+2019-09-13 10:40:31,738 INFO 10.31.19.8 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-09-13 10:40:31,738 INFO 10.31.19.8 Initialized logger
+2019-09-13 10:40:31,739 INFO 10.31.19.8 Parsed command line options
+2019-09-13 10:40:31,739 INFO 10.31.19.8 -----------------ONE STEP STUDENT-TEACHER EXPERIMENT-----------------
+2019-09-13 10:40:32,130 INFO 10.31.19.8 Loaded MNIST dataset
+2019-09-13 10:40:32,131 INFO 10.31.19.8 Initializing ModelLoader Class
+2019-09-13 10:40:32,377 INFO 10.31.19.8 Loaded lenet5
+2019-09-13 10:40:32,377 INFO 10.31.19.8 Attempting to compile lenet5 model
+2019-09-13 10:40:32,473 INFO 10.31.19.8 Calculating weighted model score
+2019-09-13 10:40:43,743 INFO 10.31.19.8 Teacher weighted score: (acc, loss) --> (0.9932291507720947, 0.021800161905911258)
+2019-09-13 10:40:53,630 INFO 10.31.19.8 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-09-13 10:40:53,630 INFO 10.31.19.8 Initializing ModelLoader Class
+2019-09-13 10:40:53,724 INFO 10.31.19.8 Loaded custom_student_128
+2019-09-13 10:40:53,724 INFO 10.31.19.8 Applying KD modifications to student network
+2019-09-13 10:40:53,784 INFO 10.31.19.8 Training student network
+2019-09-13 10:40:53,784 INFO 10.31.19.8 Student params: (temperature, epochs, batch_size) --> (1, 100, 256)
+2019-09-13 10:42:05,271 INFO 10.31.19.8 Completed student network training
+2019-09-13 10:42:05,277 INFO 10.31.19.8 Calculating weighted model score
+2019-09-13 10:42:06,337 INFO 10.31.19.8 Student weighted score before revert: (acc, loss) --> (0.981079176068306, 1.332993281316757)
+2019-09-13 10:42:06,337 INFO 10.31.19.8 Reverting KD modifications to student network
+2019-09-13 10:42:06,388 INFO 10.31.19.8 Calculating weighted model score
+2019-09-13 10:42:07,432 INFO 10.31.19.8 Student weighted score after revert: (acc, loss) --> (0.981079176068306, 1.4810840811570485)
+2019-09-13 10:42:07,447 INFO 10.31.19.8 -- COMPLETE

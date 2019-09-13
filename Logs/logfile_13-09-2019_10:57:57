@@ -1,0 +1,18 @@
+2019-09-13 10:57:58,193 INFO 10.31.19.8 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-09-13 10:57:58,193 INFO 10.31.19.8 Initialized logger
+2019-09-13 10:57:58,194 INFO 10.31.19.8 Parsed command line options
+2019-09-13 10:57:58,194 INFO 10.31.19.8 -----------------NO STEP STUDENT-TEACHER EXPERIMENT-----------------
+2019-09-13 10:57:58,547 INFO 10.31.19.8 Loaded MNIST dataset
+2019-09-13 10:57:58,547 INFO 10.31.19.8 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-09-13 10:57:58,547 INFO 10.31.19.8 Initializing ModelLoader Class
+2019-09-13 10:57:58,651 INFO 10.31.19.8 Loaded custom_student_32
+2019-09-13 10:57:58,651 INFO 10.31.19.8 Training student network
+2019-09-13 10:57:58,651 INFO 10.31.19.8 Student params: (epochs, batch_size) --> (100, 256)
+2019-09-13 10:58:42,455 INFO 10.31.19.8 Completed student network training
+2019-09-13 10:58:42,456 INFO 10.31.19.8 Calculating weighted model score
+2019-09-13 10:58:43,349 INFO 10.31.19.8 (training_acc, test_acc) --> ([0.01462070330370722, 0.99736667], [0.11014287090001453, 0.9692])
+2019-09-13 10:58:43,349 INFO 10.31.19.8 Student weighted score before revert: (acc, loss) --> (0.9762416779994965, 0.08626232900093771)
+2019-09-13 10:58:43,349 INFO 10.31.19.8 Calculating weighted model score
+2019-09-13 10:58:44,250 INFO 10.31.19.8 (training_acc, test_acc) --> ([0.01462070330370722, 0.99736667], [0.11014287090001453, 0.9692])
+2019-09-13 10:58:44,250 INFO 10.31.19.8 Student weighted score after revert: (acc, loss) --> (0.9762416779994965, 0.08626232900093771)
+2019-09-13 10:58:44,264 INFO 10.31.19.8 -- COMPLETE

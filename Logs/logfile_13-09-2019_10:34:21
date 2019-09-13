@@ -1,0 +1,16 @@
+2019-09-13 10:34:21,508 INFO 10.31.19.8 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-09-13 10:34:21,508 INFO 10.31.19.8 Initialized logger
+2019-09-13 10:34:21,509 INFO 10.31.19.8 Parsed command line options
+2019-09-13 10:34:21,509 INFO 10.31.19.8 -----------------NO STEP STUDENT-TEACHER EXPERIMENT-----------------
+2019-09-13 10:34:21,862 INFO 10.31.19.8 Loaded MNIST dataset
+2019-09-13 10:34:21,862 INFO 10.31.19.8 -----------------NEW STUDENT TRAINING SESSION-----------------
+2019-09-13 10:34:21,862 INFO 10.31.19.8 Initializing ModelLoader Class
+2019-09-13 10:34:21,973 INFO 10.31.19.8 Loaded custom_student_128
+2019-09-13 10:34:21,973 INFO 10.31.19.8 Training student network
+2019-09-13 10:34:21,973 INFO 10.31.19.8 Student params: (epochs, batch_size) --> (100, 256)
+2019-09-13 10:35:36,873 INFO 10.31.19.8 Completed student network training
+2019-09-13 10:35:36,874 INFO 10.31.19.8 Calculating weighted model score
+2019-09-13 10:35:37,839 INFO 10.31.19.8 Student weighted score before revert: (acc, loss) --> (0.9848499894142151, 0.059085954669264286)
+2019-09-13 10:35:37,839 INFO 10.31.19.8 Calculating weighted model score
+2019-09-13 10:35:38,795 INFO 10.31.19.8 Student weighted score after revert: (acc, loss) --> (0.9848499894142151, 0.059085954669264286)
+2019-09-13 10:35:38,809 INFO 10.31.19.8 -- COMPLETE

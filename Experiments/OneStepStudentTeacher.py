@@ -27,7 +27,7 @@ def run(logger, options):
 
     # training student network at a range of temperatures
     logger.info(cfg.student_train_spacer + "NEW STUDENT TRAINING SESSION" + cfg.student_train_spacer)
-    cfg.temp = 10
+    #cfg.temp = 5
     # setting up custom student network
     ssm = ModelLoader(logger, "custom_student_32")
     student = ssm.get_loaded_model()
@@ -39,7 +39,7 @@ def run(logger, options):
     cfg.temp, cfg.student_epochs, cfg.student_batch_size))
     student.fit(X_train, Y_train_new,
                 batch_size=cfg.student_batch_size,
-                epochs=cfg.student_epochs,
+                epochs=200,
                 verbose=1,
                 callbacks=[],
                 validation_data=(X_test, Y_test_new))

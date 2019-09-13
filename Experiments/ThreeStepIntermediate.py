@@ -25,6 +25,7 @@ def run(logger, options):
     # creating intermediate training data
     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(teacher, X_train, Y_train, X_test, Y_test)
 
+    cfg.temp = 10
     # perform training of intermediate student network
     logger.info(cfg.student_train_spacer + "custom_student_128 TRAINING SESSION STARTED" + cfg.student_train_spacer)
     ssm = ModelLoader(logger, "custom_student_128")
@@ -52,6 +53,7 @@ def run(logger, options):
     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(intermediateStudent, X_train, Y_train, X_test,
                                                                      Y_test)
 
+    cfg.temp = 5
     # perform training of intermediate student network
     logger.info(cfg.student_train_spacer + "custom_student_64 TRAINING SESSION STARTED" + cfg.student_train_spacer)
     ssm = ModelLoader(logger, "custom_student_64")
@@ -79,6 +81,7 @@ def run(logger, options):
     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(intermediateStudent, X_train, Y_train, X_test,
                                                                      Y_test)
 
+    cfg.temp = 1
     # perform training of final student network
     logger.info(cfg.student_train_spacer + "custom_student_32 TRAINING SESSION STARTED" + cfg.student_train_spacer)
     ssm.set_model_name("custom_student_32")

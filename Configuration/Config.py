@@ -6,12 +6,12 @@ student_dense_128_size = 128
 student_dense_64_size = 64
 student_dense_32_size = 32
 #  training
-random_seed = 3
+random_seed = 4
 teacher_epochs = 50
-temp = 10
+temp = 2
 test_temperatures = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 #test_temperatures = [20, 30, 40, 50, 60, 70, 80, 90, 100, 110]
-alpha = 0.1
+alpha = 0.0
 student_epochs = 100
 student_batch_size = 256
 pruning_epochs = 100
@@ -23,7 +23,6 @@ lenet_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_teacher_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_student_config="94.89_StudentDense_2019-08-29_18-10-22"
 # logging and system
-
 log_dir="/Logs/"
 util_dir="/Utils/"
 input_dir="/Data/Input/TestData/"

@@ -1,9 +1,0 @@
-2019-09-12 20:46:54,148 INFO 10.1.28.50 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-09-12 20:46:54,148 INFO 10.1.28.50 Initialized logger
-2019-09-12 20:46:54,149 INFO 10.1.28.50 Parsed command line options
-2019-09-12 20:46:54,149 INFO 10.1.28.50 -----------------NO STEP STUDENT-TEACHER EXPERIMENT-----------------
-2019-09-12 20:46:54,516 INFO 10.1.28.50 Loaded MNIST dataset
-2019-09-12 20:46:54,516 INFO 10.1.28.50 -----------------NEW STUDENT TRAINING SESSION-----------------
-2019-09-12 20:46:54,516 INFO 10.1.28.50 Initializing ModelLoader Class
-2019-09-12 20:46:54,617 INFO 10.1.28.50 Loaded custom_student_128
-2019-09-12 20:46:54,617 INFO 10.1.28.50 Training student network
