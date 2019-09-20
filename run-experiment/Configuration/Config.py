@@ -11,9 +11,9 @@ student_train_spacer = "-----------------"
 # custom model attributes
 # Set callback functions to early stop training and save the best model so far
 student_callbacks = callbacks=[
-        EarlyStopping(monitor='val_acc', patience=4, min_delta=0.0001),
-        ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=2, epsilon=0.007)
+        EarlyStopping(monitor='val_acc', patience=4, min_delta=0.0001)
     ]
+# ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=2, epsilon=0.007)
 # student_callbacks = callbacks=[
 #         EarlyStopping(monitor='val_acc', patience=4, min_delta=0.00007)
 #     ]
@@ -25,9 +25,9 @@ base_dense_student_size = 16
 # optimizers for students
 # SGD(lr=1e-1, momentum=0.9, nesterov=True),
 # Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
-#student_optimizer = adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0)
+student_optimizer = adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0)
 # student_optimizer = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
-student_optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+#student_optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 # student_optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
 #  training
 mnist_input_shape = (28, 28, 1)

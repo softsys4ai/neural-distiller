@@ -19,7 +19,7 @@ def config_option_parser():
     parser.add_option('-t', "--temp-config",
                       action="store",
                       type="string",
-                      default="[1,50,10]",
+                      default="[1,50,20]",
                       dest="tempOrderList",
                       help="Temperatures to apply to teacher logits for multistage experiments")
     parser.add_option('-a', "--alpha-config",

@@ -24,7 +24,7 @@ def config_option_parser(logger):
                       action="store",
                       type="string",
                       dest="experiment",
-                      help="Type of experiment to execute")
+                      help="Type of experiment1 to execute")
     parser.add_option('-t', "--teacher-model",
                       action="store",
                       type="string",
@@ -84,16 +84,16 @@ def main():
         if options.experiment == "search-alpha-temp-configurations":
             GenericMultistageKD_CNN.run(logger, options)
         elif options.experiment == "full-PaKD-compression":
-            logger.error("Provided experiment type not yet implemented!")
+            logger.error("Provided experiment1 type not yet implemented!")
             # TODO measure power consumption and inference time
             # TODO perform all pruning operations
             # TODO pruning, ex: studentModels = PruneUtil.prune(logger, teacher.getModel(), X_train, Y_train, X_test, Y_test, len(X_train), cfg.pruning_batch_size, cfg.pruning_epochs, 0.01, 0.1)
         else:
-            logger.error("Provided experiment type not supported!")
+            logger.error("Provided experiment1 type not supported!")
             return
         logger.info('-- COMPLETE')
     except Exception as e:
-        logger.error("Error while running experiment: {0}".format(str(e)))
+        logger.error("Error while running experiment1: {0}".format(str(e)))
 
 
 if __name__ == "__main__":

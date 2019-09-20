@@ -37,7 +37,7 @@ def knowledge_distillation_loss(logger, y_true, y_pred, alpha=cfg.alpha):
     y_true, y_true_softs = y_true[:, :nb_classes], y_true[:, nb_classes:]
     y_pred, y_pred_softs = y_pred[:, :nb_classes], y_pred[:, nb_classes:]
     # loss = (1-alpha)*logloss(y_true, y_pred) + alpha*logloss(y_true_softs, y_pred_softs)
-    loss = alpha * logloss(y_true, y_pred) + logloss(y_true_softs, y_pred_softs)
+    loss = alpha * logloss(y_true, y_pred) + (1-alpha) * logloss(y_true_softs, y_pred_softs)
     return loss
 
 
