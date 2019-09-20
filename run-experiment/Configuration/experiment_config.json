@@ -1,0 +1,1 @@
+{"teacher_name": null, "epochs": 3, "temp_config": [1, 5], "alpha_config": [0.1, 1, 2.0], "size_combinations": [[10, 5, 2], [8, 6, 2], [8, 4, 2], [6, 4, 2]]}

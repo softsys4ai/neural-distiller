@@ -1,0 +1,248 @@
+import sys
+sys.path.append("..") # Adds higher directory to python modules path.
+from Configuration import Config as cfg
+from Data import LoadDataset
+from Models import ModelLoader
+from Models import TeacherUtils
+from Utils import HelperUtil
+import datetime
+import json
+import ast
+import os
+from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.callbacks import ModelCheckpoint
+from tensorflow.python.keras.models import load_model
+from tensorflow.python.keras.losses import categorical_crossentropy as logloss
+from numpy.random import seed
+from tensorflow import set_random_seed
+set_random_seed(cfg.random_seed)
+seed(cfg.random_seed)
+nb_classes = 10
+
+def import_config(config_file_path):
+    with open(config_file_path, 'r') as f:
+        configuration = json.load(f)
+    return configuration
+
+# TODO include best train and validation accuracies, may be more telling
+def create_result(netSize, temp, alpha, train_score, val_score):
+    result_obj = {"result": []}  # empty space for our experiment's data
+    result = {}
+    result["date_time"] = str(datetime.datetime.now())
+    result["net_size"] = str(netSize)
+    result["temp"] = str(temp)
+    result["alpha"] = str(alpha)
+    result["val_acc"] = str(val_score[1])
+    result["acc"] = str(train_score[1])
+    result["val_loss"] = str(val_score[0])
+    result["loss"] = str(train_score[0])
+    result_obj['result'].append(result)
+    return result_obj
+
+
+def create_meta(teacher_name, epochs, temp, alpha, order):
+    metadata_obj = {"metadata": []}  # empty space for our experiment's data
+    metadata = {}
+    metadata["date_time"] = str(datetime.datetime.now())
+    metadata["teacher_name"] = str(teacher_name)
+    metadata["epochs"] = str(epochs)
+    metadata["temp"] = str(temp)
+    metadata["alpha"] = str(alpha)
+    metadata['order'] = str(order)
+    metadata_obj['metadata'].append(metadata)
+    return metadata_obj
+
+
+def run(logger, options):
+    logger.info(cfg.student_train_spacer + "GENERIC MULTISTAGE" + cfg.student_train_spacer)
+
+    # session file setup
+    session_file_name = "experiments_"+datetime.datetime.now().isoformat()+".log"
+    log_path = ".."+cfg.log_dir
+    session_file_relative_path = log_path+session_file_name
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    session_log_file = os.path.join(my_path, session_file_relative_path)
+    with open(session_log_file, "w") as f:
+        f.write("begin test\n")
+        f.close()
+    temporary_teacher_model_file = cfg.temp_experiment_configs_dir + "/" + cfg.temp_serialized_net
+
+    # load configuration file
+    configuration = import_config(options.config_file_path)
+    teacher_name = configuration['teacher_name']
+    epochs = configuration['epochs']
+    temperatures = configuration['temp_config']
+    alphas = configuration['alpha_config']
+    order_combinations = configuration['size_combinations']
+
+    # loading training data
+    X_train, Y_train, X_test, Y_test = LoadDataset.load_mnist(logger)
+
+    for alpha in alphas:
+        for temp in temperatures:
+            for order in order_combinations:
+                previousModel = None
+                if teacher_name is not None:
+                    ssm = ModelLoader(logger, options.teacherModel)
+                    previousModel = ssm.get_loaded_model()
+                    teacher_name = options.teacherModel
+                # creating experiment metadata
+                experiment_result = {"experiment_results": []}  # empty space for our experiment's data
+                experiment_metadata = create_meta(teacher_name, epochs, temp, alpha, order)
+                experiment_result["experiment_results"].append(experiment_metadata)
+                # performing experiment on given size, alpha, and temperature combination
+                for net_size in order:
+                    model = None
+                    # setting up model based on size
+                    if net_size == 10:
+                        model = Sequential([
+                            Conv2D(256, kernel_size=(3, 3),
+                                   activation='relu',
+                                   input_shape=X_train.shape[1:]),
+                            Conv2D(128, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Conv2D(64, (3, 3), activation='relu'),
+                            Conv2D(32, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Conv2D(16, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Flatten(),
+                            Dense(128, activation='relu'),
+                            Dense(cfg.mnist_number_classes, name='logits'),
+                            Activation('softmax')  # Note that we add a normal softmax layer to begin with
+                        ])
+                    elif net_size == 8:
+                        model = Sequential([
+                            Conv2D(128, kernel_size=(3, 3),
+                                   activation='relu',
+                                   input_shape=X_train.shape[1:]),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Conv2D(64, (3, 3), activation='relu'),
+                            Conv2D(32, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Conv2D(16, (3, 3), activation='relu'),
+                            # Conv2D(8, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Flatten(),
+                            Dense(96, activation='relu'),
+                            Dense(cfg.mnist_number_classes, name='logits'),
+                            Activation('softmax')  # Note that we add a normal softmax layer to begin with
+                        ])
+                    elif net_size == 6:
+                        model = Sequential([
+                            Conv2D(64, kernel_size=(3, 3),
+                                   activation='relu',
+                                   input_shape=X_train.shape[1:]),
+                            Conv2D(32, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Conv2D(16, (3, 3), activation='relu'),
+                            # Conv2D(8, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Flatten(),
+                            Dense(64, activation='relu'),
+                            Dense(cfg.mnist_number_classes, name='logits'),
+                            Activation('softmax')  # Note that we add a normal softmax layer to begin with
+                        ])
+                        # model = load_model(cfg.teacher_model_dir + "/best_size_6_model.hdf5")
+                        # previousModel = model
+                        # continue
+                    elif net_size == 4:
+                        model = Sequential([
+                            Conv2D(32, kernel_size=(3, 3),
+                                   activation='relu',
+                                   input_shape=X_train.shape[1:]),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Conv2D(16, (3, 3), activation='relu'),
+                            # Conv2D(8, (3, 3), activation='relu'),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Flatten(),
+                            Dense(128, activation='relu'),
+                            Dense(cfg.mnist_number_classes, name='logits'),
+                            Activation('softmax')  # Note that we add a normal softmax layer to begin with
+                        ])
+                        # model = load_model(cfg.teacher_model_dir + "/best_size_4_model.hdf5")
+                        # previousModel = model
+                        # continue
+                    elif net_size == 2:
+                        model = Sequential([
+                            Conv2D(16, kernel_size=(3, 3),
+                                   activation='relu',
+                                   input_shape=X_train.shape[1:]),
+                            MaxPooling2D(pool_size=(2, 2)),
+                            Flatten(),
+                            Dense(16, activation='relu'),
+                            Dense(cfg.mnist_number_classes, name='logits'),
+                            Activation('softmax')  # Note that we add a normal softmax layer to begin with
+                        ])
+                    else:
+                        raise Exception('The given net size is not a possible network. Given net size was: {}'.format(net_size))
+
+                    # perform KD if there is a previously trained model to work with
+                    if previousModel is not None:
+                        logger.info("Starting KD training...")
+                        # load model config from disc to avoid any weird errors
+                        # previousModel = load_model(temporary_teacher_model_file)
+                        train_score, val_score = HelperUtil.calculate_unweighted_score(logger, previousModel, X_train, Y_train, X_test, Y_test)
+                        logger.info("Teacher scores: %s, %s" % (val_score, train_score))
+                        # train with KD
+                        logger.info("creating soft targets for student...")
+                        Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(previousModel, temp, X_train, Y_train, X_test, Y_test)
+                        logger.info("done.")
+                        model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
+                        model.compile(
+                            optimizer=cfg.student_optimizer,
+                            loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
+                            metrics=[HelperUtil.acc])
+                        model.fit(X_train, Y_train_new,
+                                  batch_size=cfg.student_batch_size,
+                                  epochs=epochs,
+                                  verbose=1,
+                                  callbacks=cfg.student_callbacks,
+                                  validation_data=(X_test, Y_test_new))
+                        model = HelperUtil.revert_knowledge_distillation_modifications(logger, model)
+                        train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train, X_test, Y_test)
+                        result = create_result(net_size, temp, alpha, train_score, val_score)
+                        logger.info(result)
+                        experiment_result["experiment_results"].append(result)
+
+                    # if no previously trained model, train the network
+                    else:
+                        model.compile(optimizer=cfg.student_optimizer,
+                                      loss=logloss,  # the same as the custom loss function
+                                      metrics=['accuracy'])
+                        # callbacks = cfg.student_callbacks
+                        # callbacks.append(ModelCheckpoint(filepath=cfg.teacher_model_dir + "/best_size_" + str(netSize) + "_model.hdf5", save_best_only=True))
+                        model.fit(X_train, Y_train,
+                                  batch_size=cfg.student_batch_size,
+                                  epochs=epochs,
+                                  verbose=1,
+                                  callbacks=cfg.student_callbacks,
+                                  validation_data=(X_test, Y_test))
+                        train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train, X_test, Y_test)
+                        # append current trained network result to current experiment result object
+                        result = create_result(net_size, temp, alpha, train_score, val_score)
+                        experiment_result["experiment_results"].append(result)
+
+                    # temporarily serialize model to load as teacher in following KD training to avoid errors
+                    previousModel = model  # previously trained model becomes teacher
+                    model.save(temporary_teacher_model_file)
+
+                # appending experiment result to log file
+                if os.path.exists(session_log_file):
+                    open_type = 'a'
+                else:
+                    open_type = 'w'
+                with open(session_log_file, open_type) as f:
+                    f.write(json.dumps(experiment_result))
+                    f.write("\n")
+                    f.close()
+        else:
+            logger.error("Provided training order contains a non-integer!")
+            break
+
+    # printing the results of training
+    logger.info(cfg.student_train_spacer)
+    logger.info("COMPLETE RESULTS:")
+    experiment_result = json.dumps(experiment_result)
+    logger.info(experiment_result)

@@ -7,7 +7,7 @@ from itertools import combinations
 
 def config_option_parser():
     # reading command line input
-    usage = """USAGE: %python generate-config.py -s [array of network sizes] -t "min,max,steps" -a "min,max,steps"
+    usage = """USAGE: %python generate-config.py -s [array of network sizes] -t [min,max,steps] -a [min,max,steps]
             """
     parser = OptionParser(usage=usage)
     parser.add_option('-s', "--sizes-of-nets",

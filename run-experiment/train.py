@@ -81,7 +81,7 @@ def main():
     # command line input
     (options, usage) = config_option_parser(logger)
     try:
-        if options.experiment == "generic-multistep-student-teacher":
+        if options.experiment == "search-alpha-temp-configurations":
             GenericMultistageKD_CNN.run(logger, options)
         elif options.experiment == "full-PaKD-compression":
             logger.error("Provided experiment type not yet implemented!")
