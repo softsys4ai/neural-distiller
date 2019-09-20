@@ -27,7 +27,7 @@ def import_config(config_file_path):
 
 # TODO include best train and validation accuracies, may be more telling
 def create_result(netSize, temp, alpha, train_score, val_score):
-    result_obj = {"result": []}  # empty space for our experiment's data
+    result_obj = {"result": []}  # empty space for our experiment1's data
     result = {}
     result["date_time"] = str(datetime.datetime.now())
     result["net_size"] = str(netSize)
@@ -42,7 +42,7 @@ def create_result(netSize, temp, alpha, train_score, val_score):
 
 
 def create_meta(teacher_name, epochs, temp, alpha, order):
-    metadata_obj = {"metadata": []}  # empty space for our experiment's data
+    metadata_obj = {"metadata": []}  # empty space for our experiment1's data
     metadata = {}
     metadata["date_time"] = str(datetime.datetime.now())
     metadata["teacher_name"] = str(teacher_name)
@@ -64,7 +64,7 @@ def run(logger, options):
     my_path = os.path.abspath(os.path.dirname(__file__))
     session_log_file = os.path.join(my_path, session_file_relative_path)
     with open(session_log_file, "w") as f:
-        f.write("begin test\n")
+        f.write("begin test: " + datetime.datetime.now().isoformat() + "\n")
         f.close()
     temporary_teacher_model_file = cfg.temp_experiment_configs_dir + "/" + cfg.temp_serialized_net
 
@@ -87,11 +87,11 @@ def run(logger, options):
                     ssm = ModelLoader(logger, options.teacherModel)
                     previousModel = ssm.get_loaded_model()
                     teacher_name = options.teacherModel
-                # creating experiment metadata
-                experiment_result = {"experiment_results": []}  # empty space for our experiment's data
+                # creating experiment1 metadata
+                experiment_result = {"experiment_results": []}  # empty space for our experiment1's data
                 experiment_metadata = create_meta(teacher_name, epochs, temp, alpha, order)
                 experiment_result["experiment_results"].append(experiment_metadata)
-                # performing experiment on given size, alpha, and temperature combination
+                # performing experiment1 on given size, alpha, and temperature combination
                 for net_size in order:
                     model = None
                     # setting up model based on size
@@ -220,15 +220,16 @@ def run(logger, options):
                                   callbacks=cfg.student_callbacks,
                                   validation_data=(X_test, Y_test))
                         train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train, X_test, Y_test)
-                        # append current trained network result to current experiment result object
+                        # append current trained network result to current experiment1 result object
                         result = create_result(net_size, temp, alpha, train_score, val_score)
+                        logger.info(result)
                         experiment_result["experiment_results"].append(result)
 
                     # temporarily serialize model to load as teacher in following KD training to avoid errors
                     previousModel = model  # previously trained model becomes teacher
                     model.save(temporary_teacher_model_file)
 
-                # appending experiment result to log file
+                # appending experiment1 result to log file
                 if os.path.exists(session_log_file):
                     open_type = 'a'
                 else:
@@ -237,12 +238,6 @@ def run(logger, options):
                     f.write(json.dumps(experiment_result))
                     f.write("\n")
                     f.close()
-        else:
-            logger.error("Provided training order contains a non-integer!")
-            break
 
     # printing the results of training
     logger.info(cfg.student_train_spacer)
-    logger.info("COMPLETE RESULTS:")
-    experiment_result = json.dumps(experiment_result)
-    logger.info(experiment_result)
