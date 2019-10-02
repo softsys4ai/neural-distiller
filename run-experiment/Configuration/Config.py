@@ -16,7 +16,7 @@ student_train_spacer = "-----------------"
 #
 student_callbacks = callbacks=[
         EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
-        ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.001)
+        ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001)
     ]
 # WandbCallback(),
 #                                                     mode='auto', baseline=None, restore_best_weights=False)
