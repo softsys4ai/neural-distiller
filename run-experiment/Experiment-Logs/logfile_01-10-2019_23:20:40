@@ -1,0 +1,5 @@
+2019-10-01 23:20:40,531 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-01 23:20:40,531 INFO 10.16.16.193 Initialized logger
+2019-10-01 23:20:40,531 INFO 10.16.16.193 Parsed command line options
+2019-10-01 23:20:40,531 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-01 23:20:40,532 ERROR 10.16.16.193 Error while running experiment1: [Errno 2] No such file or directory: 'Configuration/experiment-config.json'
