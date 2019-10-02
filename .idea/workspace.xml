@@ -2,38 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="Iterative training tests added">
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_12-09-2019_20:47:12" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_12-09-2019_20:48:53" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_12-09-2019_20:54:44" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_03:01:54" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_08:01:47" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:20:40" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:22:47" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:26:40" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:29:18" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:31:55" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:34:21" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:40:31" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:42:21" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:44:16" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:49:20" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:52:56" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_10:57:57" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_11:00:02" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Logs/logfile_13-09-2019_11:03:45" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/neural-distiller.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/neural-distiller.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/Config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/NoStepStudent.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experiments/NoStepStudent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/OneStepStudentTeacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experiments/OneStepStudentTeacher.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/ThreeStepIntermediate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experiments/ThreeStepIntermediate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/logfile_12-09-2019_20:46:54" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Utils/HelperUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utils/HelperUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pre-experiment/generate-config.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre-experiment/generate-config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run-experiment/ModelConfigs/TemporaryExperimentConfigs/temp_KD_teacher_net.h5" beforeDir="false" afterPath="$PROJECT_DIR$/run-experiment/ModelConfigs/TemporaryExperimentConfigs/temp_KD_teacher_net.h5" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="HelperUtil.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/run-experiment/Utils/HelperUtil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="19" column="16" lean-forward="true" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="experiment_config.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="85" lean-forward="true" selection-start-column="85" selection-end-column="85" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -45,26 +51,79 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="1680" />
+    <option name="height" value="1050" />
+  </component>
   <component name="ProjectId" id="1QQHG19vcAGiiUdIBT6JQOqE31a" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="1" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
+              <item name="run-experiment" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
+              <item name="run-experiment" type="462c0819:PsiDirectoryNode" />
+              <item name="Configuration" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
+              <item name="run-experiment" type="462c0819:PsiDirectoryNode" />
+              <item name="Utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="INFO&#9;null&#9;null&#10;Initializing&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment1" />
+      <recent name="$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment" />
       <recent name="$PROJECT_DIR$/ModelConfigs" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/run-experiment/Configuration" />
       <recent name="$PROJECT_DIR$/Models" />
       <recent name="$PROJECT_DIR$/Utils" />
       <recent name="$PROJECT_DIR$/Pruning" />
@@ -83,8 +142,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.train-lenet-1s">
-    <configuration name="train-lenet-1s" type="PythonConfigurationType" factoryName="Python">
+  <component name="RunManager" selected="Python.search">
+    <configuration name="generate-config" type="PythonConfigurationType" factoryName="Python">
       <module name="neural-distiller" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -92,21 +151,18 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$PROJECT_DIR$/virtual-env-3.5/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pre-experiment" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
-      <option name="PARAMETERS" value="-m lenet5 -e one-step-student-teacher" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pre-experiment/generate-config.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
     </configuration>
-    <configuration name="train-lenet-2s" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="search" type="PythonConfigurationType" factoryName="Python">
       <module name="neural-distiller" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -114,70 +170,31 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="$PROJECT_DIR$/virtual-env-3.5/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run-experiment" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
-      <option name="PARAMETERS" value="-m lenet5 -e two-step-student-teacher" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run-experiment/train.py" />
+      <option name="PARAMETERS" value="-e search-alpha-temp-configurations -c &quot;$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json&quot;" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="train-lenet-3s" type="PythonConfigurationType" factoryName="Python">
-      <module name="neural-distiller" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="$PROJECT_DIR$/virtual-env-3.5/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
-      <option name="PARAMETERS" value="-m lenet5 -e three-step-student-teacher" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="train-lenet-ns" type="PythonConfigurationType" factoryName="Python">
-      <module name="neural-distiller" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="$PROJECT_DIR$/virtual-env-3.5/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
-      <option name="PARAMETERS" value="-m lenet5 -e no-step-student" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.train-lenet-2s" />
-      <item itemvalue="Python.train-lenet-3s" />
-      <item itemvalue="Python.train-lenet-ns" />
-      <item itemvalue="Python.train-lenet-1s" />
+      <item itemvalue="Python.search" />
+      <item itemvalue="Python.generate-config" />
     </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand />
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -192,6 +209,10 @@
       <workItem from="1567695801788" duration="963000" />
       <workItem from="1568305406252" duration="2568000" />
       <workItem from="1568316616041" duration="17966000" />
+      <workItem from="1568999366205" duration="4571000" />
+      <workItem from="1569454723177" duration="855000" />
+      <workItem from="1569860719681" duration="74000" />
+      <workItem from="1569977600599" duration="84000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to text files, addition to readme">
       <created>1567198437000</created>
@@ -326,8 +347,52 @@
       <option name="project" value="LOCAL" />
       <updated>1568335650100</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Updated entire organization, config generator added, experiment now interprets config file">
+      <created>1568862112810</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1568862112810</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Log updates, experimental results.">
+      <created>1568950512230</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1568950512230</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Iterative training tests added">
+      <created>1569000067631</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1569000067631</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -338,6 +403,12 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
@@ -345,8 +416,10 @@
       </map>
     </option>
   </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
   <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Changes to text files, addition to readme" />
     <MESSAGE value="Readme change, legacy directory deletion" />
     <MESSAGE value="Readme update" />
@@ -363,11 +436,35 @@
     <MESSAGE value="now working with &gt;python3.5 for keras surgeon library use" />
     <MESSAGE value="Working keras surgeon tests" />
     <MESSAGE value="Added new tests folder, re-organized, config additions" />
+    <MESSAGE value="Updated entire organization, config generator added, experiment now interprets config file" />
+    <MESSAGE value="Log updates, experimental results." />
     <MESSAGE value="Iterative training tests added" />
     <option name="LAST_COMMIT_MESSAGE" value="Iterative training tests added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/run-experiment/train.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/run-experiment/train.py</url>
+          <line>79</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/run-experiment/Experiments/GenericMultistageKD_CNN.py</url>
+          <line>81</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/run-experiment/Experiments/GenericMultistageKD_CNN.py</url>
+          <line>57</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -379,8 +476,29 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/neural_distiller_2$train_lenet_cs_3_5.coverage" NAME="train-lenet-2s Coverage Results" MODIFIED="1568331994263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/neural_distiller_2$search.coverage" NAME="search Coverage Results" MODIFIED="1569019924390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/run-experiment" />
     <SUITE FILE_PATH="coverage/neural_distiller_2$train_lenet_3s.coverage" NAME="train-lenet-3s Coverage Results" MODIFIED="1568384310639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/neural_distiller_2$train_lenet_simple_s_t.coverage" NAME="train-lenet-1s Coverage Results" MODIFIED="1568387024136" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/neural_distiller_2$train_lenet_ns.coverage" NAME="train-lenet-ns Coverage Results" MODIFIED="1568386676246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/neural_distiller_2$generate_config.coverage" NAME="generate-config Coverage Results" MODIFIED="1569454862573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre-experiment" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/run-experiment/Utils/HelperUtil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="19" column="16" lean-forward="true" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="85" lean-forward="true" selection-start-column="85" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
