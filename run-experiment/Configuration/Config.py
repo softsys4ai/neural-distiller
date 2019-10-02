@@ -11,7 +11,7 @@ student_train_spacer = "-----------------"
 # custom model attributes
 # Set callback functions to early stop training and save the best model so far
 student_callbacks = callbacks=[
-        EarlyStopping(monitor='val_acc', patience=4, min_delta=0.0001)
+        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.0001)
     ]
 # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=2, epsilon=0.007)
 # student_callbacks = callbacks=[
