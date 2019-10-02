@@ -79,9 +79,9 @@ def run(logger, options):
     # loading training data
     X_train, Y_train, X_test, Y_test = LoadDataset.load_mnist(logger)
 
-    for alpha in alphas:
-        for temp in temperatures:
-            for order in order_combinations:
+    for order in order_combinations:
+        for alpha in alphas:
+            for temp in temperatures:
                 previousModel = None
                 if teacher_name is not None:
                     ssm = ModelLoader(logger, options.teacherModel)
