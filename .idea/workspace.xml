@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="Iterative training tests added">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/neural-distiller.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/neural-distiller.iml" afterDir="false" />
+    <list default="true" id="d29799cc-8cf3-4074-acda-f0e3235a5aee" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre-experiment/generate-config.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre-experiment/generate-config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run-experiment/ModelConfigs/TemporaryExperimentConfigs/temp_KD_teacher_net.h5" beforeDir="false" afterPath="$PROJECT_DIR$/run-experiment/ModelConfigs/TemporaryExperimentConfigs/temp_KD_teacher_net.h5" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="85" lean-forward="true" selection-start-column="85" selection-end-column="85" />
+              <caret column="63" selection-start-column="63" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -96,6 +91,12 @@
               <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
               <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
               <item name="run-experiment" type="462c0819:PsiDirectoryNode" />
+              <item name="Experiment-Logs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="neural-distiller-2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="neural-distiller-2" type="462c0819:PsiDirectoryNode" />
+              <item name="run-experiment" type="462c0819:PsiDirectoryNode" />
               <item name="Utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -115,19 +116,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment1" />
-      <recent name="$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment" />
-      <recent name="$PROJECT_DIR$/ModelConfigs" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/run-experiment/Configuration" />
       <recent name="$PROJECT_DIR$/Models" />
       <recent name="$PROJECT_DIR$/Utils" />
       <recent name="$PROJECT_DIR$/Pruning" />
       <recent name="$PROJECT_DIR$/Data" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment2" />
+      <recent name="$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment1" />
+      <recent name="$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment" />
+      <recent name="$PROJECT_DIR$/ModelConfigs" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -368,12 +369,18 @@
       <option name="project" value="LOCAL" />
       <updated>1569000067631</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Iterative training tests added">
+      <created>1569978388008</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1569978388008</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -493,10 +500,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment2/logfile_20-09-2019_18:52:06">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run-experiment/Experiment-Logs/experiment2/experiments_2019-09-20T18:52:06.357358.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/run-experiment/Configuration/experiment_config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="85" lean-forward="true" selection-start-column="85" selection-end-column="85" />
+          <caret column="63" selection-start-column="63" selection-end-column="63" />
         </state>
       </provider>
     </entry>
