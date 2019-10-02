@@ -10,13 +10,14 @@ spacer = "--------------------------------"
 student_train_spacer = "-----------------"
 # custom model attributes
 # Set callback functions to early stop training and save the best model so far
-student_callbacks = callbacks=[
-        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.0001)
-    ]
-# ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=2, epsilon=0.007)
 # student_callbacks = callbacks=[
-#         EarlyStopping(monitor='val_acc', patience=4, min_delta=0.00007)
+#         EarlyStopping(monitor='val_acc', patience=8, min_delta=0.0001)
 #     ]
+#
+student_callbacks = callbacks=[
+        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
+        ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.001)
+    ]
 # WandbCallback(),
 #                                                     mode='auto', baseline=None, restore_best_weights=False)
 # [EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=10, verbose=0,
