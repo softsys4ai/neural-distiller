@@ -15,6 +15,7 @@ from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.models import load_model
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
+from tensorflow.python.keras.utils import multi_gpu_model
 from numpy.random import seed
 from tensorflow import set_random_seed
 
@@ -200,6 +201,7 @@ def run(logger, options):
                                                                                          Y_train, X_test, Y_test)
                         logger.info("completed")
                         model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
+                        model = multi_gpu_model(model, gpus=4)
                         model.compile(
                             optimizer=cfg.student_optimizer,
                             loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred,
