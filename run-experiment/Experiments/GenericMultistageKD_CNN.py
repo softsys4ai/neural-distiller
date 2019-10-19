@@ -116,6 +116,7 @@ def run(logger, options):
                         #     Dense(cfg.mnist_number_classes, name='logits'),
                         #     Activation('softmax')  # Note that we add a normal softmax layer to begin with
                         # ])
+                        logger.info("loading pre-trained teacher")
                         previousModel = load_model('size_10_teacher.h5')
                         continue
                     elif net_size == 8:
@@ -189,6 +190,7 @@ def run(logger, options):
                     if previousModel is not None:
                         # load model config from disc to avoid any weird errors
                         # previousModel = load_model(temporary_teacher_model_file)
+                        logger.info("evaluating teacher...")
                         train_score, val_score = HelperUtil.calculate_unweighted_score(logger, previousModel, X_train,
                                                                                        Y_train, X_test, Y_test)
                         logger.info("Teacher scores: %s, %s" % (val_score, train_score))
