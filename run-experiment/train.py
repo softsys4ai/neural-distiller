@@ -76,6 +76,8 @@ def config_logger():
 
 
 def main():
+    # add high priority
+    os.nice(1)
     # logging
     logger = config_logger()
     # command line input
