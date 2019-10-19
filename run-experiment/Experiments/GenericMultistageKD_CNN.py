@@ -100,23 +100,24 @@ def run(logger, options):
                     model = None
                     # setting up model based on size
                     if net_size == 10:
-                        model = Sequential([
-                            Conv2D(256, kernel_size=(3, 3),
-                                   activation='relu',
-                                   input_shape=X_train.shape[1:]),
-                            Conv2D(128, (3, 3), activation='relu'),
-                            MaxPooling2D(pool_size=(2, 2)),
-                            Conv2D(64, (3, 3), activation='relu'),
-                            Conv2D(32, (3, 3), activation='relu'),
-                            MaxPooling2D(pool_size=(2, 2)),
-                            Conv2D(16, (3, 3), activation='relu'),
-                            MaxPooling2D(pool_size=(2, 2)),
-                            Flatten(),
-                            Dense(128, activation='relu'),
-                            Dense(cfg.mnist_number_classes, name='logits'),
-                            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-                        ])
-                        # model = load_model('size_10_teacher.h5')
+                        # model = Sequential([
+                        #     Conv2D(256, kernel_size=(3, 3),
+                        #            activation='relu',
+                        #            input_shape=X_train.shape[1:]),
+                        #     Conv2D(128, (3, 3), activation='relu'),
+                        #     MaxPooling2D(pool_size=(2, 2)),
+                        #     Conv2D(64, (3, 3), activation='relu'),
+                        #     Conv2D(32, (3, 3), activation='relu'),
+                        #     MaxPooling2D(pool_size=(2, 2)),
+                        #     Conv2D(16, (3, 3), activation='relu'),
+                        #     MaxPooling2D(pool_size=(2, 2)),
+                        #     Flatten(),
+                        #     Dense(128, activation='relu'),
+                        #     Dense(cfg.mnist_number_classes, name='logits'),
+                        #     Activation('softmax')  # Note that we add a normal softmax layer to begin with
+                        # ])
+                        previousModel = load_model('size_10_teacher.h5')
+                        continue
                     elif net_size == 8:
                         model = Sequential([
                             Conv2D(128, kernel_size=(3, 3),
