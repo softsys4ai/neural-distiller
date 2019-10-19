@@ -1,0 +1,18 @@
+2019-10-18 19:21:43,427 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-18 19:21:43,427 INFO 10.16.16.193 Initialized logger
+2019-10-18 19:21:43,427 INFO 10.16.16.193 Parsed command line options
+2019-10-18 19:21:43,428 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-18 19:21:57,635 ERROR 10.16.16.193 Error while running experiment1: 2 root error(s) found.
+  (0) Resource exhausted: OOM when allocating tensor with shape[256,256,26,26] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[{{node conv2d/Conv2D}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+	 [[loss/mul/_115]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+  (1) Resource exhausted: OOM when allocating tensor with shape[256,256,26,26] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[{{node conv2d/Conv2D}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+0 successful operations.
+0 derived errors ignored.
