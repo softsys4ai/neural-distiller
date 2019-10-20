@@ -196,10 +196,10 @@ def run(logger, options):
                         if previousModel is not None:
                             # load model config from disc to avoid any weird errors
                             # previousModel = load_model(temporary_teacher_model_file)
-                            logger.info("evaluating teacher...")
-                            train_score, val_score = HelperUtil.calculate_unweighted_score(logger, previousModel, X_train,
-                                                                                           Y_train, X_test, Y_test)
-                            logger.info("Teacher scores: %s, %s" % (val_score, train_score))
+                            # logger.info("evaluating teacher...")
+                            # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, previousModel, X_train,
+                            #                                                                Y_train, X_test, Y_test)
+                            # logger.info("Teacher scores: %s, %s" % (val_score, train_score))
                             # train with KD
                             logger.info("creating soft targets for student...")
                             Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(previousModel, temp, X_train,
