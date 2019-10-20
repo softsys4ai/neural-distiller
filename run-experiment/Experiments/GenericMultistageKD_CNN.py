@@ -90,7 +90,7 @@ def run(logger, options):
             for temp in temperatures:
                 with tf.Graph().as_default():
                     logger.info("Clearing tensorflow/keras backend session...")
-                    tf.keras.backend.clear_session()  # must clear the current session to free memory!
+                    # tf.keras.backend.clear_session()  # must clear the current session to free memory!
                     previousModel = None
                     if teacher_name is not None:
                         ssm = ModelLoader(logger, options.teacherModel)
