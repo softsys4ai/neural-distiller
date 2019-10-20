@@ -251,6 +251,7 @@ def run(logger, options):
                         model = load_model('my_model.h5')
 
                     # temporarily serialize model to load as teacher in following KD training to avoid errors
+                    del previousModel # free memory
                     previousModel = model  # previously trained model becomes teacher
                     model.save(temporary_teacher_model_file)
 
