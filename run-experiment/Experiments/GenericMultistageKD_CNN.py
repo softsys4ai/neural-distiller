@@ -17,6 +17,7 @@ from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.models import load_model
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.utils import multi_gpu_model
+from tensorflow.python.keras.optimizers import adadelta
 from numpy.random import seed
 from tensorflow import set_random_seed
 
@@ -208,9 +209,8 @@ def run(logger, options):
                             model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
                             # model = multi_gpu_model(model, gpus=4)
                             model.compile(
-                                optimizer=cfg.student_optimizer,
-                                loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred,
-                                                                                                   alpha),
+                                optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                                loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                 metrics=[HelperUtil.acc])
                             logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%d" % (order, net_size, temp, alpha))
                             model.fit(X_train, Y_train_new,
@@ -228,7 +228,7 @@ def run(logger, options):
 
                         # if no previously trained model, train the network
                         else:
-                            model.compile(optimizer=cfg.student_optimizer,
+                            model.compile(optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                                           loss=logloss,  # the same as the custom loss function
                                           metrics=['accuracy'])
                             # callbacks = cfg.student_callbacks
