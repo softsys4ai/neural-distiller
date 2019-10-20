@@ -85,10 +85,10 @@ def run(logger, options):
     # loading training data
     X_train, Y_train, X_test, Y_test = LoadDataset.load_mnist(logger)
 
-    with tf.Graph().as_default():
-        for order in order_combinations:
-            for alpha in alphas:
-                for temp in temperatures:
+    for order in order_combinations:
+        for alpha in alphas:
+            for temp in temperatures:
+                with tf.Graph().as_default():
                     logger.info("Clearing tensorflow/keras backend session...")
                     tf.keras.backend.clear_session()  # must clear the current session to free memory!
                     previousModel = None

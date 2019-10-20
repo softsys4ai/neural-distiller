@@ -59,6 +59,7 @@ def calculate_unweighted_score(logger, model, X_train, Y_train, X_test, Y_test):
                   metrics=['accuracy'])
     train_score = model.evaluate(X_train, Y_train, verbose=0)
     val_score = model.evaluate(X_test, Y_test, verbose=0)
+    del model
     return train_score, val_score
 
 
