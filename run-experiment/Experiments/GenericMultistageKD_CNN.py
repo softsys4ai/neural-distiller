@@ -10,6 +10,7 @@ import datetime
 import json
 import ast
 import os
+import tensorflow
 from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.callbacks import ModelCheckpoint
@@ -87,6 +88,7 @@ def run(logger, options):
     for order in order_combinations:
         for alpha in alphas:
             for temp in temperatures:
+                tensorflow.keras.backend.clear_session() # must clear the current session to free memory!
                 previousModel = None
                 if teacher_name is not None:
                     ssm = ModelLoader(logger, options.teacherModel)
@@ -117,6 +119,7 @@ def run(logger, options):
                         #     Dense(cfg.mnist_number_classes, name='logits'),
                         #     Activation('softmax')  # Note that we add a normal softmax layer to begin with
                         # ])
+                        logger.info("--------------------------------------------------------------------------------")
                         logger.info("loading pre-trained teacher")
                         previousModel = load_model('size_10_teacher.h5')
                         continue
@@ -207,8 +210,7 @@ def run(logger, options):
                             loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred,
                                                                                                alpha),
                             metrics=[HelperUtil.acc])
-                        logger.info(
-                            "training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%d" % (order, net_size, temp, alpha))
+                        logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%d" % (order, net_size, temp, alpha))
                         model.fit(X_train, Y_train_new,
                                   batch_size=cfg.student_batch_size,
                                   epochs=epochs,
