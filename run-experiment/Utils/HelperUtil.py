@@ -55,14 +55,14 @@ def acc(y_true, y_pred):
 
 
 def calculate_unweighted_score(logger, model, X_train, Y_train, X_test, Y_test):
-    with tf.Graph().as_default():
-        model.compile(optimizer=cfg.student_optimizer,
-                      loss='categorical_crossentropy',
-                      metrics=['accuracy'])
-        train_score = model.evaluate(X_train, Y_train, verbose=0)
-        val_score = model.evaluate(X_test, Y_test, verbose=0)
-        del model
-        return train_score, val_score
+    # with tf.Graph().as_default():
+    model.compile(optimizer=cfg.student_optimizer,
+                  loss='categorical_crossentropy',
+                  metrics=['accuracy'])
+    train_score = model.evaluate(X_train, Y_train, verbose=0)
+    val_score = model.evaluate(X_test, Y_test, verbose=0)
+    del model
+    return train_score, val_score
 
 
 def calculate_weighted_score(logger, model, X_train, Y_train, X_test, Y_test):
