@@ -4,6 +4,7 @@ from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.metrics import categorical_accuracy
 from tensorflow.python.keras.layers import Lambda, concatenate, Activation
 from tensorflow.python.keras.models import Model
+import tensorflow as tf
 
 nb_classes = 10
 
@@ -54,9 +55,10 @@ def acc(y_true, y_pred):
 
 
 def calculate_unweighted_score(logger, model, X_train, Y_train, X_test, Y_test):
-    model.compile(optimizer=cfg.student_optimizer,
-                  loss='categorical_crossentropy',
-                  metrics=['accuracy'])
+    # with tf.Graph().as_default():
+    # model.compile(optimizer=cfg.student_optimizer,
+    #               loss='categorical_crossentropy',
+    #               metrics=['accuracy'])
     train_score = model.evaluate(X_train, Y_train, verbose=0)
     val_score = model.evaluate(X_test, Y_test, verbose=0)
     del model
