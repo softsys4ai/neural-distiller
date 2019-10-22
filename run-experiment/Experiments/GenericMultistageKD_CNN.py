@@ -230,7 +230,7 @@ def run(logger, options):
                             val_score = model.evaluate(X_test, Y_test, verbose=0)
                             result = create_result(net_size, temp, alpha, train_score, val_score)
                             logger.info(result)
-                            experiment_result["experiment_results"].append(result)
+                            # experiment_result["experiment_results"].append(result) # TODO add back after resolving memory leak
 
                         # if no previously trained model, train the network
                         else:
