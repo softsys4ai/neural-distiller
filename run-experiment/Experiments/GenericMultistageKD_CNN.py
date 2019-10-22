@@ -90,7 +90,9 @@ def run(logger, options):
         for order in order_combinations:
             for alpha in alphas:
                 for temp in temperatures:
-                    logger.info("Clearing tensorflow/keras backend session...")
+                    logger.info("Clearing tensorflow/keras backend session and de-allocating remaining models...")
+                    del model
+                    del previousModel
                     tf.keras.backend.clear_session()  # must clear the current session to free memory!
                     # with tf.Graph().as_default():
                     previousModel = None
