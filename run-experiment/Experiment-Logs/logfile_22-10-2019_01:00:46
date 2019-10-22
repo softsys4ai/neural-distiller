@@ -1,0 +1,163 @@
+2019-10-22 01:00:46,679 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-22 01:00:46,680 INFO 10.16.16.193 Initialized logger
+2019-10-22 01:00:46,680 INFO 10.16.16.193 Parsed command line options
+2019-10-22 01:00:46,680 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-22 01:00:47,173 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:00:47,276 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:1
+alpha:0.100000
+2019-10-22 01:01:27,000 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:01:26.999883', 'net_size': '4', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9909', 'acc': '0.99986666', 'val_loss': '0.03655336990420153', 'loss': '0.0007961648534320432'}]}
+2019-10-22 01:01:27,069 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:01:28,700 INFO 10.16.16.193 completed
+2019-10-22 01:01:28,750 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-22 01:01:28,793 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:1
+alpha:0.100000
+2019-10-22 01:02:32,900 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:02:32.900045', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9831', 'acc': '0.99371666', 'val_loss': '0.051981419258110693', 'loss': '0.02404576610812607'}]}
+2019-10-22 01:02:32,900 INFO 10.16.16.193 -----------------
+2019-10-22 01:02:32,900 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:02:33,000 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:10
+alpha:0.100000
+2019-10-22 01:03:00,867 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:03:00.867156', 'net_size': '4', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9913', 'acc': '0.99938333', 'val_loss': '0.031728442698906886', 'loss': '0.002691313332481983'}]}
+2019-10-22 01:03:00,936 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:03:02,569 INFO 10.16.16.193 completed
+2019-10-22 01:03:02,618 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-22 01:03:02,660 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:10
+alpha:0.100000
+2019-10-22 01:03:42,752 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:03:42.752478', 'net_size': '2', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9808', 'acc': '0.99045', 'val_loss': '0.05331927140075714', 'loss': '0.034969985754741355'}]}
+2019-10-22 01:03:42,753 INFO 10.16.16.193 -----------------
+2019-10-22 01:03:42,753 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:03:42,846 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:20
+alpha:0.100000
+2019-10-22 01:04:19,161 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:04:19.161131', 'net_size': '4', 'temp': '20', 'alpha': '0.1', 'val_acc': '0.9914', 'acc': '0.99985', 'val_loss': '0.04334624694687002', 'loss': '0.0005548118497762549'}]}
+2019-10-22 01:04:19,231 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:04:20,859 INFO 10.16.16.193 completed
+2019-10-22 01:04:21,045 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-22 01:04:21,087 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:20
+alpha:0.100000
+2019-10-22 01:05:23,465 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:05:23.465348', 'net_size': '2', 'temp': '20', 'alpha': '0.1', 'val_acc': '0.9809', 'acc': '0.99095', 'val_loss': '0.06192970297671854', 'loss': '0.02851215331852048'}]}
+2019-10-22 01:05:23,466 INFO 10.16.16.193 -----------------
+2019-10-22 01:05:23,466 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:05:23,559 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:30
+alpha:0.100000
+2019-10-22 01:05:51,696 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:05:51.696314', 'net_size': '4', 'temp': '30', 'alpha': '0.1', 'val_acc': '0.9897', 'acc': '0.99951667', 'val_loss': '0.04332965455301395', 'loss': '0.0020700028528118594'}]}
+2019-10-22 01:05:51,766 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:05:53,386 INFO 10.16.16.193 completed
+2019-10-22 01:05:53,434 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-22 01:05:53,476 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:30
+alpha:0.100000
+2019-10-22 01:06:45,524 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:06:45.523967', 'net_size': '2', 'temp': '30', 'alpha': '0.1', 'val_acc': '0.9828', 'acc': '0.99331665', 'val_loss': '0.051133297040779145', 'loss': '0.02653123105917281'}]}
+2019-10-22 01:06:45,524 INFO 10.16.16.193 -----------------
+2019-10-22 01:06:45,524 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:06:45,617 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:40
+alpha:0.100000
+2019-10-22 01:07:10,039 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:07:10.039158', 'net_size': '4', 'temp': '40', 'alpha': '0.1', 'val_acc': '0.9903', 'acc': '0.99916667', 'val_loss': '0.03459695654277332', 'loss': '0.0036162970286069593'}]}
+2019-10-22 01:07:10,108 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:07:11,703 INFO 10.16.16.193 completed
+2019-10-22 01:07:11,751 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-22 01:07:11,794 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:40
+alpha:0.100000
+2019-10-22 01:08:16,246 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:08:16.246259', 'net_size': '2', 'temp': '40', 'alpha': '0.1', 'val_acc': '0.9835', 'acc': '0.99406666', 'val_loss': '0.05357019910600502', 'loss': '0.02276540454113856'}]}
+2019-10-22 01:08:16,246 INFO 10.16.16.193 -----------------
+2019-10-22 01:08:16,247 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:08:16,341 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:50
+alpha:0.100000
+2019-10-22 01:08:48,160 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:08:48.160600', 'net_size': '4', 'temp': '50', 'alpha': '0.1', 'val_acc': '0.9919', 'acc': '0.99976665', 'val_loss': '0.03387314565388789', 'loss': '0.001263098311477485'}]}
+2019-10-22 01:08:48,230 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:08:49,828 INFO 10.16.16.193 completed
+2019-10-22 01:08:49,876 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-22 01:08:49,919 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:50
+alpha:0.100000
+2019-10-22 01:09:42,643 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:09:42.643365', 'net_size': '2', 'temp': '50', 'alpha': '0.1', 'val_acc': '0.9816', 'acc': '0.993', 'val_loss': '0.05340089198190253', 'loss': '0.02622633210940985'}]}
+2019-10-22 01:09:42,644 INFO 10.16.16.193 -----------------
+2019-10-22 01:09:42,644 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:09:42,742 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:1
+alpha:0.250000
+2019-10-22 01:10:03,475 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:10:03.475646', 'net_size': '4', 'temp': '1', 'alpha': '0.25', 'val_acc': '0.9897', 'acc': '0.99868333', 'val_loss': '0.031576512844479473', 'loss': '0.005929005933216649'}]}
+2019-10-22 01:10:03,545 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:10:05,290 INFO 10.16.16.193 completed
+2019-10-22 01:10:05,482 INFO 10.16.16.193 compiling and training student with alpha: 0.25
+2019-10-22 01:10:05,524 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:1
+alpha:0.250000
+2019-10-22 01:10:58,856 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:10:58.856085', 'net_size': '2', 'temp': '1', 'alpha': '0.25', 'val_acc': '0.9837', 'acc': '0.9974', 'val_loss': '0.05629826373236428', 'loss': '0.0125954774171405'}]}
+2019-10-22 01:10:58,857 INFO 10.16.16.193 -----------------
+2019-10-22 01:10:58,857 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:10:58,955 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:10
+alpha:0.250000
+2019-10-22 01:11:35,331 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:11:35.331478', 'net_size': '4', 'temp': '10', 'alpha': '0.25', 'val_acc': '0.9906', 'acc': '0.9999833', 'val_loss': '0.04217800575999131', 'loss': '0.0006635278994995784'}]}
+2019-10-22 01:11:35,404 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:11:37,053 INFO 10.16.16.193 completed
+2019-10-22 01:11:37,101 INFO 10.16.16.193 compiling and training student with alpha: 0.25
+2019-10-22 01:11:37,143 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:10
+alpha:0.250000
+2019-10-22 01:12:25,719 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:12:25.719785', 'net_size': '2', 'temp': '10', 'alpha': '0.25', 'val_acc': '0.9825', 'acc': '0.9955', 'val_loss': '0.055387140897481', 'loss': '0.017301913205727274'}]}
+2019-10-22 01:12:25,720 INFO 10.16.16.193 -----------------
+2019-10-22 01:12:25,720 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:12:25,814 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:20
+alpha:0.250000
+2019-10-22 01:13:06,727 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:13:06.727045', 'net_size': '4', 'temp': '20', 'alpha': '0.25', 'val_acc': '0.9909', 'acc': '1.0', 'val_loss': '0.04122291561574675', 'loss': '8.545157504756833e-05'}]}
+2019-10-22 01:13:06,797 INFO 10.16.16.193 creating soft targets for student...
+2019-10-22 01:13:08,445 INFO 10.16.16.193 completed
+2019-10-22 01:13:08,492 INFO 10.16.16.193 compiling and training student with alpha: 0.25
+2019-10-22 01:13:08,536 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:20
+alpha:0.250000
+2019-10-22 01:14:07,925 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-22 01:14:07.925629', 'net_size': '2', 'temp': '20', 'alpha': '0.25', 'val_acc': '0.9838', 'acc': '0.9975167', 'val_loss': '0.05521893770296156', 'loss': '0.01200445965398297'}]}
+2019-10-22 01:14:07,926 INFO 10.16.16.193 -----------------
+2019-10-22 01:14:07,926 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-22 01:14:08,021 INFO 10.16.16.193 training teacher model...
+order:[4, 2]
+size:4
+temp:30
+alpha:0.250000
