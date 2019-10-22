@@ -234,6 +234,7 @@ def run(logger, options):
 
                         # if no previously trained model, train the network
                         else:
+                            logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
                             model.compile(optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                                           loss=logloss,  # the same as the custom loss function
                                           metrics=['accuracy'])
