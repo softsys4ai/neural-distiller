@@ -101,7 +101,7 @@ def run(logger, options):
                     # creating experiment1 metadata
                     experiment_result = {"experiment_results": []}  # empty space for our experiment1's data
                     experiment_metadata = create_meta(teacher_name, epochs, temp, alpha, order)
-                    experiment_result["experiment_results"].append(experiment_metadata)
+                    # experiment_result["experiment_results"].append(experiment_metadata) # TODO add back after resolving memory leak
                     # performing experiment1 on given size, alpha, and temperature combination
                     for net_size in order:
                         model = None
@@ -250,7 +250,7 @@ def run(logger, options):
                             # append current trained network result to current experiment1 result object
                             result = create_result(net_size, temp, alpha, train_score, val_score)
                             logger.info(result)
-                            experiment_result["experiment_results"].append(result)
+                            # experiment_result["experiment_results"].append(result) # TODO add back after resolving memory leak
                             # model.save('size_10_teacher.h5')  # creates a HDF5 file 'my_model.h5'
 
                             # returns a compiled model
@@ -260,7 +260,7 @@ def run(logger, options):
                         # temporarily serialize model to load as teacher in following KD training to avoid errors
                         del previousModel # free memory
                         previousModel = model  # previously trained model becomes teacher
-                        model.save(temporary_teacher_model_file)
+                        # model.save(temporary_teacher_model_file)
                     # appending experiment1 result to log file
                     if os.path.exists(session_log_file):
                         open_type = 'a'
