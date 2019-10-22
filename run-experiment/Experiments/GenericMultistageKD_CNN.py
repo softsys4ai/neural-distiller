@@ -197,8 +197,8 @@ def run(logger, options):
                                 Flatten(),
                                 Dense(32, input_shape=(784,)),
                                 Activation('relu'),
-                                Dense(10),
-                                Activation('softmax'),
+                                Dense(cfg.mnist_number_classes, name='logits'),
+                                Activation('softmax')
                             ])
                         else:
                             raise Exception(
