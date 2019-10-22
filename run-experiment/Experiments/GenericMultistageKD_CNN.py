@@ -213,7 +213,7 @@ def run(logger, options):
                                 optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                                 loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                 metrics=[HelperUtil.acc])
-                            logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%d" % (order, net_size, temp, alpha))
+                            logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
                             model.fit(X_train, Y_train_new,
                                       batch_size=cfg.student_batch_size,
                                       epochs=epochs,
