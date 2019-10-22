@@ -1,6 +1,0 @@
-2019-10-22 00:58:33,835 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-10-22 00:58:33,835 INFO 10.16.16.193 Initialized logger
-2019-10-22 00:58:33,835 INFO 10.16.16.193 Parsed command line options
-2019-10-22 00:58:33,835 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
-2019-10-22 00:58:34,329 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
-2019-10-22 00:58:34,332 INFO 10.16.16.193 -- COMPLETE

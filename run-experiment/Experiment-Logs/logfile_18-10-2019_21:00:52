@@ -1,6 +1,0 @@
-2019-10-18 21:00:52,899 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-10-18 21:00:52,899 INFO 10.16.16.193 Initialized logger
-2019-10-18 21:00:52,899 INFO 10.16.16.193 Parsed command line options
-2019-10-18 21:00:52,899 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
-2019-10-18 21:03:20,197 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:03:20.197653', 'net_size': '10', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9918', 'acc': '0.9989167', 'val_loss': '0.04246806885740118', 'loss': '0.003596516622136586'}]}
-2019-10-18 21:03:20,482 ERROR 10.16.16.193 Error while running experiment1: Unable to open file (unable to open file: name = 'my_model.h5', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)

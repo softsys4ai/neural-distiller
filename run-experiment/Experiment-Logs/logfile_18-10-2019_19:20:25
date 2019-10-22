@@ -1,4 +1,0 @@
-2019-10-18 19:20:25,100 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-10-18 19:20:25,100 INFO 10.16.16.193 Initialized logger
-2019-10-18 19:20:25,100 INFO 10.16.16.193 Parsed command line options
-2019-10-18 19:20:25,101 ERROR 10.16.16.193 Provided experiment1 type not supported!

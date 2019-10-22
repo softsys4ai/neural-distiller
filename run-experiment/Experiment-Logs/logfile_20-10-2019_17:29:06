@@ -1,6 +1,0 @@
-2019-10-20 17:29:06,882 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
-2019-10-20 17:29:06,882 INFO 10.16.16.193 Initialized logger
-2019-10-20 17:29:06,882 INFO 10.16.16.193 Parsed command line options
-2019-10-20 17:29:06,882 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
-2019-10-20 17:29:07,375 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
-2019-10-20 17:29:07,376 ERROR 10.16.16.193 Error while running experiment1: Do not use tf.reset_default_graph() to clear nested graphs. If you need a cleared graph, exit the nesting and create a new graph.
