@@ -1,0 +1,29 @@
+2019-10-18 22:04:56,555 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-18 22:04:56,555 INFO 10.16.16.193 Initialized logger
+2019-10-18 22:04:56,555 INFO 10.16.16.193 Parsed command line options
+2019-10-18 22:04:56,555 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-18 22:04:57,049 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 22:05:00,234 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 22:05:09,143 INFO 10.16.16.193 Teacher scores: [0.04246804820231084, 0.9918], [0.0035965125593104903, 0.9989167]
+2019-10-18 22:05:09,143 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 22:05:14,703 INFO 10.16.16.193 completed
+2019-10-18 22:05:14,745 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 22:05:14,789 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:1
+alpha:0
+2019-10-18 22:05:26,132 ERROR 10.16.16.193 Error while running experiment1: 2 root error(s) found.
+  (0) Resource exhausted: OOM when allocating tensor with shape[256,128,26,26] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[{{node conv2d_5/Conv2D}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+	 [[loss_2/mul/_481]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+  (1) Resource exhausted: OOM when allocating tensor with shape[256,128,26,26] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[{{node conv2d_5/Conv2D}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+0 successful operations.
+0 derived errors ignored.
