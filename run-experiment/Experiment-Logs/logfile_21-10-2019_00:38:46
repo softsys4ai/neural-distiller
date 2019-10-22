@@ -1,0 +1,16 @@
+2019-10-21 00:38:46,450 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-21 00:38:46,450 INFO 10.16.16.193 Initialized logger
+2019-10-21 00:38:46,451 INFO 10.16.16.193 Parsed command line options
+2019-10-21 00:38:46,451 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-21 00:38:46,944 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
+2019-10-21 00:38:46,945 INFO 10.16.16.193 --------------------------------------------------------------------------------
+2019-10-21 00:38:46,945 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-21 00:38:51,470 INFO 10.16.16.193 creating soft targets for student...
+2019-10-21 00:38:56,365 INFO 10.16.16.193 completed
+2019-10-21 00:38:56,422 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-21 00:38:56,465 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:1
+alpha:0
+2019-10-21 00:40:21,817 ERROR 10.16.16.193 Error while running experiment1: You must compile your model before training/testing. Use `model.compile(optimizer, loss)`.

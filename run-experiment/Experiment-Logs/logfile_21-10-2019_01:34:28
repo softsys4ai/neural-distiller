@@ -1,0 +1,17 @@
+2019-10-21 01:34:28,443 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-21 01:34:28,444 INFO 10.16.16.193 Initialized logger
+2019-10-21 01:34:28,444 INFO 10.16.16.193 Parsed command line options
+2019-10-21 01:34:28,444 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-21 01:34:28,938 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
+2019-10-21 01:34:28,938 INFO 10.16.16.193 --------------------------------------------------------------------------------
+2019-10-21 01:34:28,938 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-21 01:34:33,490 INFO 10.16.16.193 creating soft targets for student...
+2019-10-21 01:34:38,422 INFO 10.16.16.193 completed
+2019-10-21 01:34:38,476 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-21 01:34:38,520 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:1
+alpha:0
+2019-10-21 01:36:09,125 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-21 01:36:09.125670', 'net_size': '8', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9884', 'acc': '0.99621665', 'val_loss': '0.04310043282480001', 'loss': '0.012252397072095725'}]}
+2019-10-21 01:36:09,377 INFO 10.16.16.193 -- COMPLETE

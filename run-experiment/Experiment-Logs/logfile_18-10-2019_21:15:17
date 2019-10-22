@@ -1,0 +1,375 @@
+2019-10-18 21:15:17,579 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-18 21:15:17,579 INFO 10.16.16.193 Initialized logger
+2019-10-18 21:15:17,579 INFO 10.16.16.193 Parsed command line options
+2019-10-18 21:15:17,579 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-18 21:15:18,073 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:15:22,639 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:15:28,903 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:15:28,904 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:15:32,522 INFO 10.16.16.193 completed
+2019-10-18 21:15:32,564 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:15:32,608 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:1
+alpha:0
+2019-10-18 21:17:00,083 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:17:00.082949', 'net_size': '8', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.982', 'acc': '0.9909', 'val_loss': '0.059224053441901195', 'loss': '0.025729384951023046'}]}
+2019-10-18 21:17:00,533 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:17:04,002 INFO 10.16.16.193 Teacher scores: [0.059224053441901195, 0.982], [0.025729384951023046, 0.9909]
+2019-10-18 21:17:04,003 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:17:06,076 INFO 10.16.16.193 completed
+2019-10-18 21:17:06,114 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:17:06,156 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:1
+alpha:0
+2019-10-18 21:17:54,825 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:17:54.825680', 'net_size': '6', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.99', 'acc': '0.99635', 'val_loss': '0.03215807710630106', 'loss': '0.012295856832851313'}]}
+2019-10-18 21:17:55,242 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:17:59,036 INFO 10.16.16.193 Teacher scores: [0.03215807710630106, 0.99], [0.012295856832851313, 0.99635]
+2019-10-18 21:17:59,037 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:18:01,005 INFO 10.16.16.193 completed
+2019-10-18 21:18:01,044 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:18:01,086 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:1
+alpha:0
+2019-10-18 21:18:44,842 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:18:44.842246', 'net_size': '4', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9855', 'acc': '0.9920167', 'val_loss': '0.04551986620048992', 'loss': '0.02446334184833492'}]}
+2019-10-18 21:18:45,257 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:18:48,613 INFO 10.16.16.193 Teacher scores: [0.04551986620048992, 0.9855], [0.02446334184833492, 0.9920167]
+2019-10-18 21:18:48,613 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:18:50,469 INFO 10.16.16.193 completed
+2019-10-18 21:18:50,506 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:18:50,550 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:1
+alpha:0
+2019-10-18 21:19:41,515 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:19:41.515040', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9821', 'acc': '0.9918', 'val_loss': '0.05631481755322311', 'loss': '0.030265963376530758'}]}
+2019-10-18 21:19:41,846 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:19:43,675 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:19:49,568 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:19:49,568 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:19:53,643 INFO 10.16.16.193 completed
+2019-10-18 21:19:53,685 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:19:53,728 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:5
+alpha:0
+2019-10-18 21:21:34,362 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:21:34.362806', 'net_size': '8', 'temp': '5', 'alpha': '0.1', 'val_acc': '0.9872', 'acc': '0.99728334', 'val_loss': '0.04795746435592801', 'loss': '0.009357140728184095'}]}
+2019-10-18 21:21:35,253 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:21:39,546 INFO 10.16.16.193 Teacher scores: [0.04795746435592801, 0.9872], [0.009357140728184095, 0.99728334]
+2019-10-18 21:21:39,547 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:21:42,082 INFO 10.16.16.193 completed
+2019-10-18 21:21:42,122 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:21:42,165 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:5
+alpha:0
+2019-10-18 21:23:16,753 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:23:16.753571', 'net_size': '6', 'temp': '5', 'alpha': '0.1', 'val_acc': '0.9884', 'acc': '0.998', 'val_loss': '0.04951507812295825', 'loss': '0.006775087094585935'}]}
+2019-10-18 21:23:17,600 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:23:21,989 INFO 10.16.16.193 Teacher scores: [0.04951507812295825, 0.9884], [0.006775087094585935, 0.998]
+2019-10-18 21:23:21,989 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:23:24,423 INFO 10.16.16.193 completed
+2019-10-18 21:23:24,464 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:23:24,507 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:5
+alpha:0
+2019-10-18 21:24:03,137 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:24:03.137029', 'net_size': '4', 'temp': '5', 'alpha': '0.1', 'val_acc': '0.9876', 'acc': '0.9951', 'val_loss': '0.035316953359326', 'loss': '0.017513448146449326'}]}
+2019-10-18 21:24:03,891 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:24:08,385 INFO 10.16.16.193 Teacher scores: [0.035316953359326, 0.9876], [0.017513448146449326, 0.9951]
+2019-10-18 21:24:08,385 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:24:10,772 INFO 10.16.16.193 completed
+2019-10-18 21:24:10,812 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:24:10,856 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:5
+alpha:0
+2019-10-18 21:25:21,718 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:25:21.718453', 'net_size': '2', 'temp': '5', 'alpha': '0.1', 'val_acc': '0.9824', 'acc': '0.9941', 'val_loss': '0.054500975608208685', 'loss': '0.022584290002107932'}]}
+2019-10-18 21:25:22,320 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:25:24,935 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:25:31,408 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:25:31,408 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:25:35,911 INFO 10.16.16.193 completed
+2019-10-18 21:25:35,952 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:25:35,997 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:10
+alpha:0
+2019-10-18 21:26:43,341 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:26:43.341264', 'net_size': '8', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9856', 'acc': '0.9931167', 'val_loss': '0.05025516761822073', 'loss': '0.021235414419680212'}]}
+2019-10-18 21:26:44,693 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:26:50,063 INFO 10.16.16.193 Teacher scores: [0.05025516761822073, 0.9856], [0.021235414419680212, 0.9931167]
+2019-10-18 21:26:50,063 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:26:53,211 INFO 10.16.16.193 completed
+2019-10-18 21:26:53,252 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:26:53,295 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:10
+alpha:0
+2019-10-18 21:28:07,886 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:28:07.886609', 'net_size': '6', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9883', 'acc': '0.99773335', 'val_loss': '0.04294879082859188', 'loss': '0.008729164325072694'}]}
+2019-10-18 21:28:09,136 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:28:14,702 INFO 10.16.16.193 Teacher scores: [0.04294879082859188, 0.9883], [0.008729164325072694, 0.99773335]
+2019-10-18 21:28:14,702 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:28:17,600 INFO 10.16.16.193 completed
+2019-10-18 21:28:17,640 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:28:17,683 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:10
+alpha:0
+2019-10-18 21:29:09,224 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:29:09.224581', 'net_size': '4', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9881', 'acc': '0.9968333', 'val_loss': '0.03980880919226511', 'loss': '0.012045325307272772'}]}
+2019-10-18 21:29:10,338 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:29:15,380 INFO 10.16.16.193 Teacher scores: [0.03980880919226511, 0.9881], [0.012045325307272772, 0.9968333]
+2019-10-18 21:29:15,381 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:29:18,160 INFO 10.16.16.193 completed
+2019-10-18 21:29:18,199 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:29:18,242 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:10
+alpha:0
+2019-10-18 21:30:07,455 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:30:07.455520', 'net_size': '2', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9816', 'acc': '0.98896664', 'val_loss': '0.05106260120784864', 'loss': '0.03736415795390494'}]}
+2019-10-18 21:30:08,342 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:30:11,944 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:30:19,374 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:30:19,374 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:30:24,275 INFO 10.16.16.193 completed
+2019-10-18 21:30:24,316 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:30:24,360 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:15
+alpha:0
+2019-10-18 21:31:53,713 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:31:53.713568', 'net_size': '8', 'temp': '15', 'alpha': '0.1', 'val_acc': '0.9863', 'acc': '0.9936', 'val_loss': '0.046319189250652565', 'loss': '0.01943099714256047'}]}
+2019-10-18 21:31:55,543 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:32:01,732 INFO 10.16.16.193 Teacher scores: [0.046319189250652565, 0.9863], [0.01943099714256047, 0.9936]
+2019-10-18 21:32:01,732 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:32:05,267 INFO 10.16.16.193 completed
+2019-10-18 21:32:05,306 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:32:05,349 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:15
+alpha:0
+2019-10-18 21:33:56,003 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:33:56.003179', 'net_size': '6', 'temp': '15', 'alpha': '0.1', 'val_acc': '0.9901', 'acc': '0.9996333', 'val_loss': '0.04356528443557619', 'loss': '0.0027786104539132216'}]}
+2019-10-18 21:33:57,683 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:34:03,541 INFO 10.16.16.193 Teacher scores: [0.04356528443557619, 0.9901], [0.0027786104539132216, 0.9996333]
+2019-10-18 21:34:03,541 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:34:06,916 INFO 10.16.16.193 completed
+2019-10-18 21:34:06,959 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:34:07,002 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:15
+alpha:0
+2019-10-18 21:35:14,375 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:35:14.375328', 'net_size': '4', 'temp': '15', 'alpha': '0.1', 'val_acc': '0.9887', 'acc': '0.99808335', 'val_loss': '0.04041975373689707', 'loss': '0.007649900675635035'}]}
+2019-10-18 21:35:15,826 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:35:21,694 INFO 10.16.16.193 Teacher scores: [0.04041975373689707, 0.9887], [0.007649900675635035, 0.99808335]
+2019-10-18 21:35:21,694 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:35:24,977 INFO 10.16.16.193 completed
+2019-10-18 21:35:25,016 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:35:25,059 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:15
+alpha:0
+2019-10-18 21:36:34,550 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:36:34.550549', 'net_size': '2', 'temp': '15', 'alpha': '0.1', 'val_acc': '0.9831', 'acc': '0.99306667', 'val_loss': '0.05409541314641247', 'loss': '0.02400271841272091'}]}
+2019-10-18 21:36:35,710 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:36:40,202 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:36:48,479 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:36:48,479 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:36:54,008 INFO 10.16.16.193 completed
+2019-10-18 21:36:54,056 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:36:54,102 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:20
+alpha:0
+2019-10-18 21:38:14,166 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:38:14.166616', 'net_size': '8', 'temp': '20', 'alpha': '0.1', 'val_acc': '0.9853', 'acc': '0.9939333', 'val_loss': '0.046471701251945344', 'loss': '0.019918708256310976'}]}
+2019-10-18 21:38:16,487 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:38:23,312 INFO 10.16.16.193 Teacher scores: [0.046471701251945344, 0.9853], [0.019918708256310976, 0.9939333]
+2019-10-18 21:38:23,313 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:38:27,262 INFO 10.16.16.193 completed
+2019-10-18 21:38:27,304 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:38:27,348 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:20
+alpha:0
+2019-10-18 21:40:26,914 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:40:26.914166', 'net_size': '6', 'temp': '20', 'alpha': '0.1', 'val_acc': '0.9895', 'acc': '0.9995', 'val_loss': '0.04797983369591621', 'loss': '0.002921495491409084'}]}
+2019-10-18 21:40:28,967 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:40:35,753 INFO 10.16.16.193 Teacher scores: [0.04797983369591621, 0.9895], [0.002921495491409084, 0.9995]
+2019-10-18 21:40:35,753 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:40:39,778 INFO 10.16.16.193 completed
+2019-10-18 21:40:39,819 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:40:39,862 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:20
+alpha:0
+2019-10-18 21:42:00,977 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:42:00.977170', 'net_size': '4', 'temp': '20', 'alpha': '0.1', 'val_acc': '0.9834', 'acc': '0.99226665', 'val_loss': '0.06190642360103648', 'loss': '0.02135069003238732'}]}
+2019-10-18 21:42:02,750 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:42:09,521 INFO 10.16.16.193 Teacher scores: [0.06190642360103648, 0.9834], [0.02135069003238732, 0.99226665]
+2019-10-18 21:42:09,521 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:42:13,308 INFO 10.16.16.193 completed
+2019-10-18 21:42:13,348 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:42:13,392 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:20
+alpha:0
+2019-10-18 21:43:28,586 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:43:28.586729', 'net_size': '2', 'temp': '20', 'alpha': '0.1', 'val_acc': '0.9855', 'acc': '0.99361664', 'val_loss': '0.04588100451759528', 'loss': '0.024417593637978036'}]}
+2019-10-18 21:43:30,024 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:43:34,999 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:43:44,231 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:43:44,231 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:43:50,136 INFO 10.16.16.193 completed
+2019-10-18 21:43:50,177 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:43:50,222 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:25
+alpha:0
+2019-10-18 21:45:07,109 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:45:07.109639', 'net_size': '8', 'temp': '25', 'alpha': '0.1', 'val_acc': '0.9809', 'acc': '0.988', 'val_loss': '0.06436753703632858', 'loss': '0.03549404144618311'}]}
+2019-10-18 21:45:09,979 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:45:17,839 INFO 10.16.16.193 Teacher scores: [0.06436753703632858, 0.9809], [0.03549404144618311, 0.988]
+2019-10-18 21:45:17,840 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:45:22,338 INFO 10.16.16.193 completed
+2019-10-18 21:45:22,388 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:45:22,432 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:25
+alpha:0
+2019-10-18 21:46:30,665 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:46:30.665573', 'net_size': '6', 'temp': '25', 'alpha': '0.1', 'val_acc': '0.9895', 'acc': '0.9968', 'val_loss': '0.03359096675815381', 'loss': '0.011939146551250451'}]}
+2019-10-18 21:46:33,189 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:46:40,918 INFO 10.16.16.193 Teacher scores: [0.03359096675815381, 0.9895], [0.011939146551250451, 0.9968]
+2019-10-18 21:46:40,919 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:46:45,241 INFO 10.16.16.193 completed
+2019-10-18 21:46:45,281 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:46:45,324 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:25
+alpha:0
+2019-10-18 21:47:51,328 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:47:51.327872', 'net_size': '4', 'temp': '25', 'alpha': '0.1', 'val_acc': '0.9889', 'acc': '0.99738336', 'val_loss': '0.03792396418539829', 'loss': '0.00990624924935837'}]}
+2019-10-18 21:47:53,442 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:48:01,252 INFO 10.16.16.193 Teacher scores: [0.03792396418539829, 0.9889], [0.00990624924935837, 0.99738336]
+2019-10-18 21:48:01,252 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:48:05,645 INFO 10.16.16.193 completed
+2019-10-18 21:48:05,685 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:48:05,727 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:25
+alpha:0
+2019-10-18 21:49:31,644 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:49:31.643859', 'net_size': '2', 'temp': '25', 'alpha': '0.1', 'val_acc': '0.9814', 'acc': '0.99271667', 'val_loss': '0.05502485271235928', 'loss': '0.02598227651399405'}]}
+2019-10-18 21:49:33,403 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:49:39,302 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:49:49,572 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:49:49,572 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:49:56,506 INFO 10.16.16.193 completed
+2019-10-18 21:49:56,547 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:49:56,591 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:30
+alpha:0
+2019-10-18 21:51:15,004 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:51:15.004822', 'net_size': '8', 'temp': '30', 'alpha': '0.1', 'val_acc': '0.9819', 'acc': '0.9857', 'val_loss': '0.06381225797438528', 'loss': '0.042081077243231506'}]}
+2019-10-18 21:51:18,260 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:51:26,726 INFO 10.16.16.193 Teacher scores: [0.06381225797438528, 0.9819], [0.042081077243231506, 0.9857]
+2019-10-18 21:51:26,726 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:51:31,715 INFO 10.16.16.193 completed
+2019-10-18 21:51:31,756 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:51:31,799 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:30
+alpha:0
+2019-10-18 21:53:02,009 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:53:02.009673', 'net_size': '6', 'temp': '30', 'alpha': '0.1', 'val_acc': '0.9872', 'acc': '0.99523336', 'val_loss': '0.04625729402677605', 'loss': '0.014524788014034918'}]}
+2019-10-18 21:53:04,902 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:53:13,344 INFO 10.16.16.193 Teacher scores: [0.04625729402677605, 0.9872], [0.014524788014034918, 0.99523336]
+2019-10-18 21:53:13,345 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:53:18,299 INFO 10.16.16.193 completed
+2019-10-18 21:53:18,341 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:53:18,385 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:30
+alpha:0
+2019-10-18 21:54:43,790 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:54:43.790121', 'net_size': '4', 'temp': '30', 'alpha': '0.1', 'val_acc': '0.987', 'acc': '0.99761665', 'val_loss': '0.045316610713842964', 'loss': '0.007977275443786371'}]}
+2019-10-18 21:54:46,262 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:54:54,588 INFO 10.16.16.193 Teacher scores: [0.045316610713842964, 0.987], [0.007977275443786371, 0.99761665]
+2019-10-18 21:54:54,589 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:54:59,505 INFO 10.16.16.193 completed
+2019-10-18 21:54:59,544 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:54:59,588 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:30
+alpha:0
+2019-10-18 21:56:11,816 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:56:11.816026', 'net_size': '2', 'temp': '30', 'alpha': '0.1', 'val_acc': '0.982', 'acc': '0.99105', 'val_loss': '0.055112009916757236', 'loss': '0.030373903077305295'}]}
+2019-10-18 21:56:13,793 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 21:56:20,489 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:56:31,208 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 21:56:31,209 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:56:38,034 INFO 10.16.16.193 completed
+2019-10-18 21:56:38,074 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:56:38,118 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:35
+alpha:0
+2019-10-18 21:58:57,051 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 21:58:57.051410', 'net_size': '8', 'temp': '35', 'alpha': '0.1', 'val_acc': '0.9834', 'acc': '0.9943', 'val_loss': '0.061154758209200556', 'loss': '0.016180565658313086'}]}
+2019-10-18 21:59:00,889 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 21:59:10,470 INFO 10.16.16.193 Teacher scores: [0.061154758209200556, 0.9834], [0.016180565658313086, 0.9943]
+2019-10-18 21:59:10,471 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 21:59:16,130 INFO 10.16.16.193 completed
+2019-10-18 21:59:16,171 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 21:59:16,214 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:6
+temp:35
+alpha:0
+2019-10-18 22:01:23,626 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 22:01:23.625848', 'net_size': '6', 'temp': '35', 'alpha': '0.1', 'val_acc': '0.9901', 'acc': '0.99975', 'val_loss': '0.04186864917684379', 'loss': '0.002586122378336955'}]}
+2019-10-18 22:01:26,941 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 22:01:36,366 INFO 10.16.16.193 Teacher scores: [0.04186864917684379, 0.9901], [0.002586122378336955, 0.99975]
+2019-10-18 22:01:36,366 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 22:01:41,674 INFO 10.16.16.193 completed
+2019-10-18 22:01:41,714 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 22:01:41,757 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:4
+temp:35
+alpha:0
+2019-10-18 22:02:58,081 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 22:02:58.081097', 'net_size': '4', 'temp': '35', 'alpha': '0.1', 'val_acc': '0.9884', 'acc': '0.9982833', 'val_loss': '0.038069892253317264', 'loss': '0.007924266693543663'}]}
+2019-10-18 22:03:00,972 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 22:03:10,360 INFO 10.16.16.193 Teacher scores: [0.038069892253317264, 0.9884], [0.007924266693543663, 0.9982833]
+2019-10-18 22:03:10,361 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 22:03:15,740 INFO 10.16.16.193 completed
+2019-10-18 22:03:15,782 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 22:03:15,827 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:2
+temp:35
+alpha:0
+2019-10-18 22:04:49,717 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-18 22:04:49.717402', 'net_size': '2', 'temp': '35', 'alpha': '0.1', 'val_acc': '0.982', 'acc': '0.9931333', 'val_loss': '0.05462857076463988', 'loss': '0.023865741617791356'}]}
+2019-10-18 22:04:52,017 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-18 22:04:59,371 INFO 10.16.16.193 evaluating teacher...
+2019-10-18 22:05:15,092 INFO 10.16.16.193 Teacher scores: [0.04246806885740118, 0.9918], [0.003596516622136586, 0.9989167]
+2019-10-18 22:05:15,092 INFO 10.16.16.193 creating soft targets for student...
+2019-10-18 22:05:22,672 INFO 10.16.16.193 completed
+2019-10-18 22:05:22,717 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-18 22:05:22,763 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:40
+alpha:0

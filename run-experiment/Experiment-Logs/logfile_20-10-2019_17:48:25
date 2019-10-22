@@ -1,0 +1,18 @@
+2019-10-20 17:48:25,681 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-20 17:48:25,682 INFO 10.16.16.193 Initialized logger
+2019-10-20 17:48:25,682 INFO 10.16.16.193 Parsed command line options
+2019-10-20 17:48:25,682 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-20 17:48:26,176 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
+2019-10-20 17:48:26,176 INFO 10.16.16.193 --------------------------------------------------------------------------------
+2019-10-20 17:48:26,176 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-20 17:48:30,707 INFO 10.16.16.193 evaluating teacher...
+2019-10-20 17:48:37,173 INFO 10.16.16.193 Teacher scores: [0.042468060569293836, 0.9918], [0.0035965110132374065, 0.9989167]
+2019-10-20 17:48:37,174 INFO 10.16.16.193 creating soft targets for student...
+2019-10-20 17:48:40,979 INFO 10.16.16.193 completed
+2019-10-20 17:48:41,021 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-20 17:48:41,065 INFO 10.16.16.193 training model...
+order:[10, 8, 6, 4, 2]
+size:8
+temp:1
+alpha:0
+2019-10-20 17:48:41,405 ERROR 10.16.16.193 Error while running experiment1: Tensor("training_2/Const:0", shape=(), dtype=int64) must be from the same graph as Tensor("Adadelta/iterations:0", shape=(), dtype=resource).

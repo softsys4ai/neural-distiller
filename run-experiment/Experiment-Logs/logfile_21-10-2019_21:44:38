@@ -1,0 +1,41 @@
+2019-10-21 21:44:38,981 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-21 21:44:38,981 INFO 10.16.16.193 Initialized logger
+2019-10-21 21:44:38,982 INFO 10.16.16.193 Parsed command line options
+2019-10-21 21:44:38,982 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-21 21:44:39,476 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
+2019-10-21 21:45:18,002 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-21 21:45:18.002794', 'net_size': '4', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9899', 'acc': '0.99948335', 'val_loss': '0.04093364013562175', 'loss': '0.001762991753087051'}]}
+2019-10-21 21:45:18,075 INFO 10.16.16.193 creating soft targets for student...
+2019-10-21 21:45:19,696 INFO 10.16.16.193 completed
+2019-10-21 21:45:19,746 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-21 21:45:19,789 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:1
+alpha:0
+2019-10-21 21:46:12,926 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-21 21:46:12.926757', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9815', 'acc': '0.99078333', 'val_loss': '0.056999844469409436', 'loss': '0.03227837180365653'}]}
+2019-10-21 21:46:12,927 INFO 10.16.16.193 -----------------
+2019-10-21 21:46:12,927 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
+2019-10-21 21:46:42,942 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-21 21:46:42.942722', 'net_size': '4', 'temp': '5', 'alpha': '0.1', 'val_acc': '0.9893', 'acc': '0.99838334', 'val_loss': '0.04138275777554767', 'loss': '0.004900614534804625'}]}
+2019-10-21 21:46:43,012 INFO 10.16.16.193 creating soft targets for student...
+2019-10-21 21:46:44,647 INFO 10.16.16.193 completed
+2019-10-21 21:46:44,696 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-21 21:46:44,738 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:5
+alpha:0
+2019-10-21 21:47:40,440 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-21 21:47:40.440176', 'net_size': '2', 'temp': '5', 'alpha': '0.1', 'val_acc': '0.982', 'acc': '0.99165', 'val_loss': '0.05504433091792744', 'loss': '0.02952836094436546'}]}
+2019-10-21 21:47:40,440 INFO 10.16.16.193 -----------------
+2019-10-21 21:47:40,440 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
+2019-10-21 21:48:20,675 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-21 21:48:20.675460', 'net_size': '4', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9895', 'acc': '0.9992', 'val_loss': '0.05475686110945944', 'loss': '0.002517233403699664'}]}
+2019-10-21 21:48:20,743 INFO 10.16.16.193 creating soft targets for student...
+2019-10-21 21:48:22,348 INFO 10.16.16.193 completed
+2019-10-21 21:48:22,536 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-21 21:48:22,578 INFO 10.16.16.193 training model...
+order:[4, 2]
+size:2
+temp:10
+alpha:0
+2019-10-21 21:49:10,435 INFO 10.16.16.193 {'result': [{'date_time': '2019-10-21 21:49:10.435449', 'net_size': '2', 'temp': '10', 'alpha': '0.1', 'val_acc': '0.9818', 'acc': '0.99046665', 'val_loss': '0.05717630981700495', 'loss': '0.034593628830617916'}]}
+2019-10-21 21:49:10,436 INFO 10.16.16.193 -----------------
+2019-10-21 21:49:10,436 INFO 10.16.16.193 Clearing tensorflow/keras backend session...
