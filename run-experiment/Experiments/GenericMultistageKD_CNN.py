@@ -174,7 +174,7 @@ def run(logger, options):
                                 # Conv2D(8, (3, 3), activation='relu'),
                                 MaxPooling2D(pool_size=(2, 2)),
                                 Flatten(),
-                                Dense(128, activation='relu'),
+                                Dense(32, activation='relu'),
                                 Dense(cfg.mnist_number_classes, name='logits'),
                                 Activation('softmax')  # Note that we add a normal softmax layer to begin with
                             ])
@@ -183,7 +183,7 @@ def run(logger, options):
                             # continue
                         elif net_size == 2:
                             model = Sequential([
-                                Conv2D(16, kernel_size=(3, 3),
+                                Conv2D(8, kernel_size=(3, 3),
                                        activation='relu',
                                        input_shape=X_train.shape[1:]),
                                 MaxPooling2D(pool_size=(2, 2)),

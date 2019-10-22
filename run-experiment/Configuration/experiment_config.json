@@ -1,1 +1,1 @@
-{"teacher_name": null, "epochs": 50, "temp_config": [1, 10, 20, 30, 40, 50], "alpha_config": [0.1, 0.25, 0.5, 0.75, 1], "size_combinations": [[4, 2], [6, 2], [8, 2] ,[10, 2]]}
+{"teacher_name": null, "epochs": 50, "temp_config": [1, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50], "alpha_config": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1], "size_combinations": [[4, 2], [6, 2], [8, 2] ,[10, 2]]}
