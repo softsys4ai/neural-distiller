@@ -103,7 +103,7 @@ def run(logger, options):
                     # creating experiment1 metadata
                     experiment_result = {"experiment_results": []}  # empty space for our experiment1's data
                     experiment_metadata = create_meta(teacher_name, epochs, temp, alpha, order)
-                    # experiment_result["experiment_results"].append(experiment_metadata) # TODO add back after resolving memory leak
+                    experiment_result["experiment_results"].append(experiment_metadata) # TODO add back after resolving memory leak
                     # performing experiment1 on given size, alpha, and temperature combination
                     for net_size in order:
                         model = None
@@ -232,7 +232,7 @@ def run(logger, options):
                             val_score = model.evaluate(X_test, Y_test, verbose=0)
                             result = create_result(net_size, temp, alpha, train_score, val_score)
                             logger.info(result)
-                            # experiment_result["experiment_results"].append(result) # TODO add back after resolving memory leak
+                            experiment_result["experiment_results"].append(result)
 
                         # if no previously trained model, train the network
                         else:
@@ -240,7 +240,6 @@ def run(logger, options):
                             model.compile(optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                                           loss=logloss,  # the same as the custom loss function
                                           metrics=['accuracy'])
-                            # callbacks = cfg.student_callbacks
                             # callbacks.append(ModelCheckpoint(filepath=cfg.teacher_model_dir + "/best_size_" + str(netSize) + "_model.hdf5", save_best_only=True))
                             model.fit(X_train, Y_train,
                                       batch_size=cfg.student_batch_size,
@@ -253,7 +252,7 @@ def run(logger, options):
                             # append current trained network result to current experiment1 result object
                             result = create_result(net_size, temp, alpha, train_score, val_score)
                             logger.info(result)
-                            # experiment_result["experiment_results"].append(result) # TODO add back after resolving memory leak
+                            experiment_result["experiment_results"].append(result) # TODO add back after resolving memory leak
                             # model.save('size_10_teacher.h5')  # creates a HDF5 file 'my_model.h5'
 
                             # returns a compiled model
