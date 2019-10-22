@@ -90,9 +90,9 @@ def run(logger, options):
         for order in order_combinations:
             for alpha in alphas:
                 for temp in temperatures:
-                    # with tf.Graph().as_default():
                     logger.info("Clearing tensorflow/keras backend session...")
-                    # tf.keras.backend.clear_session()  # must clear the current session to free memory!
+                    tf.keras.backend.clear_session()  # must clear the current session to free memory!
+                    # with tf.Graph().as_default():
                     previousModel = None
                     if teacher_name is not None:
                         ssm = ModelLoader(logger, options.teacherModel)
@@ -251,11 +251,11 @@ def run(logger, options):
                             result = create_result(net_size, temp, alpha, train_score, val_score)
                             logger.info(result)
                             experiment_result["experiment_results"].append(result)
-                            model.save('size_10_teacher.h5')  # creates a HDF5 file 'my_model.h5'
+                            # model.save('size_10_teacher.h5')  # creates a HDF5 file 'my_model.h5'
 
                             # returns a compiled model
                             # identical to the previous one
-                            model = load_model('my_model.h5')
+                            # model = load_model('my_model.h5')
 
                         # temporarily serialize model to load as teacher in following KD training to avoid errors
                         del previousModel # free memory
