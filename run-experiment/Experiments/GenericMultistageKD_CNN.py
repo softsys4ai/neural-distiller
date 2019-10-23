@@ -19,13 +19,12 @@ from tensorflow.python.keras.models import load_model
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.utils import multi_gpu_model
 from tensorflow.python.keras.optimizers import adadelta
-from numpy.random import seed
+import numpy as np
 from tensorflow import set_random_seed
 
-set_random_seed(cfg.random_seed)
-seed(cfg.random_seed)
+tf.set_random_seed(cfg.random_seed)
+np.random.seed(cfg.random_seed)
 nb_classes = 10
-
 
 def import_config(config_file_path):
     with open(config_file_path, 'r') as f:
