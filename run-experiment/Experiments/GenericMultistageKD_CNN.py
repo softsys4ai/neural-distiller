@@ -215,8 +215,11 @@ def run(logger, options):
                             # logger.info("Teacher scores: %s, %s" % (val_score, train_score))
                             # train with KD
                             logger.info("creating soft targets for student...")
-                            Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(previousModel, temp, X_train,
-                                                                                             Y_train, X_test, Y_test)
+                            # Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(previousModel, temp, X_train, Y_train, X_test, Y_test)
+                            import pickle # TODO remove next 3 lines and add back in line above
+                            filehandler = open("size10_soft_targets.pkl", 'rb')
+                            Y_train_new = pickle.load(filehandler)
+                            Y_test_new = pickle.load(filehandler)
                             logger.info("completed")
                             model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
                             model.summary()
