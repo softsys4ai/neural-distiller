@@ -85,6 +85,7 @@ def main():
     try:
         if options.experiment == "search-alpha-temp-configurations":
             GenericMultistageKD_CNN.run(logger, options)
+            logger.info('-- COMPLETE')
         elif options.experiment == "full-PaKD-compression":
             logger.error("Provided experiment1 type not yet implemented!")
             # TODO measure power consumption and inference time
@@ -93,7 +94,6 @@ def main():
         else:
             logger.error("Provided experiment1 type not supported!")
             return
-        logger.info('-- COMPLETE')
     except Exception as e:
         logger.error("Error while running experiment1: {0}".format(str(e)))
 

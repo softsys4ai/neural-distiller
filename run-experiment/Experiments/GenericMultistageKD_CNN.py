@@ -194,8 +194,9 @@ def run(logger, options):
                             #     Activation('softmax'),
                             # ])
                             model = Sequential([
-                                Dense(32, input_shape=(784,)),
+                                Dense(32, activation='relu', input_shape=X_train.shape[1:]),
                                 Activation('relu'),
+                                Flatten(),
                                 Dense(cfg.mnist_number_classes, name='logits'),
                                 Activation('softmax'),
                             ])
@@ -226,8 +227,8 @@ def run(logger, options):
                                 metrics=[HelperUtil.acc])
                             logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
                             # Flatten the images.
-                            X_train = X_train.reshape((-1, 784))
-                            X_test = X_test.reshape((-1, 784))
+                            # X_train = X_train.reshape((-1, 784))
+                            # X_test = X_test.reshape((-1, 784))
                             model.fit(X_train, Y_train_new,
                                       batch_size=cfg.student_batch_size,
                                       epochs=epochs,
@@ -290,4 +291,4 @@ def run(logger, options):
         traceback.print_exc()
         error = traceback.format_exc()
         # error.upper()
-        logging.error('Error encountered: ', exc_info=True)
+        logging.error('Error encountered: %s' % error, exc_info=True)
