@@ -194,12 +194,12 @@ def run(logger, options):
                             #     Activation('softmax'),
                             # ])
                             model = Sequential([
-                                Flatten(),
                                 Dense(32, input_shape=(784,)),
                                 Activation('relu'),
                                 Dense(cfg.mnist_number_classes, name='logits'),
-                                Activation('softmax')
+                                Activation('softmax'),
                             ])
+
                         else:
                             raise Exception(
                                 'The given net size is not a possible network. Given net size was: {}'.format(net_size))
@@ -218,12 +218,16 @@ def run(logger, options):
                                                                                              Y_train, X_test, Y_test)
                             logger.info("completed")
                             model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
+                            model.summary()
                             # model = multi_gpu_model(model, gpus=4)
                             model.compile(
                                 optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                                 loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                 metrics=[HelperUtil.acc])
                             logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
+                            # Flatten the images.
+                            X_train = X_train.reshape((-1, 784))
+                            X_test = X_test.reshape((-1, 784))
                             model.fit(X_train, Y_train_new,
                                       batch_size=cfg.student_batch_size,
                                       epochs=epochs,
