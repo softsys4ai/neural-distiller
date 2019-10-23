@@ -91,6 +91,8 @@ def run(logger, options):
                 for temp in temperatures:
                     model = None
                     previousModel = None
+                    Y_train_new = None
+                    Y_test_new = None
                     logger.info("Clearing tensorflow/keras backend session and de-allocating remaining models...")
                     tf.keras.backend.clear_session()  # must clear the current session to free memory!
                     # with tf.Graph().as_default():
@@ -127,6 +129,11 @@ def run(logger, options):
                             logger.info("--------------------------------------------------------------------------------")
                             logger.info("loading pre-trained teacher")
                             previousModel = load_model('size_10_teacher.h5')
+                            # load pre-created soft targets for teacher
+                            import pickle
+                            filehandler = open("size10_soft_targets.pkl", 'rb')
+                            Y_train_new = pickle.load(filehandler)
+                            Y_test_new = pickle.load(filehandler)
                             continue
                         elif net_size == 8:
                             model = Sequential([
@@ -214,11 +221,8 @@ def run(logger, options):
                             # logger.info("Teacher scores: %s, %s" % (val_score, train_score))
                             # train with KD
                             logger.info("creating soft targets for student...")
-                            # Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(previousModel, temp, X_train, Y_train, X_test, Y_test)
-                            import pickle # TODO remove next 3 lines and add back in line above
-                            filehandler = open("size10_soft_targets.pkl", 'rb')
-                            Y_train_new = pickle.load(filehandler)
-                            Y_test_new = pickle.load(filehandler)
+                            if Y_train_new is None or Y_test_new is None:
+                                Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(previousModel, temp, X_train, Y_train, X_test, Y_test)
                             logger.info("completed")
                             model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
                             model.summary()
@@ -228,9 +232,6 @@ def run(logger, options):
                                 loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                 metrics=[HelperUtil.acc])
                             logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
-                            # Flatten the images.
-                            # X_train = X_train.reshape((-1, 784))
-                            # X_test = X_test.reshape((-1, 784))
                             model.fit(X_train, Y_train_new,
                                       batch_size=cfg.student_batch_size,
                                       epochs=epochs,
@@ -248,6 +249,9 @@ def run(logger, options):
                             result = create_result(net_size, temp, alpha, train_score, val_score)
                             logger.info(result)
                             experiment_result["experiment_results"].append(result)
+                            # clear soft targets
+                            Y_train_new = None
+                            Y_test_new = None
 
                         # if no previously trained model, train the network
                         else:
@@ -269,7 +273,6 @@ def run(logger, options):
                             logger.info(result)
                             experiment_result["experiment_results"].append(result) # TODO add back after resolving memory leak
                             # model.save('size_10_teacher.h5')  # creates a HDF5 file 'my_model.h5'
-
                             # returns a compiled model
                             # identical to the previous one
                             # model = load_model('my_model.h5')
@@ -278,6 +281,7 @@ def run(logger, options):
                         del previousModel # free memory
                         previousModel = model  # previously trained model becomes teacher
                         # model.save(temporary_teacher_model_file)
+
                     # appending experiment1 result to log file
                     if os.path.exists(session_log_file):
                         open_type = 'a'
@@ -289,6 +293,7 @@ def run(logger, options):
                         f.close()
                     # printing the results of training
                     logger.info(cfg.student_train_spacer)
+
     except Exception:
         traceback.print_exc()
         error = traceback.format_exc()
