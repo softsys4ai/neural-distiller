@@ -225,7 +225,7 @@ def run(logger, options):
                                 Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(previousModel, temp, X_train, Y_train, X_test, Y_test)
                             logger.info("completed")
                             model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
-                            model.summary()
+                            # model.summary()
                             # model = multi_gpu_model(model, gpus=4)
                             model.compile(
                                 optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
