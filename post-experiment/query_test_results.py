@@ -13,10 +13,10 @@ val_acc = []
 acc_avg = 0
 val_avg = 0
 for experiment in data:
-    acc.append(experiment['experiment_results'][1]['result'][0]['acc'])
-    val_acc.append(experiment['experiment_results'][1]['result'][0]['val_acc'])
-    acc_avg += float(experiment['experiment_results'][1]['result'][0]['acc'])
-    val_avg += float(experiment['experiment_results'][1]['result'][0]['val_acc'])
+    acc.append(experiment['experiment_results'][0]['result'][0]['acc'])
+    val_acc.append(experiment['experiment_results'][0]['val_acc'])
+    acc_avg += float(experiment['experiment_results'][0]['result'][0]['acc'])
+    val_avg += float(experiment['experiment_results'][0]['result'][0]['val_acc'])
 
 print("average acc: %f" % (acc_avg/len(acc)))
 print("average val_acc: %f" % (val_avg/len(val_acc)))

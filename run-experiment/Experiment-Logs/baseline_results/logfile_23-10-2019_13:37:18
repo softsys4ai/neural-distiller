@@ -1,0 +1,45 @@
+2019-10-23 13:37:19,154 INFO 127.0.0.1 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-23 13:37:19,154 INFO 127.0.0.1 Initialized logger
+2019-10-23 13:37:19,154 INFO 127.0.0.1 Parsed command line options
+2019-10-23 13:37:19,154 INFO 127.0.0.1 -----------------GENERIC MULTISTAGE-----------------
+2019-10-23 13:37:19,495 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-23 13:37:19,604 INFO 127.0.0.1 training teacher model...
+order:[2]
+size:2
+temp:1
+alpha:0.100000
+2019-10-23 13:41:12,767 INFO 127.0.0.1 {'result': [{'date_time': '2019-10-23 13:41:12.767868', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9234', 'acc': '0.93105', 'val_loss': '0.2732998856559396', 'loss': '0.24656158664822578'}]}
+2019-10-23 13:41:12,768 INFO 127.0.0.1 -----------------
+2019-10-23 13:41:12,768 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-23 13:41:12,811 INFO 127.0.0.1 training teacher model...
+order:[2]
+size:2
+temp:1
+alpha:0.100000
+2019-10-23 13:43:29,703 INFO 127.0.0.1 {'result': [{'date_time': '2019-10-23 13:43:29.703374', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9182', 'acc': '0.92578334', 'val_loss': '0.2850364750236273', 'loss': '0.26295728451112904'}]}
+2019-10-23 13:43:29,705 INFO 127.0.0.1 -----------------
+2019-10-23 13:43:29,705 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-23 13:43:29,750 INFO 127.0.0.1 training teacher model...
+order:[2]
+size:2
+temp:1
+alpha:0.100000
+2019-10-23 13:46:44,314 INFO 127.0.0.1 {'result': [{'date_time': '2019-10-23 13:46:44.314510', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.924', 'acc': '0.93265', 'val_loss': '0.2725634087830782', 'loss': '0.24651047199368478'}]}
+2019-10-23 13:46:44,315 INFO 127.0.0.1 -----------------
+2019-10-23 13:46:44,315 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-23 13:46:44,431 INFO 127.0.0.1 training teacher model...
+order:[2]
+size:2
+temp:1
+alpha:0.100000
+2019-10-23 13:51:53,036 INFO 127.0.0.1 {'result': [{'date_time': '2019-10-23 13:51:53.036294', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9242', 'acc': '0.9317', 'val_loss': '0.2756353518933058', 'loss': '0.24639879745443663'}]}
+2019-10-23 13:51:53,037 INFO 127.0.0.1 -----------------
+2019-10-23 13:51:53,037 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-23 13:51:53,092 INFO 127.0.0.1 training teacher model...
+order:[2]
+size:2
+temp:1
+alpha:0.100000
+2019-10-23 13:56:47,941 INFO 127.0.0.1 {'result': [{'date_time': '2019-10-23 13:56:47.941575', 'net_size': '2', 'temp': '1', 'alpha': '0.1', 'val_acc': '0.9214', 'acc': '0.92541665', 'val_loss': '0.2827710557177663', 'loss': '0.2584423144628604'}]}
+2019-10-23 13:56:47,942 INFO 127.0.0.1 -----------------
+2019-10-23 13:56:47,956 INFO 127.0.0.1 -- COMPLETE

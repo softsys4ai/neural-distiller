@@ -1,33 +1,12 @@
-# Evolutionary Pruning and Knowledge Distillation (EPK Distillation)
-Contributers: Blake Edwards
-References: Dr. Pooyan Jamshidi
-Description: n/a
+# PaKD Model Compression
+Project: Multi-stage Compression of Deep Neural Networks through Pruning and Knowledge Distillation<br>
+Contributers: Blake Edwards<br>
+References: Dr. Pooyan Jamshidi<br>
+<br>Description: <br>
+Almost everyone today uses a smart mobile phone that they carry with them at all times. The ability to run powerful artificial intelligence (AI) technologies on our phones would revolutionize the world and equip mobile devices with an increasing amount of functionality. However, we do not want AI technologies to drain our battery and require us to charge our phones multiple times per day in order to run them. Our project will reduce the work needed to run AI technologies and enable them to be run on devices constrained by battery, power, and storage, like our mobile phones.
+<br><br>Significance:<br>
+Our project is significant because it will allow large neural networks, that achieve state-of-the-art accuracy in a variety of different fields including, but not limited to, computer vision, natural language processing, and speech recognition, to be run on small devices [7, 13]. Neural networks perform the best on these tasks but in order for them to become more accurate they grow in size, thus becoming more expensive to run. Our project intends to combat this issue by compressing neural networks through the removal of unnecessary components. This is important because it will allow them to run on smaller devices with less computational power, storage, and memory bandwidth. This is crucial because if we do not compress large neural networks, we will not be able to use them in real world applications because not everyone has access to a supercomputer.
+<br>
 
-Notes:
-[!] Find easy way to tune hyperparams of pre-trained models.
-- https://keras.io/applications/#available-models
-	- if model is of sequential type (keras) it is easy to .pop() the last layer to re-purpose the network
-	- not a straightforward way of changing the layers within the sequential model
-	- easy to get the intermediate outputs of individual layers of pre-trained models
-- https://flyyufelix.github.io/2016/10/08/fine-tuning-in-keras-part2.html
-	- what parameters can be changed on the pre-trained Keras models?
-		- pooling, output classes, input shap, temperature
-		- optimizer, learning rate, momentum, batch size, number of epochs, shuffle
-		- pop off last layer / add a new output layer + re-train its use of feature output of layer[-2]
-
-Rough-outline:
-// train all teacher models that are not pre-trained
-// load each teacher model configurations and weights
-// create a directory for each run of the program to contain all of the saved metrics and student models
-// REFERENCE POINT 1
-// perform five different pruning techniques to the teacher network
-// save each pruned teacher model as a new student model within a directory named by the iteration number
-// modify the student network to accept and produce the correct output
-// tune each student model by training it for 100 epochs on hard and soft teacher targets
-// compare and rank all of the models with accuracy and validation_accuracy weighed 1:3
-// save the rankings of student models and their associated pruning method
-// choose the best performing student model and load it
-// modify this student model to output in the correct dimensions (original nb_classes)
-// decrease the temperature value by 5
-// return to REFERENCE POINT 1
-// repeat this process 10 times
+Goal:<br>
+The goal of this project is to publish the compression results of the PaKD model compression technique, develop our code base to generically compress deep neural networks, compress a neural network by at least 11 times and increase its speed by an average of 4 times [4].
