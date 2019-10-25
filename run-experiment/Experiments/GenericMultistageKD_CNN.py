@@ -34,7 +34,6 @@ def import_config(config_file_path):
 
 # TODO include best train and validation accuracies, may be more telling
 def create_result(netSize, temp, alpha, train_score, val_score):
-    result_obj = {"result": []}  # empty space for our experiment1's data
     result = {}
     result["date_time"] = str(datetime.datetime.now())
     result["net_size"] = str(netSize)
@@ -44,12 +43,10 @@ def create_result(netSize, temp, alpha, train_score, val_score):
     result["acc"] = str(train_score[1])
     result["val_loss"] = str(val_score[0])
     result["loss"] = str(train_score[0])
-    result_obj['result'].append(result)
-    return result_obj
+    return result
 
 
 def create_meta(teacher_name, epochs, temp, alpha, order):
-    metadata_obj = {"metadata": []}  # empty space for our experiment1's data
     metadata = {}
     metadata["date_time"] = str(datetime.datetime.now())
     metadata["teacher_name"] = str(teacher_name)
@@ -57,8 +54,7 @@ def create_meta(teacher_name, epochs, temp, alpha, order):
     metadata["temp"] = str(temp)
     metadata["alpha"] = str(alpha)
     metadata['order'] = str(order)
-    metadata_obj['metadata'].append(metadata)
-    return metadata_obj
+    return metadata
 
 
 def run(logger, options):
@@ -104,7 +100,7 @@ def run(logger, options):
                     # creating experiment1 metadata
                     experiment_result = {"experiment_results": []}  # empty space for our experiment1's data
                     experiment_metadata = create_meta(teacher_name, epochs, temp, alpha, order)
-                    experiment_result["experiment_results"].append(experiment_metadata) # TODO add back after resolving memory leak
+                    experiment_result['metadata'] = experiment_metadata
                     # performing experiment1 on given size, alpha, and temperature combination
                     for net_size in order:
                         model = None
@@ -271,7 +267,7 @@ def run(logger, options):
                             # append current trained network result to current experiment1 result object
                             result = create_result(net_size, temp, alpha, train_score, val_score)
                             logger.info(result)
-                            experiment_result["experiment_results"].append(result) # TODO add back after resolving memory leak
+                            experiment_result["experiment_results"].append(result)
                             # model.save('size_10_teacher.h5')  # creates a HDF5 file 'my_model.h5'
                             # returns a compiled model
                             # identical to the previous one
