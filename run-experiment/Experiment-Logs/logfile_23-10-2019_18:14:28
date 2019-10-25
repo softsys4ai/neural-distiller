@@ -1,0 +1,15 @@
+2019-10-23 18:14:28,881 INFO 10.16.16.193 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-10-23 18:14:28,882 INFO 10.16.16.193 Initialized logger
+2019-10-23 18:14:28,882 INFO 10.16.16.193 Parsed command line options
+2019-10-23 18:14:28,882 INFO 10.16.16.193 -----------------GENERIC MULTISTAGE-----------------
+2019-10-23 18:14:29,375 INFO 10.16.16.193 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-10-23 18:14:29,377 INFO 10.16.16.193 --------------------------------------------------------------------------------
+2019-10-23 18:14:29,377 INFO 10.16.16.193 loading pre-trained teacher
+2019-10-23 18:14:33,919 INFO 10.16.16.193 creating soft targets for student...
+2019-10-23 18:14:33,921 INFO 10.16.16.193 completed
+2019-10-23 18:14:33,974 INFO 10.16.16.193 compiling and training student with alpha: 0.1
+2019-10-23 18:14:34,017 INFO 10.16.16.193 training model...
+order:[10, 6, 2]
+size:6
+temp:1
+alpha:0.100000
