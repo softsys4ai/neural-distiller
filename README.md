@@ -1,7 +1,7 @@
 # PaKD Model Compression
 <b>Project:</b> Multi-stage Compression of Deep Neural Networks through Pruning and Knowledge Distillation<br>
+<b>Lead Professor:</b> Dr. Pooyan Jamshidi<br>
 <b>Contributers:</b> Blake Edwards<br>
-<b>References:</b> Dr. Pooyan Jamshidi<br>
 <br><b>Description:</b> <br>
 Almost everyone today uses a smart mobile phone that they carry with them at all times. The ability to run powerful artificial intelligence (AI) technologies on our phones would revolutionize the world and equip mobile devices with an increasing amount of functionality. However, we do not want AI technologies to drain our battery and require us to charge our phones multiple times per day in order to run them. Our project will reduce the work needed to run AI technologies and enable them to be run on devices constrained by battery, power, and storage, like our mobile phones.
 <br><br><b>Significance:</b><br>
