@@ -25,6 +25,7 @@ The goal of this project is to publish the compression results of the PaKD model
 ## 2. Dependencies
 ### Software
 ### Hardware
+Minimum memory requirement: 3GB of RAM
 
 ## 3. Pruning and Knowledge Distillation
 overview of implemented pruning and knowledge distillation (KD) methods
