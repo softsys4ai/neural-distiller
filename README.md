@@ -7,11 +7,12 @@
 ## Table of Contents
 1. **Overview**
 2. **Dependencies**
-3. **Transformation and Defense**
-4. **Project Structure**
-5. **Getting Started**
-6. **How to Contribute**
-7. **References**
+3. **Pruning**
+4. **Knowledge Distillation**
+5. **Project Structure**
+6. **Getting Started**
+7. **How to Contribute**
+8. **References**
 
 ## 1. Overview
 <b>Background:</b><br>Almost everyone today uses a smart mobile phone that they carry with them at all times. The ability to run powerful artificial intelligence (AI) technologies on our phones would revolutionize the world and equip mobile devices with an increasing amount of functionality. However, we do not want AI technologies to drain our battery and require us to charge our phones multiple times per day in order to run them. Our project will reduce the work needed to run AI technologies and enable them to be run on devices constrained by battery, power, and storage, like our mobile phones.
@@ -27,20 +28,21 @@ The goal of this project is to publish the compression results of the PaKD model
 ### Hardware
 Minimum memory requirement: 3GB of RAM
 
-## 3. Pruning and Knowledge Distillation
-overview of implemented pruning and knowledge distillation (KD) methods
+## 3. Pruning
+overview of implemented pruning methods
 
-## 4. Project Structure
+## 4. Knowledge Distillation
+overview of implemented knowledge distillation (KD) methods
+
+## 5. Project Structure
 navigation of project and component hierarchy
 
+## 6. Getting Started
 
-## 5. Getting Started
+## 7. How to Contribute
 
+## 8. References
 
-## 6. How to Contribute
-
-
-## 7. References
 <br>
 <b>References</b>
 
