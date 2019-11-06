@@ -9,9 +9,9 @@ import tensorflow as tf
 # wandb.init(project="knowledge-distillation")
 dataset = "cifar100"
 dataset_num_classes = 100
-model_checkpoint_dir = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Models/ModelCheckpoints"
-soft_targets_dir = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/SoftTargets"
-log_dir = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Experiment-Logs"
+model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
+soft_targets_dir = "/local/neural-distiller//run-experiment/SoftTargets"
+log_dir = "/local/neural-distiller/run-experiment/Experiment-Logs"
 epochs = 150
 batch_size = 100
 # logging
