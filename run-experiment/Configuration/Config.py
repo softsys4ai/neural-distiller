@@ -1,4 +1,5 @@
 # imports
+import os
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.python.keras.optimizers import adadelta, RMSprop, SGD, Adam
 import tensorflow as tf
@@ -6,7 +7,13 @@ import tensorflow as tf
 # import wandb
 # from wandb.keras import WandbCallback
 # wandb.init(project="knowledge-distillation")
-
+dataset = "cifar100"
+dataset_num_classes = 100
+model_checkpoint_dir = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Models/ModelCheckpoints"
+soft_targets_dir = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/SoftTargets"
+log_dir = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Experiment-Logs"
+epochs = 150
+batch_size = 100
 # logging
 spacer = "--------------------------------"
 student_train_spacer = "-----------------"
@@ -17,8 +24,10 @@ student_train_spacer = "-----------------"
             #ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001)
 #     ]
 #
-student_callbacks = callbacks=[
-        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007)
+checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+student_callbacks = [
+        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
+        ModelCheckpoint(checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     ]
 # WandbCallback(),
 #                                                     mode='auto', baseline=None, restore_best_weights=False)

@@ -1,5 +1,5 @@
 from Configuration import Config as cfg
-from Models.CustomTeacher import TeacherCNN
+from Models.CustomNets.CustomTeacher import TeacherCNN
 from Models.LeNet5 import LeNet5Teacher
 
 

@@ -1,6 +1,7 @@
-from keras.datasets import mnist
-from keras.datasets import cifar10
+from keras.datasets import mnist, cifar10, cifar100
 from tensorflow.python.keras.utils import np_utils
+
+
 
 def load_mnist(logger):
     # preparing the MNIST dataset for training teacher and student models
@@ -30,3 +31,24 @@ def load_cifar_10(logger):
     X_train /= 255
     X_test /= 255
     return X_train, Y_train, X_test, Y_test
+
+def load_cifar_100(logger):
+    nb_classes = 100
+    (X_train, y_train), (X_test, y_test) = cifar100.load_data()
+    Y_train = np_utils.to_categorical(y_train, nb_classes)
+    Y_test = np_utils.to_categorical(y_test, nb_classes)
+    X_train = X_train.astype('float32')
+    X_test = X_test.astype('float32')
+    X_train /= 255
+    X_test /= 255
+    return X_train, Y_train, X_test, Y_test
+
+def load_dataset_by_name(logger, datasetname):
+    if datasetname is "mnist":
+       return load_mnist(logger)
+    elif datasetname is "cifar10":
+        return load_cifar_10(logger)
+    elif datasetname is "cifar100":
+        return load_cifar_100(logger)
+    else:
+        logger.error("provided dataset name is not supported!")
