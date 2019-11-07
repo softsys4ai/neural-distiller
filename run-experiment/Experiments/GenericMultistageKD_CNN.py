@@ -430,6 +430,7 @@ def run(logger, options):
                         if previousModel is not None:
                             model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                             logger.info("loading soft targets for student training...")
+                            print("previous model to load logits for: %s" % str(previousModel))
                             Y_train_new, Y_test_new = get_pretrained_teacher_logits(previousModel, cfg.dataset)
                             if Y_train_new is None or Y_test_new is None:
                                 logger.info("soft targets not loaded correctly!")
