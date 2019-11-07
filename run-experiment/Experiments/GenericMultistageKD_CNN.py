@@ -366,7 +366,9 @@ def get_pretrained_teacher_logits(netSize, dataset):
     # load pre-created soft targets for teacher
     logitFileName = os.path.join(cfg.soft_targets_dir, str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
     logitFileName.strip()
+    print("get_pretrained_teacher_logits")
     print(logitFileName)
+    print(os.path.isfile(logitFileName))
     if os.path.isfile(logitFileName): # check for logit file existence
         filehandler = open(logitFileName, 'rb')
         Y_train_new = pickle.load(filehandler)
@@ -382,6 +384,9 @@ def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset):
     filehandler = open(logitFileName, 'wb')
     pickle.dump(Y_train_new, filehandler)
     pickle.dump(Y_test_new, filehandler)
+    print("save_pretrained_teacher_logits")
+    print(logitFileName)
+    print(os.path.isfile(logitFileName))
 
 def run(logger, options):
     logger.info(cfg.student_train_spacer + "GENERIC MULTISTAGE" + cfg.student_train_spacer)
