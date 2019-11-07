@@ -367,7 +367,7 @@ def get_pretrained_teacher_logits(netSize, dataset):
     logitFileName = os.path.join(cfg.soft_targets_dir, str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
     logitFileName.strip()
     print(logitFileName)
-    if os.path.exists(logitFileName): # check for logit file existence
+    if os.path.isfile(logitFileName): # check for logit file existence
         filehandler = open(logitFileName, 'rb')
         Y_train_new = pickle.load(filehandler)
         Y_test_new = pickle.load(filehandler)
@@ -492,7 +492,7 @@ def run(logger, options):
                             Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset)
                             # train network if not previously created logits
                             if Y_train_new is None or Y_test_new is None:
-                                if os.path.exists(cfg.checkpoint_path):
+                                if os.path.isfile(cfg.checkpoint_path):
                                     logger.info("removing previous checkpoint")
                                     os.remove(cfg.checkpoint_path) # remove previous checkpoint
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
@@ -543,7 +543,7 @@ def run(logger, options):
                         previousModel = model  # previously trained model becomes teacher
 
                     # appending experiment result to log file
-                    if os.path.exists(session_log_file):
+                    if os.path.isfile(session_log_file):
                         open_type = 'a'
                     else:
                         open_type = 'w'
