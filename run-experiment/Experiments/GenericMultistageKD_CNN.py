@@ -373,7 +373,7 @@ def get_pretrained_teacher_logits(netSize, dataset):
         Y_test_new = pickle.load(filehandler)
         return Y_train_new, Y_test_new
     else:
-        print("logits do not exist for the given netSize!")
+        print("logits do not exist for netSize: %s" % str(netSize))
         return None, None
 
 def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset):
@@ -489,6 +489,8 @@ def run(logger, options):
                         # if no previously trained model, train the network
                         else:
                             # load the already created soft targets
+                            Y_train_new = None
+                            Y_test_new = None
                             Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset)
                             # train network if not previously created logits
                             if Y_train_new is None or Y_test_new is None:
