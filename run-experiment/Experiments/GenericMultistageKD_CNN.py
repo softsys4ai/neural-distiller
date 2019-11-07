@@ -12,6 +12,7 @@ import datetime
 import json
 import ast
 import os
+import keras as K
 import tensorflow as tf
 from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D
 from tensorflow.python.keras.models import Sequential
@@ -405,6 +406,7 @@ def run(logger, options):
             for alpha in alphas:
                 for temp in temperatures:
                     tf.keras.backend.clear_session()  # must clear the current session to free memory!
+                    K.clear_session()   # must clear the current session to free memory!
                     logger.info("Clearing tensorflow/keras backend session and de-allocating remaining models...")
                     model = None
                     previousModel = None
@@ -425,7 +427,7 @@ def run(logger, options):
                             logger.info("loading soft targets for student training...")
                             Y_train_new, Y_test_new = get_pretrained_teacher_logits(previousModel, cfg.dataset)
                             if Y_train_new is None or Y_test_new is None:
-                                logger.error("soft targets not loaded correctly!")
+                                logger.info("soft targets not loaded correctly!")
                             else:
                                 logger.info("completed")
                                 # filehandler = open("mnist_10_soft_targets.pkl", 'wb')

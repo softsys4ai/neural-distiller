@@ -10,6 +10,7 @@ import tensorflow as tf
 dataset = "cifar100"
 dataset_num_classes = 100
 model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
+checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
 soft_targets_dir = "/local/neural-distiller/run-experiment/SoftTargets"
 log_dir = "/local/neural-distiller/run-experiment/Experiment-Logs"
 epochs = 150
@@ -24,7 +25,7 @@ student_train_spacer = "-----------------"
             #ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001)
 #     ]
 #
-checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+
 student_callbacks = [
         EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
