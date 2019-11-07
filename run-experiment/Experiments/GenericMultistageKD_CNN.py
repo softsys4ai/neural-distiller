@@ -481,7 +481,9 @@ def run(logger, options):
                             Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset)
                             # train network if not previously created logits
                             if Y_train_new is None or Y_test_new is None:
-                                os.remove(cfg.checkpoint_path) # remove previous checkpoint
+                                if os.path.exists(cfg.checkpoint_path):
+                                    logger.info("removing previous checkpoint")
+                                    os.remove(cfg.checkpoint_path) # remove previous checkpoint
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
