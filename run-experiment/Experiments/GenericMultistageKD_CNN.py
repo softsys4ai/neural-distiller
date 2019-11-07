@@ -450,6 +450,7 @@ def run(logger, options):
                                 # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train,
                                 #                                                                X_test, Y_test)
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                model.summary()
                                 # load best model from checkpoint for evaluation
                                 model.load_weights(cfg.checkpoint_path)
                                 model.compile(optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
@@ -478,6 +479,7 @@ def run(logger, options):
                             Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset)
                             # train network if not previously created logits
                             if Y_train_new is None or Y_test_new is None:
+                                os.remove(cfg.checkpoint_path) # remove previous checkpoint
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
