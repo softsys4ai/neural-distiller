@@ -445,7 +445,7 @@ def run(logger, options):
                                 # pickle.dump(Y_train_new, filehandler)
                                 # pickle.dump(Y_test_new, filehandler)
                                 model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
-                                model.summary()
+                                # model.summary()
                                 # model = multi_gpu_model(model, gpus=4)
                                 model.compile(
                                     optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
@@ -468,7 +468,7 @@ def run(logger, options):
                                 # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train,
                                 #                                                                X_test, Y_test)
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
-                                model.summary()
+                                # model.summary()
                                 # load best model from checkpoint for evaluation
                                 model.load_weights(cfg.checkpoint_path)
                                 model.compile(optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
