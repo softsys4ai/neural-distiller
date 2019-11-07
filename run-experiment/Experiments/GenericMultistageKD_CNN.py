@@ -424,51 +424,54 @@ def run(logger, options):
                             model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                             logger.info("loading soft targets for student training...")
                             Y_train_new, Y_test_new = get_pretrained_teacher_logits(previousModel, cfg.dataset)
-                            logger.info("completed")
-                            # filehandler = open("mnist_10_soft_targets.pkl", 'wb')
-                            # pickle.dump(Y_train_new, filehandler)
-                            # pickle.dump(Y_test_new, filehandler)
-                            model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
-                            model.summary()
-                            # model = multi_gpu_model(model, gpus=4)
-                            model.compile(
-                                optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
-                                loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
-                                metrics=[HelperUtil.acc])
-                            logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
-                            model.fit(X_train, Y_train_new,
-                                      batch_size=cfg.student_batch_size,
-                                      epochs=epochs,
-                                      verbose=1,
-                                      callbacks=cfg.student_callbacks,
-                                      validation_data=(X_test, Y_test_new))
-                            # model = HelperUtil.revert_knowledge_distillation_modifications(logger, model)
-                            del model
-                            # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train,
-                            #                                                                X_test, Y_test)
-                            model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
-                            # load best model from checkpoint for evaluation
-                            model.load_weights(cfg.checkpoint_path)
-                            model.compile(optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
-                                          loss=logloss,  # the same as the custom loss function
-                                          metrics=['accuracy'])
-                            train_score = model.evaluate(X_train, Y_train, verbose=0)
-                            val_score = model.evaluate(X_test, Y_test, verbose=0)
-                            result = create_result(net_size, temp, alpha, train_score, val_score)
-                            logger.info(result)
-                            experiment_result["experiment_results"].append(result)
-                            # # remove checkpoint of best model for new checkpoint
-                            # os.remove(cfg.checkpoint_path)
-                            # save soft targets
-                            logger.info("creating student training data...")
-                            Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test)
-                            save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset)
-                            logger.info("done.")
-                            # clear soft targets
-                            Y_train_new = None
-                            Y_test_new = None
-                            # set model to current net size to preserve in previousModel
-                            model = net_size
+                            if Y_train_new is None or Y_test_new is None:
+                                logger.error("soft targets not loaded correctly!")
+                            else:
+                                logger.info("completed")
+                                # filehandler = open("mnist_10_soft_targets.pkl", 'wb')
+                                # pickle.dump(Y_train_new, filehandler)
+                                # pickle.dump(Y_test_new, filehandler)
+                                model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
+                                model.summary()
+                                # model = multi_gpu_model(model, gpus=4)
+                                model.compile(
+                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                                    loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
+                                    metrics=[HelperUtil.acc])
+                                logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
+                                model.fit(X_train, Y_train_new,
+                                          batch_size=cfg.student_batch_size,
+                                          epochs=epochs,
+                                          verbose=1,
+                                          callbacks=cfg.student_callbacks,
+                                          validation_data=(X_test, Y_test_new))
+                                # model = HelperUtil.revert_knowledge_distillation_modifications(logger, model)
+                                del model
+                                # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train,
+                                #                                                                X_test, Y_test)
+                                model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                # load best model from checkpoint for evaluation
+                                model.load_weights(cfg.checkpoint_path)
+                                model.compile(optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                                              loss=logloss,  # the same as the custom loss function
+                                              metrics=['accuracy'])
+                                train_score = model.evaluate(X_train, Y_train, verbose=0)
+                                val_score = model.evaluate(X_test, Y_test, verbose=0)
+                                result = create_result(net_size, temp, alpha, train_score, val_score)
+                                logger.info(result)
+                                experiment_result["experiment_results"].append(result)
+                                # # remove checkpoint of best model for new checkpoint
+                                # os.remove(cfg.checkpoint_path)
+                                # save soft targets
+                                logger.info("creating student training data...")
+                                Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test)
+                                save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset)
+                                logger.info("done.")
+                                # clear soft targets
+                                Y_train_new = None
+                                Y_test_new = None
+                                # set model to current net size to preserve in previousModel
+                                model = net_size
                         # if no previously trained model, train the network
                         else:
                             # load the already created soft targets
