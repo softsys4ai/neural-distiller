@@ -12,7 +12,7 @@ import datetime
 import json
 import ast
 import os
-import keras as K
+from keras import backend as K
 import tensorflow as tf
 from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D
 from tensorflow.python.keras.models import Sequential
