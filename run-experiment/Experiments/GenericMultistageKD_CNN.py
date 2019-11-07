@@ -22,6 +22,7 @@ from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.utils import multi_gpu_model
 from tensorflow.python.keras.optimizers import adadelta
 from tensorflow.python.keras.backend import clear_session
+from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 import numpy as np
 
 tf.set_random_seed(cfg.random_seed)
@@ -441,11 +442,16 @@ def run(logger, options):
                                     loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                     metrics=[HelperUtil.acc])
                                 logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
+                                callbacks = [
+                                        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
+                                        # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
+                                        ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+                                    ]
                                 model.fit(X_train, Y_train_new,
                                           batch_size=cfg.student_batch_size,
                                           epochs=epochs,
                                           verbose=1,
-                                          callbacks=cfg.student_callbacks,
+                                          callbacks=callbacks,
                                           validation_data=(X_test, Y_test_new))
                                 # model = HelperUtil.revert_knowledge_distillation_modifications(logger, model)
                                 del model
@@ -491,12 +497,17 @@ def run(logger, options):
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
                                 # train network and save model with bet validation accuracy to cfg.checkpoint_path
+                                callbacks = [
+                                        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
+                                        # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
+                                        ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+                                    ]
                                 model.fit(X_train, Y_train,
                                           validation_data=(X_test, Y_test),
                                           batch_size=cfg.student_batch_size,
                                           epochs=epochs,
                                           verbose=1,
-                                          callbacks=cfg.student_callbacks)
+                                          callbacks=callbacks)
                                 # load best model from checkpoint for evaluation
                                 del model
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
