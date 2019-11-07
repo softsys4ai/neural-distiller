@@ -1,13 +1,10 @@
 import numpy as np
 from Configuration import Config as cfg
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
-from tensorflow.python.keras.metrics import categorical_accuracy
+from tensorflow.python.keras.metrics import categorical_accuracy, top_k_categorical_accuracy
 from tensorflow.python.keras.layers import Lambda, concatenate, Activation
 from tensorflow.python.keras.models import Model
 import tensorflow as tf
-
-nb_classes = 10
-
 
 def apply_knowledge_distillation_modifications(logger, model, temp):
     # modifying student network for KD
@@ -35,8 +32,8 @@ def softmax(x):
 def knowledge_distillation_loss(logger, y_true, y_pred, alpha=cfg.alpha):
     logger.info("compiling and training student with alpha: %s" % alpha)
     # Extract the one-hot encoded values and the softs separately so that we can create two objective functions
-    y_true, y_true_softs = y_true[:, :nb_classes], y_true[:, nb_classes:]
-    y_pred, y_pred_softs = y_pred[:, :nb_classes], y_pred[:, nb_classes:]
+    y_true, y_true_softs = y_true[:, :cfg.dataset_num_classes], y_true[:, cfg.dataset_num_classes:]
+    y_pred, y_pred_softs = y_pred[:, :cfg.dataset_num_classes], y_pred[:, cfg.dataset_num_classes:]
     # loss = (1-alpha)*logloss(y_true, y_pred) + alpha*logloss(y_true_softs, y_pred_softs)
     loss = logloss(y_true, y_pred) + alpha * logloss(y_true_softs, y_pred_softs)
     return loss
@@ -49,10 +46,21 @@ def custom_logloss_loss(y_true, y_pred):
 
 # For testing use regular output probabilities - without temperature
 def acc(y_true, y_pred):
-    y_true = y_true[:, :nb_classes]
-    y_pred = y_pred[:, :nb_classes]
+    y_true = y_true[:, :cfg.dataset_num_classes]
+    y_pred = y_pred[:, :cfg.dataset_num_classes]
     return categorical_accuracy(y_true, y_pred)
 
+def top_5_accuracy(y_true, y_pred):
+    y_true = y_true[:, :256]
+    y_pred = y_pred[:, :256]
+    return top_k_categorical_accuracy(y_true, y_pred)
+
+# logloss with only soft probabilities and targets
+def soft_logloss(y_true, y_pred):
+    logits = y_true[:, 256:]
+    y_soft = softmax(logits/temperature)
+    y_pred_soft = y_pred[:, 256:]
+    return logloss(y_soft, y_pred_soft)
 
 def calculate_unweighted_score(logger, model, X_train, Y_train, X_test, Y_test):
     # with tf.Graph().as_default():
