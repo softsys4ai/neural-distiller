@@ -365,16 +365,20 @@ def find_largest_value(output_distribution):
 def get_pretrained_teacher_logits(netSize, dataset):
     # load pre-created soft targets for teacher
     logitFileName = os.path.join(cfg.soft_targets_dir, str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
+    logitFileName.strip()
+    print(logitFileName)
     if os.path.exists(logitFileName): # check for logit file existence
         filehandler = open(logitFileName, 'rb')
         Y_train_new = pickle.load(filehandler)
         Y_test_new = pickle.load(filehandler)
         return Y_train_new, Y_test_new
     else:
+        print("logits do not exist for the given netSize!")
         return None, None
 
 def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset):
     logitFileName = os.path.join(cfg.soft_targets_dir, str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
+    logitFileName.strip()
     filehandler = open(logitFileName, 'wb')
     pickle.dump(Y_train_new, filehandler)
     pickle.dump(Y_test_new, filehandler)
