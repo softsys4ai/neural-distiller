@@ -14,7 +14,6 @@ def find_largest_value(output_distribution):
 
 def createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test):
     teacher_WO_Softmax = Model(model.input, model.get_layer('logits').output) # TODO test this method of getting the last layer output
-    teacher_WO_Softmax.summary()
     teacher_train_logits = teacher_WO_Softmax.predict(X_train)
     # directly retrieve the logits
     teacher_test_logits = teacher_WO_Softmax.predict(X_test)
