@@ -481,11 +481,14 @@ def run(logger, options):
                                 experiment_result["experiment_results"].append(result)
                                 # # remove checkpoint of best model for new checkpoint
                                 # os.remove(cfg.checkpoint_path)
-                                # save soft targets
-                                logger.info("creating student training data...")
-                                Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test)
-                                save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset)
-                                logger.info("done.")
+                                if order.index(net_size) < len(order)-1:
+                                    # save soft targets
+                                    logger.info("creating student training data...")
+                                    Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test)
+                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset)
+                                    logger.info("done.")
+                                else:
+                                    logger.info("skipping creation of student training data, we are @ target model...")
                                 # clear soft targets
                                 Y_train_new = None
                                 Y_test_new = None
@@ -547,7 +550,7 @@ def run(logger, options):
                                 model = net_size
                         # temporarily serialize model to load as teacher in following KD training to avoid errors
                         del previousModel # free memory
-                        previousModel = model  # previously trained model becomes teacher
+                        previousModel = net_size  # previously trained model becomes teacher
 
                     # appending experiment result to log file
                     if os.path.isfile(session_log_file):
