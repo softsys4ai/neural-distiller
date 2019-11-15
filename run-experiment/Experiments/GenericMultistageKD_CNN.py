@@ -167,15 +167,15 @@ def get_model_cifar100(numClasses, X_train, net_size):
     # setting up model based on size
     if net_size == 10:
         model = Sequential([
-            Conv2D(256, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
-            Conv2D(128, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
             Conv2D(32, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(64, (3, 3), activation='relu'),
+            Conv2D(128, (3, 3), activation='relu'),
+            MaxPooling2D(pool_size=(2, 2)),
+            Conv2D(256, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
             Dense(128, activation='relu'),
@@ -184,14 +184,14 @@ def get_model_cifar100(numClasses, X_train, net_size):
         ])
     elif net_size == 8:
         model = Sequential([
-            Conv2D(128, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
             Conv2D(32, (3, 3), activation='relu'),
+            Conv2D(64, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(128, (3, 3), activation='relu'),
             # Conv2D(8, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
@@ -201,12 +201,12 @@ def get_model_cifar100(numClasses, X_train, net_size):
         ])
     elif net_size == 6:
         model = Sequential([
-            Conv2D(64, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             Conv2D(32, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(64, (3, 3), activation='relu'),
             # Conv2D(8, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
@@ -219,11 +219,11 @@ def get_model_cifar100(numClasses, X_train, net_size):
         # continue
     elif net_size == 4:
         model = Sequential([
-            Conv2D(32, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(32, (3, 3), activation='relu'),
             # Conv2D(8, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
@@ -236,11 +236,11 @@ def get_model_cifar100(numClasses, X_train, net_size):
         # continue
     elif net_size == 2:
         model = Sequential([
-            Conv2D(8, kernel_size=(3, 3),
+            Conv2D(4, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(4, (3, 3), activation='relu'),
+            Conv2D(8, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
             Dense(16, input_shape=X_train.shape[1:]),
@@ -264,90 +264,89 @@ def get_model_cifar100_raw_output(numClasses, X_train, net_size):
     # setting up model based on size
     if net_size == 10:
         model = Sequential([
-            Conv2D(256, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
-            Conv2D(128, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
             Conv2D(32, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(64, (3, 3), activation='relu'),
+            Conv2D(128, (3, 3), activation='relu'),
+            MaxPooling2D(pool_size=(2, 2)),
+            Conv2D(256, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
             Dense(128, activation='relu'),
-            Dense(numClasses, name='logits'),
+            Dense(numClasses, name='logits')
         ])
     elif net_size == 8:
         model = Sequential([
-            Conv2D(128, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
             Conv2D(32, (3, 3), activation='relu'),
+            Conv2D(64, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(128, (3, 3), activation='relu'),
             # Conv2D(8, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
             Dense(96, activation='relu'),
-            Dense(numClasses, name='logits'),
+            Dense(numClasses, name='logits')
         ])
     elif net_size == 6:
         model = Sequential([
-            Conv2D(64, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             Conv2D(32, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(64, (3, 3), activation='relu'),
             # Conv2D(8, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
             Dense(64, activation='relu'),
-            Dense(numClasses, name='logits'),
+            Dense(numClasses, name='logits')
         ])
         # model = load_model(cfg.teacher_model_dir + "/best_size_6_model.hdf5")
         # previousModel = model
         # continue
     elif net_size == 4:
         model = Sequential([
-            Conv2D(32, kernel_size=(3, 3),
+            Conv2D(16, kernel_size=(3, 3),
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
+            Conv2D(32, (3, 3), activation='relu'),
             # Conv2D(8, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
             Dense(32, activation='relu'),
-            Dense(numClasses, name='logits'),
+            Dense(numClasses, name='logits')
         ])
         # model = load_model(cfg.teacher_model_dir + "/best_size_4_model.hdf5")
         # previousModel = model
         # continue
     elif net_size == 2:
-        # model = Sequential([
-        #     Conv2D(8, kernel_size=(3, 3),
-        #            activation='relu',
-        #            input_shape=X_train.shape[1:]),
-        #     MaxPooling2D(pool_size=(2, 2)),
-        #     Conv2D(4, (3, 3), activation='relu'),
-        #     MaxPooling2D(pool_size=(2, 2)),
-        #     Flatten(),
-        #     Dense(16, input_shape=X_train.shape[1:]),
-        #     Activation('relu'),
-        #     Dense(numClasses, name='logits'),
-        #     Activation('softmax'),
-        # ])
         model = Sequential([
-            Dense(16, activation='relu', input_shape=X_train.shape[1:]),
-            Dense(16, activation='relu', input_shape=X_train.shape[1:]),
-            Activation('relu'),
+            Conv2D(4, kernel_size=(3, 3),
+                   activation='relu',
+                   input_shape=X_train.shape[1:]),
+            MaxPooling2D(pool_size=(2, 2)),
+            Conv2D(8, (3, 3), activation='relu'),
+            MaxPooling2D(pool_size=(2, 2)),
             Flatten(),
-            Dense(numClasses, name='logits'),
+            Dense(16, input_shape=X_train.shape[1:]),
+            Activation('relu'),
+            Dense(numClasses, name='logits')
         ])
+        # model = Sequential([
+        #     Dense(16, activation='relu', input_shape=X_train.shape[1:]),
+        #     Dense(16, activation='relu', input_shape=X_train.shape[1:]),
+        #     Activation('relu'),
+        #     Flatten(),
+        #     Dense(numClasses, name='logits'),
+        # ])
     else:
         print('no model available for given size!')
     return model
