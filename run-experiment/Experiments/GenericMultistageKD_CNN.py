@@ -279,18 +279,18 @@ def get_model_cifar100(numClasses, X_train, net_size):
                    activation='relu',
                    input_shape=X_train.shape[1:]),
             Conv2D(32, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
+            MaxPooling2D(pool_size=(2, 2), strides=2, padding='valid'),
             Conv2D(64, (3, 3), activation='relu'),
             Conv2D(64, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
+            MaxPooling2D(pool_size=(2, 2), strides=2, padding='valid'),
             Conv2D(128, (3, 3), activation='relu'),
             Conv2D(128, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
+            MaxPooling2D(pool_size=(2, 2), strides=2, padding='valid'),
             Conv2D(256, (3, 3), activation='relu'),
             Conv2D(256, (3, 3), activation='relu'),
             Conv2D(256, (3, 3), activation='relu'),
             Conv2D(256, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
+            MaxPooling2D(pool_size=(2, 2), strides=2, padding='valid'),
             Flatten(),
             Dense(512, activation='relu'),
             Dense(numClasses, name='logits'),
@@ -525,6 +525,7 @@ def run(logger, options):
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                model.summary()
                                 model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
