@@ -451,7 +451,7 @@ def run(logger, options):
                                 # model.summary()
                                 # model = multi_gpu_model(model, gpus=4)
                                 model.compile(
-                                    optimizer=SGD(learning_rate=0.1, momentum=0.9, nesterov=True),
+                                    optimizer=SGD(lr=0.1, momentum=0.9, nesterov=True),
                                     loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                     metrics=[HelperUtil.acc])
                                 logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
@@ -474,7 +474,7 @@ def run(logger, options):
                                 # model.summary()
                                 # load best model from checkpoint for evaluation
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(optimizer=SGD(learning_rate=0.1, momentum=0.9, nesterov=True),
+                                model.compile(optimizer=SGD(lr=0.1, momentum=0.9, nesterov=True),
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
                                 train_score = model.evaluate(X_train, Y_train, verbose=0)
@@ -511,7 +511,7 @@ def run(logger, options):
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
-                                model.compile(optimizer=SGD(learning_rate=0.1, momentum=0.9, nesterov=True),
+                                model.compile(optimizer=SGD(lr=0.1, momentum=0.9, nesterov=True),
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
                                 # train network and save model with bet validation accuracy to cfg.checkpoint_path
@@ -530,7 +530,7 @@ def run(logger, options):
                                 del model
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(optimizer=SGD(learning_rate=0.1, momentum=0.9, nesterov=True),
+                                model.compile(optimizer=SGD(lr=0.1, momentum=0.9, nesterov=True),
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
                                 # evaluate network
