@@ -164,7 +164,7 @@ def get_model_mnist(numClasses, X_train, net_size):
         print('no model available for given size!')
     return model
 
-def get_model_cifar100(numClasses, X_train, net_size):
+def get_model_cifar100_raw_output(numClasses, X_train, net_size):
     # setting up model based on size
     if net_size == 10:
         model = Sequential([
@@ -271,7 +271,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
 # 		  'Conv256', 'Conv256','MaxPool', 'FC64', 'FC100'],
 # 	'10': ['Conv32', 'Conv32', 'MaxPool', 'Conv64', 'Conv64', 'MaxPool', 'Conv128', 'Conv128', 'MaxPool',
 # 		   'Conv256', 'Conv256', 'Conv256', 'Conv256' , 'MaxPool', 'FC512', 'FC100'],
-def get_model_cifar100_raw_output(numClasses, X_train, net_size):
+def get_model_cifar100(numClasses, X_train, net_size):
     # setting up model based on size
     if net_size == 10:
         model = Sequential([
@@ -292,7 +292,8 @@ def get_model_cifar100_raw_output(numClasses, X_train, net_size):
             Conv2D(256, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Dense(512, activation='relu'),
-            Dense(numClasses, name='logits')
+            Dense(numClasses, name='logits'),
+            Activation('softmax'),
         ])
     elif net_size == 8:
         model = Sequential([
@@ -311,7 +312,8 @@ def get_model_cifar100_raw_output(numClasses, X_train, net_size):
             Conv2D(256, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
             Dense(64, activation='relu'),
-            Dense(numClasses, name='logits')
+            Dense(numClasses, name='logits'),
+            Activation('softmax'),
         ])
     elif net_size == 6:
         model = Sequential([
@@ -325,7 +327,8 @@ def get_model_cifar100_raw_output(numClasses, X_train, net_size):
             MaxPooling2D(pool_size=(2, 2)),
             Conv2D(128, (3, 3), activation='relu'),
             Conv2D(128, (3, 3), activation='relu'),
-            Dense(numClasses, name='logits')
+            Dense(numClasses, name='logits'),
+            Activation('softmax'),
         ])
         # model = load_model(cfg.teacher_model_dir + "/best_size_6_model.hdf5")
         # previousModel = model
@@ -340,7 +343,8 @@ def get_model_cifar100_raw_output(numClasses, X_train, net_size):
             Conv2D(64, (3, 3), activation='relu'),
             Conv2D(64, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Dense(numClasses, name='logits')
+            Dense(numClasses, name='logits'),
+            Activation('softmax'),
         ])
         # model = load_model(cfg.teacher_model_dir + "/best_size_4_model.hdf5")
         # previousModel = model
@@ -353,7 +357,8 @@ def get_model_cifar100_raw_output(numClasses, X_train, net_size):
             MaxPooling2D(pool_size=(2, 2)),
             Conv2D(32, (3, 3), activation='relu'),
             MaxPooling2D(pool_size=(2, 2)),
-            Dense(numClasses, name='logits')
+            Dense(numClasses, name='logits'),
+            Activation('softmax'),
         ])
     else:
         print('no model available for given size!')
