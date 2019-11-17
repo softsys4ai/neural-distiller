@@ -1,7 +1,5 @@
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
-# The GPU id to use, usually either "0" or "1";
-os.environ["CUDA_VISIBLE_DEVICES"]="1";
 import socket
 import logging
 import sys
@@ -40,6 +38,12 @@ def config_option_parser():
                       default=None,
                       dest="config_file_path",
                       help="Type of Model")
+    parser.add_option('-g', "--gpu",
+                      action="store",
+                      type="int",
+                      default=0,
+                      dest="gpu",
+                      help="Which GPU to use for training")
     (options, args) = parser.parse_args()
     return (options, usage)
 
@@ -74,6 +78,9 @@ def config_logger(log_file):
 def main():
     # command line input
     (options, usage) = config_option_parser()
+
+    # set GPU to train on
+    os.environ["CUDA_VISIBLE_DEVICES"] = options.gpu;
 
     # get log directory
     log_dir = os.getcwd() + cfg.log_dir
