@@ -431,8 +431,9 @@ def find_largest_value(output_distribution):
 # method to check for already saved copy of teacher knowledge
 def get_pretrained_teacher_logits(netSize, dataset, trainOrder):
     # load pre-created soft targets for teacher
-    logitFileName = os.path.join(cfg.soft_targets_dir, str(trainOrder)+"_"+str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
-    logitFileName.strip()
+    target_file = str(dataset) + "_" + str(netSize) + str(trainOrder) + "_soft_targets.pkl"
+    target_file = target_file.replace(" ", "")
+    logitFileName = os.path.join(cfg.soft_targets_dir, target_file)
     print("get_pretrained_teacher_logits")
     print(logitFileName)
     print(os.path.isfile(logitFileName))
@@ -446,8 +447,9 @@ def get_pretrained_teacher_logits(netSize, dataset, trainOrder):
         return None, None
 
 def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset, trainOrder):
-    logitFileName = os.path.join(cfg.soft_targets_dir, str(trainOrder)+"_"+str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
-    logitFileName.strip()
+    target_file = str(dataset) + "_" + str(netSize) + str(trainOrder) + "_soft_targets.pkl"
+    target_file = target_file.replace(" ", "")
+    logitFileName = os.path.join(cfg.soft_targets_dir, target_file)
     filehandler = open(logitFileName, 'wb')
     pickle.dump(Y_train_new, filehandler)
     pickle.dump(Y_test_new, filehandler)
@@ -455,15 +457,9 @@ def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset, tr
     print(logitFileName)
     print(os.path.isfile(logitFileName))
 
-def run(logger, options):
+def run(logger, options, session_log_file):
     logger.info(cfg.student_train_spacer + "GENERIC MULTISTAGE" + cfg.student_train_spacer)
 
-    # session file setup
-    session_file_name = cfg.dataset + "_grid_search_experiment_" + datetime.datetime.now().isoformat() + ".log"
-    log_path = ".." + cfg.log_dir
-    session_file_relative_path = log_path + session_file_name
-    my_path = os.path.abspath(os.path.dirname(__file__))
-    session_log_file = os.path.join(my_path, session_file_relative_path)
     with open(session_log_file, "w") as f:
         f.write("begin test: " + datetime.datetime.now().isoformat() + "\n")
         f.close()
@@ -634,7 +630,7 @@ def run(logger, options):
                     # free model variables for next configuration iteration
                     del model
                     del previousModel
-
+        logger.info('-- COMPLETE')
     except Exception:
         traceback.print_exc()
         error = traceback.format_exc()

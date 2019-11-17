@@ -10,7 +10,7 @@ from datetime import datetime
 from Configuration import Config as cfg
 from Experiments import GenericMultistageKD_CNN
 
-def config_option_parser(logger):
+def config_option_parser():
     # reading command line input
     usage = """USAGE: %python train.py -m [model]
                  Model ResNet50:                  python train.py -m resnet50
@@ -41,21 +41,14 @@ def config_option_parser(logger):
                       dest="config_file_path",
                       help="Type of Model")
     (options, args) = parser.parse_args()
-    logger.info("Parsed command line options")
     return (options, usage)
 
 # TODO add separate logger path for experimental results
-def config_logger():
+def config_logger(log_file):
     """This function is used to configure logging information
     @returns:
         logger: logging object
     """
-    # get log directory
-    log_dir = os.getcwd() + cfg.log_dir
-    now = datetime.now()
-    now_datetime = now.strftime("%d-%m-%Y_%H:%M:%S")
-    log_file_name = "logfile_{0}".format(str(now_datetime))
-    log_file = os.path.join(log_dir, log_file_name)
 
     # get logger object
     ip = socket.gethostbyname(socket.gethostname())
@@ -79,16 +72,28 @@ def config_logger():
 
 
 def main():
+    # command line input
+    (options, usage) = config_option_parser()
+
+    # get log directory
+    log_dir = os.getcwd() + cfg.log_dir
+    now = datetime.now()
+    now_datetime = now.strftime("%d-%m-%Y_%H:%M:%S")
+    if options.experiment == "search-alpha-temp-configurations":
+        log_dir = log_dir + "/" + cfg.dataset + "_grid_search_" + now_datetime
+        os.mkdir(log_dir)
+    log_file_name = "experiment_log"
+    log_file = os.path.join(log_dir, log_file_name)
+
     # add high priority
     os.nice(1)
     # logging
-    logger = config_logger()
-    # command line input
-    (options, usage) = config_option_parser(logger)
+    logger = config_logger(log_file)
+
     try:
         if options.experiment == "search-alpha-temp-configurations":
-            GenericMultistageKD_CNN.run(logger, options)
-            logger.info('-- COMPLETE')
+            session_log_file = log_dir + "/training_session.log"
+            GenericMultistageKD_CNN.run(logger, options, session_log_file)
         elif options.experiment == "full-PaKD-compression":
             logger.error("Provided experiment1 type not yet implemented!")
             # TODO measure power consumption and inference time
