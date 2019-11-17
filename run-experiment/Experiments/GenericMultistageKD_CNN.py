@@ -320,6 +320,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Dense(numClasses, name='logits'),
             Activation('softmax'),
         ])
+        # TODO add resnet8 here!
     elif net_size == 8:
         model = Sequential([
             Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),

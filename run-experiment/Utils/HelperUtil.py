@@ -4,6 +4,7 @@ from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.metrics import categorical_accuracy, top_k_categorical_accuracy
 from tensorflow.python.keras.layers import Lambda, concatenate, Activation
 from tensorflow.python.keras.models import Model
+from tensorflow.python.keras.losses import kullback_leibler_divergence
 import tensorflow as tf
 
 def apply_knowledge_distillation_modifications(logger, model, temp):
@@ -35,7 +36,7 @@ def knowledge_distillation_loss(logger, y_true, y_pred, alpha=cfg.alpha):
     y_true, y_true_softs = y_true[:, :cfg.dataset_num_classes], y_true[:, cfg.dataset_num_classes:]
     y_pred, y_pred_softs = y_pred[:, :cfg.dataset_num_classes], y_pred[:, cfg.dataset_num_classes:]
     # loss = (1-alpha)*logloss(y_true, y_pred) + alpha*logloss(y_true_softs, y_pred_softs)
-    loss = logloss(y_true, y_pred) + alpha * logloss(y_true_softs, y_pred_softs)
+    loss = (1-alpha) * logloss(y_true, y_pred) + alpha * kullback_leibler_divergence(y_true_softs, y_pred_softs)
     return loss
 
 
