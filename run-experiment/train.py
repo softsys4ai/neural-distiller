@@ -40,8 +40,8 @@ def config_option_parser():
                       help="Type of Model")
     parser.add_option('-g', "--gpu",
                       action="store",
-                      type="int",
-                      default=0,
+                      type="string",
+                      default="0",
                       dest="gpu",
                       help="Which GPU to use for training")
     (options, args) = parser.parse_args()
