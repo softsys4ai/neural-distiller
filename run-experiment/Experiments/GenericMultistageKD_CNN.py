@@ -533,7 +533,8 @@ def run(logger, options, session_log_file):
                                 # model.summary()
                                 # model = multi_gpu_model(model, gpus=4)
                                 model.compile(
-                                    optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                                     loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                     metrics=[HelperUtil.acc])
                                 logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
@@ -556,9 +557,11 @@ def run(logger, options, session_log_file):
                                 # model.summary()
                                 # load best model from checkpoint for evaluation
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
-                                              loss=logloss,  # the same as the custom loss function
-                                              metrics=['accuracy'])
+                                model.compile(
+                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                                    loss=logloss,  # the same as the custom loss function
+                                    metrics=['accuracy'])
                                 train_score = model.evaluate(X_train, Y_train, verbose=0)
                                 val_score = model.evaluate(X_test, Y_test, verbose=0)
                                 result = create_result(net_size, temp, alpha, train_score, val_score)
@@ -594,9 +597,11 @@ def run(logger, options, session_log_file):
                                 order, net_size, temp, alpha))
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                                 model.summary()
-                                model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
-                                              loss=logloss,  # the same as the custom loss function
-                                              metrics=['accuracy'])
+                                model.compile(
+                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                                    loss=logloss,  # the same as the custom loss function
+                                    metrics=['accuracy'])
                                 # train network and save model with bet validation accuracy to cfg.checkpoint_path
                                 callbacks = [
                                         EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007),
@@ -613,15 +618,17 @@ def run(logger, options, session_log_file):
                                 del model
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
-                                              loss=logloss,  # the same as the custom loss function
-                                              metrics=['accuracy'])
+                                model.compile(
+                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                                    loss=logloss,  # the same as the custom loss function
+                                    metrics=['accuracy'])
                                 # evaluate network
                                 train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train,
                                                                                                Y_train,
                                                                                                X_test, Y_test)
                                 # save evaluation
-                                result = create_result(net_size, temp, alpha, train_score, val_score)
+                                result = create_result(net_size, None, None, train_score, val_score)
                                 logger.info(result)
                                 experiment_result["experiment_results"].append(result)
                                 logger.info("creating student training data...")

@@ -92,7 +92,7 @@ def main():
 
     try:
         if options.experiment == "search-alpha-temp-configurations":
-            session_log_file = log_dir + "/training_session.log"
+            session_log_file = log_dir + "/training_results.log"
             GenericMultistageKD_CNN.run(logger, options, session_log_file)
         elif options.experiment == "full-PaKD-compression":
             logger.error("Provided experiment1 type not yet implemented!")
