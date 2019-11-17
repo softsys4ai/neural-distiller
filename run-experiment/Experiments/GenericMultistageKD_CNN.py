@@ -14,7 +14,7 @@ import ast
 import os
 from keras import backend as K
 import tensorflow as tf
-from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D, BatchNormalization
+from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D, BatchNormalization, Dropout
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.models import load_model
@@ -278,6 +278,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
+            Dropout(0.1),
             Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
@@ -285,6 +286,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
+            Dropout(0.1),
             Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
@@ -292,6 +294,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
+            Dropout(0.1),
             Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
@@ -299,15 +302,18 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
+            Dropout(0.1),
             Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
             Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
+            Dropout(0.1),
             Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
+            Dropout(0.1),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
             Flatten(),
             Dense(512, activation='relu'),
@@ -516,7 +522,7 @@ def run(logger, options, session_log_file):
                                     metrics=[HelperUtil.acc])
                                 logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
                                 callbacks = [
-                                        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
+                                        EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007),
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
@@ -577,7 +583,7 @@ def run(logger, options, session_log_file):
                                               metrics=['accuracy'])
                                 # train network and save model with bet validation accuracy to cfg.checkpoint_path
                                 callbacks = [
-                                        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
+                                        EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007),
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
