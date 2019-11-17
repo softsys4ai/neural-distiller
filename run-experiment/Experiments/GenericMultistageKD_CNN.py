@@ -603,10 +603,11 @@ def run(logger, options, session_log_file):
                                 logger.info(result)
                                 experiment_result["experiment_results"].append(result)
                                 logger.info("creating student training data...")
-                                Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train,
-                                                                                                 Y_train, X_test,
-                                                                                                 Y_test)
-                                save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
+                                if len(order) != 1:
+                                    Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train,
+                                                                                                     Y_train, X_test,
+                                                                                                     Y_test)
+                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
                                 logger.info("done.")
                                 # # remove checkpoint of best model for new checkpoint
                                 # os.remove(cfg.checkpoint_path)
