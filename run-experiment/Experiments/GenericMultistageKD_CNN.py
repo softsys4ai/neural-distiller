@@ -278,7 +278,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
-            Dropout(0.3),
+            Dropout(0.4),
             Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
@@ -286,7 +286,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
-            Dropout(0.3),
+            Dropout(0.4),
             Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
@@ -313,7 +313,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
-            Dropout(0.3),
+            Dropout(0.4),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
             Flatten(),
             Dense(512, activation='relu'),
@@ -496,8 +496,10 @@ def run(logger, options, session_log_file):
     X_train, Y_train, X_test, Y_test = LoadDataset.load_dataset_by_name(logger, cfg.dataset)
     try:
         for order in order_combinations:
-            for alpha in alphas:
-                for temp in temperatures:
+            for temp in temperatures:
+                # clearing all saved teacher logits
+
+                for alpha in alphas:
                     tf.keras.backend.clear_session()  # must clear the current session to free memory!
                     K.clear_session()   # must clear the current session to free memory!
                     logger.info("Clearing tensorflow/keras backend session and de-allocating remaining models...")
@@ -646,6 +648,7 @@ def run(logger, options, session_log_file):
                         f.write(json.dumps(experiment_result))
                         f.write("\n")
                         f.close()
+
                     # printing the results of training
                     logger.info(cfg.student_train_spacer)
                     # free model variables for next configuration iteration
