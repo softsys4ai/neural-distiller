@@ -531,7 +531,6 @@ def run(logger, options, session_log_file):
                                 # pickle.dump(Y_train_new, filehandler)
                                 # pickle.dump(Y_test_new, filehandler)
                                 model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
-                                # model.summary()
                                 # model = multi_gpu_model(model, gpus=4)
                                 model.compile(
                                     # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
@@ -563,6 +562,7 @@ def run(logger, options, session_log_file):
                                     optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
                                     loss=logloss,  # the same as the custom loss function
                                     metrics=['accuracy'])
+                                model.summary()
                                 train_score = model.evaluate(X_train, Y_train, verbose=0)
                                 val_score = model.evaluate(X_test, Y_test, verbose=0)
                                 result = create_result(net_size, temp, alpha, train_score, val_score)
