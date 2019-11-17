@@ -275,19 +275,39 @@ def get_model_cifar100(numClasses, X_train, net_size):
     # setting up model based on size
     if net_size == 10:
         model = Sequential([
-            Conv2D(32, activation='relu', kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(32, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(128, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(128, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(256, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(256, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(256, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(256, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
             Flatten(),
             Dense(512, activation='relu'),
@@ -296,17 +316,33 @@ def get_model_cifar100(numClasses, X_train, net_size):
         ])
     elif net_size == 8:
         model = Sequential([
-            Conv2D(32, activation='relu', kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(32, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(128, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(128, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(256, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(256, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
             Flatten(),
             Dense(64, activation='relu'),
@@ -315,14 +351,26 @@ def get_model_cifar100(numClasses, X_train, net_size):
         ])
     elif net_size == 6:
         model = Sequential([
-            Conv2D(32, activation='relu', kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(32, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(128, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(128, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             Flatten(),
             Dense(numClasses, name='logits'),
             Activation('softmax'),
@@ -332,11 +380,19 @@ def get_model_cifar100(numClasses, X_train, net_size):
         # continue
     elif net_size == 4:
         model = Sequential([
-            Conv2D(32, activation='relu', kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(32, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            Conv2D(64, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
             Flatten(),
             Dense(numClasses, name='logits'),
@@ -347,9 +403,13 @@ def get_model_cifar100(numClasses, X_train, net_size):
         # continue
     elif net_size == 2:
         model = Sequential([
-            Conv2D(32, activation='relu', kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(32, activation='relu', kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
             MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
             Flatten(),
             Dense(numClasses, name='logits'),
@@ -369,9 +429,9 @@ def find_largest_value(output_distribution):
     return max_val
 
 # method to check for already saved copy of teacher knowledge
-def get_pretrained_teacher_logits(netSize, dataset):
+def get_pretrained_teacher_logits(netSize, dataset, trainOrder):
     # load pre-created soft targets for teacher
-    logitFileName = os.path.join(cfg.soft_targets_dir, str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
+    logitFileName = os.path.join(cfg.soft_targets_dir, str(trainOrder)+"_"+str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
     logitFileName.strip()
     print("get_pretrained_teacher_logits")
     print(logitFileName)
@@ -385,13 +445,13 @@ def get_pretrained_teacher_logits(netSize, dataset):
         print("logits do not exist for netSize: %s" % str(netSize))
         return None, None
 
-def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset):
-    logitFileName = os.path.join(cfg.soft_targets_dir, str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
+def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset, trainOrder):
+    logitFileName = os.path.join(cfg.soft_targets_dir, str(trainOrder)+"_"+str(dataset)+"_"+str(netSize)+"_soft_targets.pkl")
     logitFileName.strip()
     filehandler = open(logitFileName, 'wb')
     pickle.dump(Y_train_new, filehandler)
     pickle.dump(Y_test_new, filehandler)
-    print("save_pretrained_teacher_logits")
+    print("saving pretrained teacher logits - size: %s, dataset: %s" % (netSize, dataset))
     print(logitFileName)
     print(os.path.isfile(logitFileName))
 
@@ -443,7 +503,7 @@ def run(logger, options):
                             model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                             logger.info("loading soft targets for student training...")
                             print("previous model to load logits for: %s" % str(previousModel))
-                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(previousModel, cfg.dataset)
+                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(previousModel, cfg.dataset, order)
                             if Y_train_new is None or Y_test_new is None:
                                 logger.info("soft targets not loaded correctly!")
                             else:
@@ -492,7 +552,7 @@ def run(logger, options):
                                     # save soft targets
                                     logger.info("creating student training data...")
                                     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test)
-                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset)
+                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
                                     logger.info("done.")
                                 else:
                                     logger.info("skipping creation of student training data, we are @ target model...")
@@ -506,7 +566,7 @@ def run(logger, options):
                             # load the already created soft targets
                             Y_train_new = None
                             Y_test_new = None
-                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset)
+                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset, order)
                             # train network if not previously created logits
                             if Y_train_new is None or Y_test_new is None:
                                 if os.path.isfile(cfg.checkpoint_path):
@@ -525,7 +585,6 @@ def run(logger, options):
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
-                                model.summary()
                                 model.fit(X_train, Y_train,
                                           validation_data=(X_test, Y_test),
                                           batch_size=cfg.student_batch_size,
@@ -551,7 +610,7 @@ def run(logger, options):
                                 Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train,
                                                                                                  Y_train, X_test,
                                                                                                  Y_test)
-                                save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset)
+                                save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
                                 logger.info("done.")
                                 # # remove checkpoint of best model for new checkpoint
                                 # os.remove(cfg.checkpoint_path)

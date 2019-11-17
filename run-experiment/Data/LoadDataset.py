@@ -37,6 +37,8 @@ def load_cifar_100(logger):
     (X_train, y_train), (X_test, y_test) = cifar100.load_data()
     Y_train = np_utils.to_categorical(y_train, nb_classes)
     Y_test = np_utils.to_categorical(y_test, nb_classes)
+    # X_train = X_train.reshape(50000, 32, 32, 3)
+    # X_test = X_test.reshape(10000, 32, 32, 3)
     X_train = X_train.astype('float32')
     X_test = X_test.astype('float32')
     X_train /= 255
