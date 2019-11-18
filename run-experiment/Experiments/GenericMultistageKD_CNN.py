@@ -539,7 +539,7 @@ def run(logger, options, session_log_file):
                                     metrics=[HelperUtil.acc])
                                 logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
                                 callbacks = [
-                                        EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007),
+                                        EarlyStopping(monitor='val_acc', patience=50, min_delta=0.00007),
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
@@ -605,7 +605,7 @@ def run(logger, options, session_log_file):
                                     metrics=['accuracy'])
                                 # train network and save model with bet validation accuracy to cfg.checkpoint_path
                                 callbacks = [
-                                        EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007),
+                                        EarlyStopping(monitor='val_acc', patience=50, min_delta=0.00007),
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
