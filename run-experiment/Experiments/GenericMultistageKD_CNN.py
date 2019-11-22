@@ -452,7 +452,10 @@ def find_largest_value(output_distribution):
 # method to check for already saved copy of teacher knowledge
 def get_pretrained_teacher_logits(logits_dir, netSize, alpha, dataset, trainOrder):
     # load pre-created soft targets for teacher
-    target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
+    if netSize == cfg.max_net_size:
+        target_file = str(dataset) + "_" + str(netSize) + "_soft_targets.pkl"
+    else:
+        target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
     target_file = target_file.replace(" ", "")
     logitFileName = os.path.join(logits_dir, target_file)
     if os.path.isfile(logitFileName): # check for logit file existence
@@ -465,7 +468,10 @@ def get_pretrained_teacher_logits(logits_dir, netSize, alpha, dataset, trainOrde
         return None, None
 
 def save_pretrained_teacher_logits(logits_dir, netSize, alpha, teacher_train_logits, teacher_test_logits, dataset, trainOrder):
-    target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
+    if netSize == cfg.max_net_size:
+        target_file = str(dataset) + "_" + str(netSize) + "_soft_targets.pkl"
+    else:
+        target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
     target_file = target_file.replace(" ", "")
     logitFileName = os.path.join(logits_dir, target_file)
     filehandler = open(logitFileName, 'wb')

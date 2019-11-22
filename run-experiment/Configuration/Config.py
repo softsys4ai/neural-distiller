@@ -8,6 +8,7 @@ import tensorflow as tf
 # from wandb.keras import WandbCallback
 # wandb.init(project="knowledge-distillation")
 dataset = "cifar100"
+max_net_size = 10
 use_fit_generator_teacher = False
 use_fit_generator_student = False
 dataset_num_classes = 100
