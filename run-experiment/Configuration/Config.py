@@ -8,13 +8,15 @@ import tensorflow as tf
 # from wandb.keras import WandbCallback
 # wandb.init(project="knowledge-distillation")
 dataset = "cifar100"
+use_fit_generator_teacher = False
+use_fit_generator_student = False
 dataset_num_classes = 100
 model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
 checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
 soft_targets_dir = "/local/neural-distiller/run-experiment/SoftTargets"
 log_dir = "/local/neural-distiller/run-experiment/Experiment-Logs"
 epochs = 150
-batch_size = 100
+batch_size = 128
 # logging
 spacer = "--------------------------------"
 student_train_spacer = "-----------------"

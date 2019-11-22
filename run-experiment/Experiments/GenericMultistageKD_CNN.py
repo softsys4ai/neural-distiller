@@ -495,6 +495,50 @@ def run(logger, options, session_log_file):
 
     # loading training data
     X_train, Y_train, X_test, Y_test = LoadDataset.load_dataset_by_name(logger, cfg.dataset)
+    if cfg.use_fit_generator_student is True or cfg.use_fit_generator_teacher is True:
+        # data generator for on the fly training data manipulation
+        datagen = ImageDataGenerator(
+            # set input mean to 0 over the dataset
+            featurewise_center=False,
+            # set each sample mean to 0
+            samplewise_center=False,
+            # divide inputs by std of dataset
+            featurewise_std_normalization=False,
+            # divide each input by its std
+            samplewise_std_normalization=False,
+            # apply ZCA whitening
+            zca_whitening=False,
+            # epsilon for ZCA whitening
+            zca_epsilon=1e-06,
+            # randomly rotate images in the range (deg 0 to 180)
+            rotation_range=0,
+            # randomly shift images horizontally
+            width_shift_range=0.1,
+            # randomly shift images vertically
+            height_shift_range=0.1,
+            # set range for random shear
+            shear_range=0.,
+            # set range for random zoom
+            zoom_range=0.,
+            # set range for random channel shifts
+            channel_shift_range=0.,
+            # set mode for filling points outside the input boundaries
+            fill_mode='nearest',
+            # value used for fill_mode = "constant"
+            cval=0.,
+            # randomly flip images
+            horizontal_flip=True,
+            # randomly flip images
+            vertical_flip=False,
+            # set rescaling factor (applied before any other transformation)
+            rescale=None,
+            # set function that will be applied on each input
+            preprocessing_function=None,
+            # image data format, either "channels_first" or "channels_last"
+            data_format=None,
+            # fraction of images reserved for validation (strictly between 0 and 1)
+            validation_split=0.0)
+        datagen.fit(X_train)
     try:
         for order in order_combinations:
             for temp in temperatures:
@@ -542,12 +586,19 @@ def run(logger, options, session_log_file):
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
-                                model.fit(X_train, Y_train_new,
-                                          batch_size=cfg.student_batch_size,
-                                          epochs=epochs,
-                                          verbose=1,
-                                          callbacks=callbacks,
-                                          validation_data=(X_test, Y_test_new))
+                                if cfg.use_fit_generator_student is True:
+                                    model.fit(datagen.flow(X_train, Y_train_new, batch_size=cfg.student_batch_size),
+                                              validation_data=(X_test, Y_test_new),
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks)
+                                else:
+                                    model.fit(X_train, Y_train_new,
+                                              batch_size=cfg.student_batch_size,
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks,
+                                              validation_data=(X_test, Y_test_new))
                                 # model = HelperUtil.revert_knowledge_distillation_modifications(logger, model)
                                 del model
                                 # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train,
@@ -603,54 +654,19 @@ def run(logger, options, session_log_file):
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
-                                # data generator for on the fly training data manipulation
-                                datagen = ImageDataGenerator(
-                                    # set input mean to 0 over the dataset
-                                    featurewise_center=False,
-                                    # set each sample mean to 0
-                                    samplewise_center=False,
-                                    # divide inputs by std of dataset
-                                    featurewise_std_normalization=False,
-                                    # divide each input by its std
-                                    samplewise_std_normalization=False,
-                                    # apply ZCA whitening
-                                    zca_whitening=False,
-                                    # epsilon for ZCA whitening
-                                    zca_epsilon=1e-06,
-                                    # randomly rotate images in the range (deg 0 to 180)
-                                    rotation_range=0,
-                                    # randomly shift images horizontally
-                                    width_shift_range=0.1,
-                                    # randomly shift images vertically
-                                    height_shift_range=0.1,
-                                    # set range for random shear
-                                    shear_range=0.,
-                                    # set range for random zoom
-                                    zoom_range=0.,
-                                    # set range for random channel shifts
-                                    channel_shift_range=0.,
-                                    # set mode for filling points outside the input boundaries
-                                    fill_mode='nearest',
-                                    # value used for fill_mode = "constant"
-                                    cval=0.,
-                                    # randomly flip images
-                                    horizontal_flip=True,
-                                    # randomly flip images
-                                    vertical_flip=False,
-                                    # set rescaling factor (applied before any other transformation)
-                                    rescale=None,
-                                    # set function that will be applied on each input
-                                    preprocessing_function=None,
-                                    # image data format, either "channels_first" or "channels_last"
-                                    data_format=None,
-                                    # fraction of images reserved for validation (strictly between 0 and 1)
-                                    validation_split=0.0)
-                                datagen.fit(X_train)
-                                model.fit(datagen.flow(X_train, Y_train, batch_size=cfg.student_batch_size),
-                                          validation_data=(X_test, Y_test),
-                                          epochs=epochs,
-                                          verbose=1,
-                                          callbacks=callbacks)
+                                if cfg.use_fit_generator_teacher is True:
+                                    model.fit(datagen.flow(X_train, Y_train, batch_size=cfg.student_batch_size),
+                                              validation_data=(X_test, Y_test),
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks)
+                                else:
+                                    model.fit(X_train, Y_train,
+                                              validation_data=(X_test, Y_test),
+                                              batch_size=cfg.student_batch_size,
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks)
                                 # load best model from checkpoint for evaluation
                                 del model
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
