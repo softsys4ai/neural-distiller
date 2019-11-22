@@ -11,6 +11,7 @@ dataset = "cifar100"
 max_net_size = 10
 use_fit_generator_teacher = False
 use_fit_generator_student = False
+subtract_pixel_mean = True
 dataset_num_classes = 100
 model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
 checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")

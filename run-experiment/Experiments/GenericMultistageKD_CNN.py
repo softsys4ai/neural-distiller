@@ -334,7 +334,7 @@ def get_model_cifar100(numClasses, X_train, net_size):
             Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
-            Dropout(0.1),
+            Dropout(0.2),
             Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
@@ -498,6 +498,14 @@ def run(logger, options, session_log_file, logits_dir):
 
     # loading training data
     X_train, Y_train, X_test, Y_test = LoadDataset.load_dataset_by_name(logger, cfg.dataset)
+    # if using CIFAR-100 or CIFAR-10, do not need division b/c already done
+    # X_train = X_train.astype('float32') / 255
+    # X_test = X_test.astype('float32') / 255
+    # mean subtraction regularization
+    if cfg.subtract_pixel_mean is True:
+        x_train_mean = np.mean(X_train, axis=0)
+        X_train -= x_train_mean
+        X_test -= x_train_mean
     if cfg.use_fit_generator_student is True or cfg.use_fit_generator_teacher is True:
         # data generator for on the fly training data manipulation
         datagen = ImageDataGenerator(
@@ -541,7 +549,7 @@ def run(logger, options, session_log_file, logits_dir):
             data_format=None,
             # fraction of images reserved for validation (strictly between 0 and 1)
             validation_split=0.0)
-        datagen.fit(X_train)
+    datagen.fit(X_train)
     try:
         for order in order_combinations:
             for alpha in alphas:
