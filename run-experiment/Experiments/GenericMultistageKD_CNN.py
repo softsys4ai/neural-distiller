@@ -538,8 +538,8 @@ def run(logger, options, session_log_file, logits_dir):
         datagen.fit(X_train)
     try:
         for order in order_combinations:
-            for temp in temperatures:
-                for alpha in alphas:
+            for alpha in alphas:
+                for temp in temperatures:
                     tf.keras.backend.clear_session()  # must clear the current session to free memory!
                     K.clear_session()   # must clear the current session to free memory!
                     logger.info("Clearing tensorflow/keras backend session and de-allocating remaining models...")
