@@ -450,35 +450,32 @@ def find_largest_value(output_distribution):
     return max_val
 
 # method to check for already saved copy of teacher knowledge
-def get_pretrained_teacher_logits(netSize, dataset, trainOrder):
+def get_pretrained_teacher_logits(logits_dir, netSize, alpha, dataset, trainOrder):
     # load pre-created soft targets for teacher
-    target_file = str(dataset) + "_" + str(netSize) + "_" + str(trainOrder) + "_soft_targets.pkl"
+    target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
     target_file = target_file.replace(" ", "")
-    logitFileName = os.path.join(cfg.soft_targets_dir, target_file)
-    print("get_pretrained_teacher_logits")
-    print(logitFileName)
-    print(os.path.isfile(logitFileName))
+    logitFileName = os.path.join(logits_dir, target_file)
     if os.path.isfile(logitFileName): # check for logit file existence
         filehandler = open(logitFileName, 'rb')
-        Y_train_new = pickle.load(filehandler)
-        Y_test_new = pickle.load(filehandler)
-        return Y_train_new, Y_test_new
+        teacher_train_logits = pickle.load(filehandler)
+        teacher_test_logits = pickle.load(filehandler)
+        return teacher_train_logits, teacher_test_logits
     else:
         print("logits do not exist for netSize: %s" % str(netSize))
         return None, None
 
-def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset, trainOrder):
-    target_file = str(dataset) + "_" + str(netSize) + "_" + str(trainOrder) + "_soft_targets.pkl"
+def save_pretrained_teacher_logits(logits_dir, netSize, alpha, teacher_train_logits, teacher_test_logits, dataset, trainOrder):
+    target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
     target_file = target_file.replace(" ", "")
-    logitFileName = os.path.join(cfg.soft_targets_dir, target_file)
+    logitFileName = os.path.join(logits_dir, target_file)
     filehandler = open(logitFileName, 'wb')
-    pickle.dump(Y_train_new, filehandler)
-    pickle.dump(Y_test_new, filehandler)
+    pickle.dump(teacher_train_logits, filehandler)
+    pickle.dump(teacher_test_logits, filehandler)
     print("saving pretrained teacher logits - size: %s, dataset: %s" % (netSize, dataset))
     print(logitFileName)
     print(os.path.isfile(logitFileName))
 
-def run(logger, options, session_log_file):
+def run(logger, options, session_log_file, logits_dir):
     logger.info(cfg.student_train_spacer + "GENERIC MULTISTAGE" + cfg.student_train_spacer)
 
     with open(session_log_file, "w") as f:
@@ -542,7 +539,6 @@ def run(logger, options, session_log_file):
     try:
         for order in order_combinations:
             for temp in temperatures:
-                # TODO transform previous logits to the new temperature
                 for alpha in alphas:
                     tf.keras.backend.clear_session()  # must clear the current session to free memory!
                     K.clear_session()   # must clear the current session to free memory!
@@ -565,7 +561,8 @@ def run(logger, options, session_log_file):
                             model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                             logger.info("loading soft targets for student training...")
                             print("previous model to load logits for: %s" % str(previousModel))
-                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(previousModel, cfg.dataset, order)
+                            teacher_train_logits, teacher_test_logits = get_pretrained_teacher_logits(logits_dir, previousModel, alpha, cfg.dataset, order)
+                            Y_train_new, Y_test_new = TeacherUtils.convert_logits_to_soft_targets(temp, teacher_train_logits, teacher_test_logits, Y_train, Y_test)
                             if Y_train_new is None or Y_test_new is None:
                                 logger.info("soft targets not loaded correctly!")
                             else:
@@ -621,7 +618,7 @@ def run(logger, options, session_log_file):
                                     # save soft targets
                                     logger.info("creating student training data...")
                                     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test)
-                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
+                                    save_pretrained_teacher_logits(logits_dir, net_size, alpha, Y_train_new, Y_test_new, cfg.dataset, order)
                                     logger.info("done.")
                                 else:
                                     logger.info("skipping creation of student training data, we are @ target model...")
@@ -635,9 +632,9 @@ def run(logger, options, session_log_file):
                             # load the already created soft targets
                             Y_train_new = None
                             Y_test_new = None
-                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset, order)
+                            teacher_train_logits, teacher_test_logits = get_pretrained_teacher_logits(logits_dir, net_size, alpha, cfg.dataset, order)
                             # train network if not previously created logits
-                            if Y_train_new is None or Y_test_new is None:
+                            if teacher_train_logits is None or teacher_test_logits is None:
                                 if os.path.isfile(cfg.checkpoint_path):
                                     logger.info("removing previous checkpoint")
                                     os.remove(cfg.checkpoint_path) # remove previous checkpoint
@@ -682,13 +679,13 @@ def run(logger, options, session_log_file):
                                 result = create_result(net_size, temp, alpha, train_score, val_score)
                                 logger.info(result)
                                 experiment_result["experiment_results"].append(result)
-                                logger.info("creating student training data...")
                                 if len(order) != 1:
-                                    Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train,
+                                    logger.info("creating student training data...")
+                                    teacher_train_logits, teacher_test_logits = TeacherUtils.createStudentTrainingData(model, temp, X_train,
                                                                                                      Y_train, X_test,
                                                                                                      Y_test)
-                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
-                                logger.info("done.")
+                                    save_pretrained_teacher_logits(logits_dir, net_size, alpha, teacher_train_logits, teacher_test_logits, cfg.dataset, order)
+                                    logger.info("done creating student training data.")
                                 # # remove checkpoint of best model for new checkpoint
                                 # os.remove(cfg.checkpoint_path)
                             else:

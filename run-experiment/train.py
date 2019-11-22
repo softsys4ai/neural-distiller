@@ -80,8 +80,10 @@ def main():
     now = datetime.now()
     now_datetime = now.strftime("%d-%m-%Y_%H:%M:%S")
     if options.experiment == "search-alpha-temp-configurations":
-        log_dir = log_dir + "/" + cfg.dataset + "_grid_search_" + now_datetime
+        log_dir = log_dir + cfg.dataset + "_grid_search_" + now_datetime
         os.mkdir(log_dir)
+        logits_dir = log_dir + "/" + "saved_logits"
+        os.mkdir(logits_dir)
     log_file_name = "experiment_log"
     log_file = os.path.join(log_dir, log_file_name)
 
@@ -93,7 +95,7 @@ def main():
     try:
         if options.experiment == "search-alpha-temp-configurations":
             session_log_file = log_dir + "/training_session.log"
-            GenericMultistageKD_CNN.run(logger, options, session_log_file)
+            GenericMultistageKD_CNN.run(logger, options, session_log_file, logits_dir)
         elif options.experiment == "full-PaKD-compression":
             logger.error("Provided experiment1 type not yet implemented!")
             # TODO measure power consumption and inference time
