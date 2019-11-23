@@ -574,11 +574,11 @@ def run(logger, options, session_log_file, logits_dir):
                             print("previous model to load logits for: %s" % str(previousModel))
                             teacher_train_logits, teacher_test_logits = get_pretrained_teacher_logits(logits_dir, previousModel, alpha, cfg.dataset, order)
                             Y_train_new, Y_test_new = TeacherUtils.convert_logits_to_soft_targets(temp, teacher_train_logits, teacher_test_logits, Y_train, Y_test)
-                            # TODO remove next three lines
-                            file_name = "/home/blakete/" + temp + "_" + previousModel + "_training_labels.npy"
-                            filehandler = open(file_name, 'wb')
-                            pickle.dump(Y_train_new, filehandler)
-                            pickle.dump(Y_test_new, filehandler)
+                            # # TODO remove next three lines
+                            # file_name = "/home/blakete/" + temp + "_" + previousModel + "_training_labels.npy"
+                            # filehandler = open(file_name, 'wb')
+                            # pickle.dump(Y_train_new, filehandler)
+                            # pickle.dump(Y_test_new, filehandler)
                             if Y_train_new is None or Y_test_new is None:
                                 logger.info("soft targets not loaded correctly!")
                             else:
