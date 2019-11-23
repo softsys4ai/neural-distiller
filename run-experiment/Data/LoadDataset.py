@@ -17,8 +17,9 @@ def load_mnist(logger):
     X_train = X_train.astype('float32')
     X_test = X_test.astype('float32')
     # Normalize the values
-    X_train /= 255
-    X_test /= 255
+    # if using CIFAR-100 or CIFAR-10, do not need division b/c already done
+    X_train = X_train.astype('float32') / 255
+    X_test = X_test.astype('float32') / 255
     return X_train, Y_train, X_test, Y_test
 
 def load_cifar_10(logger):

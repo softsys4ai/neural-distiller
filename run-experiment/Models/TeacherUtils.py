@@ -30,7 +30,7 @@ def convert_logits_to_soft_targets(temp, teacher_train_logits, teacher_test_logi
     Y_train_soft = sess.run(Y_train_soft)
     Y_test_soft = sess.run(Y_test_soft)
 
-    # TODO remove after negative test feedback!
+    # TODO remove if negative test feedback!
     Y_train_soft, Y_test_soft = normalizeStudentSoftTargets(Y_train_soft, Y_test_soft)
     for i in range(0, len(Y_train_soft)):
         Y_train_soft[i] = (1 / find_largest_value(Y_train_soft[i])) * Y_train_soft[i]

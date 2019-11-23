@@ -498,9 +498,6 @@ def run(logger, options, session_log_file, logits_dir):
 
     # loading training data
     X_train, Y_train, X_test, Y_test = LoadDataset.load_dataset_by_name(logger, cfg.dataset)
-    # if using CIFAR-100 or CIFAR-10, do not need division b/c already done
-    # X_train = X_train.astype('float32') / 255
-    # X_test = X_test.astype('float32') / 255
     # mean subtraction regularization
     if cfg.subtract_pixel_mean is True:
         x_train_mean = np.mean(X_train, axis=0)
@@ -549,7 +546,7 @@ def run(logger, options, session_log_file, logits_dir):
             data_format=None,
             # fraction of images reserved for validation (strictly between 0 and 1)
             validation_split=0.0)
-    datagen.fit(X_train)
+        datagen.fit(X_train)
     try:
         for order in order_combinations:
             for alpha in alphas:
@@ -577,6 +574,11 @@ def run(logger, options, session_log_file, logits_dir):
                             print("previous model to load logits for: %s" % str(previousModel))
                             teacher_train_logits, teacher_test_logits = get_pretrained_teacher_logits(logits_dir, previousModel, alpha, cfg.dataset, order)
                             Y_train_new, Y_test_new = TeacherUtils.convert_logits_to_soft_targets(temp, teacher_train_logits, teacher_test_logits, Y_train, Y_test)
+                            # TODO remove next three lines
+                            file_name = "/home/blakete/" + str(temp) + "_" +  + str(previousModel) + "_training_labels.npy"
+                            filehandler = open(file_name, 'wb')
+                            pickle.dump(Y_train_new, filehandler)
+                            pickle.dump(Y_test_new, filehandler)
                             if Y_train_new is None or Y_test_new is None:
                                 logger.info("soft targets not loaded correctly!")
                             else:
@@ -655,7 +657,7 @@ def run(logger, options, session_log_file, logits_dir):
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
-                                model.summary()
+                                # model.summary()
                                 model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
