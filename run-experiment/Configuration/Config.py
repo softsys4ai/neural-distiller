@@ -8,45 +8,22 @@ import tensorflow as tf
 # from wandb.keras import WandbCallback
 # wandb.init(project="knowledge-distillation")
 dataset = "cifar100"
+dataset_num_classes = 100
 max_net_size = 10
 use_fit_generator_teacher = True
-use_fit_generator_student = False
+use_fit_generator_student = True
 subtract_pixel_mean = True
-dataset_num_classes = 100
-model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
-checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
-soft_targets_dir = "/local/neural-distiller/run-experiment/SoftTargets"
-log_dir = "/local/neural-distiller/run-experiment/Experiment-Logs"
-epochs = 150
 batch_size = 128
+start_teacher_optimizer = "sgd"
+student_optimizer = "sgd"
+
 # logging
 spacer = "--------------------------------"
 student_train_spacer = "-----------------"
-# custom model attributes
-# Set callback functions to early stop training and save the best model so far
-# student_callbacks = callbacks=[
-#         EarlyStopping(monitor='val_acc', patience=8, min_delta=0.0001),
-            #ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001)
-#     ]
-#
 
-student_callbacks = [
-        EarlyStopping(monitor='val_acc', patience=8, min_delta=0.00007),
-        # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
-        ModelCheckpoint(checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    ]
-# WandbCallback(),
-#                                                     mode='auto', baseline=None, restore_best_weights=False)
-# [EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=10, verbose=0,
-#                                                     mode='auto', baseline=None, restore_best_weights=False)]
-base_dense_student_size = 16
-# optimizers for students
-# SGD(lr=1e-1, momentum=0.9, nesterov=True),
-# Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
-student_optimizer = adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0)
 # student_optimizer = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
-#student_optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
-# student_optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+#student_optimizer =
+# student_optimizer =
 #  training
 mnist_input_shape = (28, 28, 1)
 mnist_number_classes = 10
@@ -69,7 +46,7 @@ lenet_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_teacher_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_student_config="94.89_StudentDense_2019-08-29_18-10-22"
 # logging and system
-log_dir="/Experiment-Logs/"
+log_dir="/Logs/"
 util_dir="/Utils/"
 input_dir="/Data/Input/TestData/"
 jetson_output_dir="/Data/Output/Jetson/"

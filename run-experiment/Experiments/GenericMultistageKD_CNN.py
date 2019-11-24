@@ -21,12 +21,11 @@ from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.models import load_model
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.utils import multi_gpu_model
-from tensorflow.python.keras.optimizers import adadelta, SGD
+from tensorflow.python.keras.optimizers import adadelta, SGD, Adam
 from tensorflow.python.keras.backend import clear_session
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 import numpy as np
 
-# adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0) # artifact
 tf.set_random_seed(cfg.random_seed)
 np.random.seed(cfg.random_seed)
 
@@ -455,7 +454,7 @@ def get_pretrained_teacher_logits(logits_dir, netSize, alpha, dataset, trainOrde
     if netSize == cfg.max_net_size:
         target_file = str(dataset) + "_" + str(netSize) + "_soft_targets.pkl"
     else:
-        target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
+        target_file = str(dataset) + "_" + str(netSize) + "_" + str(trainOrder) + "_soft_targets.pkl"
     target_file = target_file.replace(" ", "")
     logitFileName = os.path.join(logits_dir, target_file)
     if os.path.isfile(logitFileName): # check for logit file existence
@@ -471,7 +470,7 @@ def save_pretrained_teacher_logits(logits_dir, netSize, alpha, teacher_train_log
     if netSize == cfg.max_net_size:
         target_file = str(dataset) + "_" + str(netSize) + "_soft_targets.pkl"
     else:
-        target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + "_soft_targets.pkl"
+        target_file = str(dataset) + "_" + str(netSize) + "_" + str(trainOrder) + "_soft_targets.pkl"
     target_file = target_file.replace(" ", "")
     logitFileName = os.path.join(logits_dir, target_file)
     filehandler = open(logitFileName, 'wb')
@@ -480,6 +479,15 @@ def save_pretrained_teacher_logits(logits_dir, netSize, alpha, teacher_train_log
     print("saving pretrained teacher logits - size: %s, dataset: %s" % (netSize, dataset))
     print(logitFileName)
     print(os.path.isfile(logitFileName))
+
+def get_optimizer(type):
+    if type is "adam":
+        optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    elif type is "adadelta":
+        optimizer = adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0)
+    elif type is "sgd":
+        optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+    return optimizer
 
 def run(logger, options, session_log_file, logits_dir):
     logger.info(cfg.student_train_spacer + "GENERIC MULTISTAGE" + cfg.student_train_spacer)
@@ -589,8 +597,9 @@ def run(logger, options, session_log_file, logits_dir):
                                 model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
                                 # model.summary()
                                 # model = multi_gpu_model(model, gpus=4)
+                                optimizer = get_optimizer(cfg.student_optimizer)
                                 model.compile(
-                                    optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                    optimizer=optimizer,
                                     loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                     metrics=[HelperUtil.acc])
                                 logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
@@ -620,7 +629,8 @@ def run(logger, options, session_log_file, logits_dir):
                                 # model.summary()
                                 # load best model from checkpoint for evaluation
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                optimizer = get_optimizer(cfg.student_optimizer)
+                                model.compile(optimizer=optimizer,
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
                                 train_score = model.evaluate(X_train, Y_train, verbose=0)
@@ -658,7 +668,8 @@ def run(logger, options, session_log_file, logits_dir):
                                 order, net_size, temp, alpha))
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                                 # model.summary()
-                                model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                optimizer = get_optimizer(cfg.start_teacher_optimizer)
+                                model.compile(optimizer=optimizer,
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
                                 # train network and save model with bet validation accuracy to cfg.checkpoint_path
@@ -684,7 +695,8 @@ def run(logger, options, session_log_file, logits_dir):
                                 del model
                                 model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
+                                optimizer = get_optimizer(cfg.start_teacher_optimizer)
+                                model.compile(optimizer=optimizer,
                                               loss=logloss,  # the same as the custom loss function
                                               metrics=['accuracy'])
                                 # evaluate network
