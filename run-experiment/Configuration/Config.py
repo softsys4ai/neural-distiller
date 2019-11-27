@@ -19,7 +19,7 @@ log_dir="/Logs/"
 util_dir="/Utils/"
 
 
-dataset = "cifar100"
+dataset = "cifar100-static-transform"
 dataset_num_classes = 100
 max_net_size = 10
 use_fit_generator_teacher = True
