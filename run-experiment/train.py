@@ -3,8 +3,10 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
 # The GPU id to use, usually either "0" or "1";
 os.environ["CUDA_VISIBLE_DEVICES"]="0";
 import socket
+
 import logging
 import sys
+import traceback
 from optparse import OptionParser
 from datetime import datetime
 from Configuration import Config as cfg
@@ -104,8 +106,11 @@ def main():
         else:
             logger.error("Provided experiment1 type not supported!")
             return
-    except Exception as e:
-        logger.error("Error while running experiment1: {0}".format(str(e)))
+    except Exception:
+        traceback.print_exc()
+        error = traceback.format_exc()
+        # error.upper()
+        logging.error('Error encountered: %s' % error, exc_info=True)
 
 
 if __name__ == "__main__":
