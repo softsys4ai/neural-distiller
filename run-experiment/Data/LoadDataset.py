@@ -73,4 +73,5 @@ def load_dataset_by_name(logger, datasetname):
         # dataset of preprocessed aka transformed cifar100 images
         return load_preprocessed_cifar100(logger)
     else:
+        return load_preprocessed_cifar100(logger)
         logger.error("provided dataset name is not supported!")
