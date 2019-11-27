@@ -7,14 +7,14 @@ import tensorflow as tf
 # from wandb.keras import WandbCallback
 # wandb.init(project="knowledge-distillation")
 
-# model_checkpoint_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Models/ModelCheckpoints"
-# checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
-# log_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Logs"
-# log_dir="/Logs/"
-model_checkpoint_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Models/ModelCheckpoints"
+model_checkpoint_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Models/ModelCheckpoints"
 checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
-log_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Logs"
+log_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Logs"
 log_dir="/Logs/"
+# model_checkpoint_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Models/ModelCheckpoints"
+# checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+# log_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Logs"
+# log_dir="/Logs/"
 
 util_dir="/Utils/"
 
