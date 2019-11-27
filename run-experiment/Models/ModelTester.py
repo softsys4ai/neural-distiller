@@ -1,5 +1,5 @@
 from VGG16 import VGG16
-vgg16 = VGG16('cifar100', "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Models/ModelCheckpoints", "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Experiment-Logs", 150, 100, 0.01)
+vgg16 = VGG16('cifar100', "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Models/ModelCheckpoints", "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Logs", 150, 100, 0.01)
 
 model = vgg16.build()
 

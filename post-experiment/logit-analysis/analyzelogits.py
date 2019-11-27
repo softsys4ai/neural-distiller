@@ -1,6 +1,6 @@
 import pickle
 from keras import backend as K
-from keras.datasets import mnist, cifar10, cifar100
+from keras.datasets import cifar100
 import numpy as np
 from tensorflow.python.keras.utils import np_utils
 import matplotlib.pyplot as plt 
@@ -69,6 +69,7 @@ X_train, Y_train, X_test, Y_test = load_cifar_100()
 filehandler = open("cifar100_10_soft_targets.pkl", 'rb')
 teacher_train_logits = pickle.load(filehandler)
 teacher_test_logits = pickle.load(filehandler)
+
 
 Y_train_new_1, Y_test_new_1 = convert_logits_to_soft_targets(1, True, teacher_train_logits, teacher_test_logits, Y_train, Y_test)
 Y_train_new_2, Y_test_new_2 = convert_logits_to_soft_targets(2, True, teacher_train_logits, teacher_test_logits, Y_train, Y_test)
