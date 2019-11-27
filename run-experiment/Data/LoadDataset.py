@@ -68,10 +68,10 @@ def load_dataset_by_name(logger, datasetname):
     elif datasetname is "cifar10":
         return load_cifar_10(logger)
     elif datasetname is "cifar100":
-        return load_cifar_100(logger)
+        # return load_cifar_100(logger)
+        return load_preprocessed_cifar100(logger)
     elif datasetname is "cifar100-static-transform":
         # dataset of preprocessed aka transformed cifar100 images
         return load_preprocessed_cifar100(logger)
     else:
-        return load_preprocessed_cifar100(logger)
         logger.error("provided dataset name is not supported!")
