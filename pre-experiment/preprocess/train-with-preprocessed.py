@@ -14,8 +14,8 @@ def load_cifar_100(nb_classes, train_x, train_y):
     test_y = np_utils.to_categorical(test_y, nb_classes)
     train_x = train_x.astype('float32')
     test_x = test_x.astype('float32')
-    train_y = train_y.astype('float32')
-    test_y = test_y.astype('float32')
+    train_x = train_x.astype('float32')
+    test_x = test_x.astype('float32')
     train_x /= 255
     test_x /= 255
     return train_x, train_y, test_x, test_y
