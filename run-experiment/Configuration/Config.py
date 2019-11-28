@@ -10,8 +10,8 @@ import tensorflow as tf
 dataset = "cifar100"
 dataset_num_classes = 100
 max_net_size = 10
-use_fit_generator_teacher = True
-use_fit_generator_student = True
+use_fit_generator_teacher = False
+use_fit_generator_student = False
 subtract_pixel_mean = True
 batch_size = 128
 start_teacher_optimizer = "sgd"
@@ -46,6 +46,9 @@ lenet_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_teacher_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_student_config="94.89_StudentDense_2019-08-29_18-10-22"
 # logging and system
+model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
+checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+log_dir = "/local/neural-distiller/run-experiment/Logs"
 log_dir="/Logs/"
 util_dir="/Utils/"
 input_dir="/Data/Input/TestData/"
