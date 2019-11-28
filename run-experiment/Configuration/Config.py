@@ -1,13 +1,25 @@
 # imports
 import os
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from tensorflow.python.keras.optimizers import adadelta, RMSprop, SGD, Adam
 import tensorflow as tf
 # with tf.Graph().as_default():
 # import wandb
 # from wandb.keras import WandbCallback
 # wandb.init(project="knowledge-distillation")
-dataset = "cifar100"
+
+model_checkpoint_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Models/ModelCheckpoints"
+checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+log_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Logs"
+log_dir="/Logs/"
+# model_checkpoint_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Models/ModelCheckpoints"
+# checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+# log_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Logs"
+# log_dir="/Logs/"
+
+util_dir="/Utils/"
+
+
+dataset = "cifar100-static-transform"
 dataset_num_classes = 100
 max_net_size = 10
 use_fit_generator_teacher = False
@@ -46,11 +58,14 @@ lenet_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_teacher_config="99.2_TeacherCNN_2019-08-29_17-25-46"
 custom_student_config="94.89_StudentDense_2019-08-29_18-10-22"
 # logging and system
+<<<<<<< HEAD
 model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
 checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
 log_dir = "/local/neural-distiller/run-experiment/Logs"
 log_dir="/Logs/"
 util_dir="/Utils/"
+=======
+>>>>>>> 4df770063b7fb4e3da4bbbb42a381e76886be341
 input_dir="/Data/Input/TestData/"
 jetson_output_dir="/Data/Output/Jetson/"
 tx2_output_dir="/Data/Output/TX2/"

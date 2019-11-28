@@ -1,4 +1,1 @@
-
-nohup mprof run python train.py -e search-alpha-temp-configurations -c /local/neural-distiller/run-experiment/Configuration/experiment_config.json &
-
-
+nohup python train.py -e search-alpha-temp-configurations -c /local/neural-distiller/run-experiment/Configuration/experiment_config.json &
