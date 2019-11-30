@@ -6,7 +6,7 @@ sys.path.append("..")  # Adds higher directory to python modules path.
 from Configuration import Config as cfg
 from Data import LoadDataset
 from Models import ModelLoader
-from Models import TeacherUtils
+from Utils import TeacherUtils
 from Utils import HelperUtil
 import datetime
 import json
