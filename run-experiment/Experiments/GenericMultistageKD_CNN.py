@@ -274,6 +274,7 @@ def run(logger, options, session_log_file, logits_dir):
                                 Y_test_new = None
                                 # set model to current net size to preserve in previousModel
                                 model = net_size
+
                         # if no previously trained model, train the network
                         else:
                             # load the already created soft targets
@@ -288,7 +289,7 @@ def run(logger, options, session_log_file, logits_dir):
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
                                 model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
-                                # model.summary()
+                                model.summary()
                                 optimizer = get_optimizer(cfg.start_teacher_optimizer)
                                 model.compile(optimizer=optimizer,
                                               loss=logloss,  # the same as the custom loss function

@@ -48,11 +48,11 @@ def return_top_five_validation(experiment_results, net_size):
 
 
 # loading experiment data json objects
-filepath = "example-results.log"
+filepath = "training-results.log"
 experiment_data = load_experiments(filepath)
 
 # net size we are interested in
-net_size = 2
+net_size = 10
 # find top 5 highest validation accuracy
 top_5 = return_top_five_validation(experiment_data, net_size)
 
