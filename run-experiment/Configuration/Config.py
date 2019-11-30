@@ -7,16 +7,26 @@ import tensorflow as tf
 # from wandb.keras import WandbCallback
 # wandb.init(project="knowledge-distillation")
 
-#model_checkpoint_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Models/ModelCheckpoints"
-#checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
-#log_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Logs"
-#log_dir="/Logs/"
-model_checkpoint_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Models/ModelCheckpoints"
-checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
-log_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Logs"
-log_dir="/Logs/"
 
+# local configurations
+# model_checkpoint_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Models/ModelCheckpoints"
+# checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+# log_dir = "/Users/blakeedwards/Desktop/Repos/research/temp/neural-distiller/run-experiment/Logs"
+# log_dir="/Logs/"
+
+# remote configurations - 1
+model_checkpoint_dir = "/local/neural-distiller/run-experiment/Models/ModelCheckpoints"
+checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+log_dir = "/local/neural-distiller/run-experiment/Logs"
+log_dir="/Logs/"
 util_dir="/Utils/"
+
+# remote configurations - 2
+# model_checkpoint_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Models/ModelCheckpoints"
+# checkpoint_path = os.path.join(model_checkpoint_dir, "weights_for_best_intermediate_model.hdf5")
+# log_dir = "/local/second-neur-dist/neural-distiller/run-experiment/Logs"
+# log_dir="/Logs/"
+# util_dir="/Utils/"
 
 
 dataset = "cifar100"
