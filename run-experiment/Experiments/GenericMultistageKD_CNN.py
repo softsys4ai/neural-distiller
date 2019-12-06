@@ -117,7 +117,7 @@ def saved_model(logger, dataset, net_size, alpha, val_score, order, model, model
     if net_size == cfg.max_net_size:
         target_file_suffix = str(dataset) + "_" + str(net_size) + "_" + str(val_score[1])
     else:
-        target_file_suffix =  + str(net_size) + "_" + str(alpha) + "_" + str(order) + "_" + str(val_score[1])
+        target_file_suffix = str(net_size) + "_" + str(alpha) + "_" + str(order) + "_" + str(val_score[1])
     target_file_suffix = target_file_suffix.replace(" ", "")
     target_file = target_file_suffix + ".h5"
     modelWeightFile = os.path.join(model_dir, target_file)
