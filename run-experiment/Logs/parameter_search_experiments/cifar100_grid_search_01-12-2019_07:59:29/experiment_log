@@ -1,0 +1,26 @@
+2019-12-01 07:59:29,113 INFO 127.0.0.1 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-12-01 07:59:29,113 INFO 127.0.0.1 Initialized logger
+2019-12-01 07:59:29,113 INFO 127.0.0.1 -----------------GENERIC MULTISTAGE-----------------
+2019-12-01 07:59:29,897 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-12-01 07:59:29,906 INFO 127.0.0.1 removing previous checkpoint
+2019-12-01 07:59:29,907 INFO 127.0.0.1 training teacher model...
+order:[2, 2]
+size:2
+temp:1
+alpha:1.000000
+2019-12-01 08:00:51,306 INFO 127.0.0.1 {'date_time': '2019-12-01 08:00:51.306704', 'net_size': '2', 'temp': '1', 'alpha': '1.0', 'val_acc': '0.1312', 'acc': '0.13954', 'val_loss': '3.870781500244141', 'loss': '3.813467261352539'}
+2019-12-01 08:00:51,306 INFO 127.0.0.1 creating student training data...
+2019-12-01 08:00:59,916 INFO 127.0.0.1 done creating student training data.
+2019-12-01 08:01:00,098 INFO 127.0.0.1 loading soft targets for student training...
+2019-12-01 08:01:00,879 INFO 127.0.0.1 completed
+2019-12-01 08:01:00,935 INFO 127.0.0.1 compiling and training student with alpha: 1.0
+2019-12-01 08:01:01,007 INFO 127.0.0.1 training model...
+order:[2, 2]
+size:2
+temp:1
+alpha:1.000000
+2019-12-01 08:02:30,917 INFO 127.0.0.1 {'date_time': '2019-12-01 08:02:30.917257', 'net_size': '2', 'temp': '1', 'alpha': '1.0', 'val_acc': '0.1095', 'acc': '0.11384', 'val_loss': '4.012756259918213', 'loss': '3.9653412707519533'}
+2019-12-01 08:02:30,917 INFO 127.0.0.1 creating student training data...
+2019-12-01 08:02:40,235 INFO 127.0.0.1 done.
+2019-12-01 08:02:40,238 INFO 127.0.0.1 -----------------
+2019-12-01 08:02:40,238 INFO 127.0.0.1 -- COMPLETE

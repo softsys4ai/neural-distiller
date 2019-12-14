@@ -1,0 +1,40 @@
+2019-12-04 04:09:41,932 INFO 127.0.0.1 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-12-04 04:09:41,932 INFO 127.0.0.1 Initialized logger
+2019-12-04 04:09:41,932 INFO 127.0.0.1 -----------------GENERIC MULTISTAGE-----------------
+2019-12-04 04:09:42,960 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...
+2019-12-04 04:09:42,960 INFO 127.0.0.1 removing previous checkpoint
+2019-12-04 04:09:42,961 INFO 127.0.0.1 training teacher model...
+order:[2, 2, 2]
+size:2
+temp:1
+alpha:1.000000
+2019-12-04 04:11:05,228 INFO 127.0.0.1 {'date_time': '2019-12-04 04:11:05.228545', 'net_size': '2', 'temp': '1', 'alpha': '1.0', 'val_acc': '0.1182', 'acc': '0.1313', 'val_loss': '3.9177682258605957', 'loss': '3.859076324157715'}
+2019-12-04 04:11:05,228 INFO 127.0.0.1 creating student training data...
+2019-12-04 04:11:13,537 INFO 127.0.0.1 done creating student training data.
+2019-12-04 04:11:13,628 INFO 127.0.0.1 Saved trained model to: /Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Logs/cifar100_grid_search_04-12-2019_04:09:41/saved_models/cifar100_2_1.0_[2,2,2]_0.1182.h5
+2019-12-04 04:11:13,840 INFO 127.0.0.1 loading soft targets for student training...
+2019-12-04 04:11:14,569 INFO 127.0.0.1 completed
+2019-12-04 04:11:14,609 INFO 127.0.0.1 compiling and training student with alpha: 1.0
+2019-12-04 04:11:14,641 INFO 127.0.0.1 training model...
+order:[2, 2, 2]
+size:2
+temp:1
+alpha:1.000000
+2019-12-04 04:12:37,685 INFO 127.0.0.1 {'date_time': '2019-12-04 04:12:37.685114', 'net_size': '2', 'temp': '1', 'alpha': '1.0', 'val_acc': '0.1023', 'acc': '0.1056', 'val_loss': '4.062001248168945', 'loss': '4.021063375701904'}
+2019-12-04 04:12:37,975 INFO 127.0.0.1 Saved trained model to: /Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Logs/cifar100_grid_search_04-12-2019_04:09:41/saved_models/cifar100_2_1.0_[2,2,2]_0.1023.h5
+2019-12-04 04:12:37,976 INFO 127.0.0.1 creating student training data...
+2019-12-04 04:12:46,478 INFO 127.0.0.1 done.
+2019-12-04 04:12:46,654 INFO 127.0.0.1 loading soft targets for student training...
+2019-12-04 04:12:47,655 INFO 127.0.0.1 completed
+2019-12-04 04:12:47,700 INFO 127.0.0.1 compiling and training student with alpha: 1.0
+2019-12-04 04:12:47,733 INFO 127.0.0.1 training model...
+order:[2, 2, 2]
+size:2
+temp:1
+alpha:1.000000
+2019-12-04 04:14:20,841 INFO 127.0.0.1 {'date_time': '2019-12-04 04:14:20.841877', 'net_size': '2', 'temp': '1', 'alpha': '1.0', 'val_acc': '0.1055', 'acc': '0.11306', 'val_loss': '4.043458673095703', 'loss': '4.0039441622924805'}
+2019-12-04 04:14:21,310 INFO 127.0.0.1 Saved trained model to: /Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Logs/cifar100_grid_search_04-12-2019_04:09:41/saved_models/cifar100_2_1.0_[2,2,2]_0.1055.h5
+2019-12-04 04:14:21,311 INFO 127.0.0.1 creating student training data...
+2019-12-04 04:14:30,345 INFO 127.0.0.1 done.
+2019-12-04 04:14:30,347 INFO 127.0.0.1 -----------------
+2019-12-04 04:14:30,348 INFO 127.0.0.1 -- COMPLETE

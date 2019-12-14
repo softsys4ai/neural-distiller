@@ -1,0 +1,4 @@
+2019-12-04 03:34:45,305 INFO 127.0.0.1 --------------------------------NEW TRAINING SESSION STARTED--------------------------------
+2019-12-04 03:34:45,305 INFO 127.0.0.1 Initialized logger
+2019-12-04 03:34:45,305 INFO 127.0.0.1 -----------------GENERIC MULTISTAGE-----------------
+2019-12-04 03:34:46,173 INFO 127.0.0.1 Clearing tensorflow/keras backend session and de-allocating remaining models...

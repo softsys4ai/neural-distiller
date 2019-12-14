@@ -1,5 +1,5 @@
-from keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D, BatchNormalization, Dropout
-from keras.models import Sequential
+from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D, BatchNormalization, Dropout
+from tensorflow.python.keras.models import Sequential
 # from Configuration import Config as cfg
 
 def get_model(dataset, numClasses, X_train, net_size):

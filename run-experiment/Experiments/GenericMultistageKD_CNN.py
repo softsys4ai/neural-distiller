@@ -98,6 +98,7 @@ def save_pretrained_teacher_logits(logits_dir, netSize, alpha, teacher_train_log
     filehandler = open(logitFileName, 'wb')
     pickle.dump(teacher_train_logits, filehandler)
     pickle.dump(teacher_test_logits, filehandler)
+    filehandler.close()
     print("saving pretrained teacher logits - size: %s, dataset: %s" % (netSize, dataset))
     print(logitFileName)
     print(os.path.isfile(logitFileName))
