@@ -58,7 +58,7 @@ max = np.max(X_train)
 
 # ESKD experiment hyperparameters
 dataset = "cifar100"
-teacher_model_size = 2
+teacher_model_size = 10
 epoch_min = 0
 epoch_max = 200
 interval_size = 10
@@ -73,7 +73,7 @@ epoch_intervals = np.arange(epoch_min, epoch_max+interval_size, interval_size)
 log_dir = os.getcwd()
 now = datetime.now()
 now_datetime = now.strftime("%d-%m-%y_%H:%M:%S")
-log_dir = os.path.join(log_dir, "ESKD_" + dataset + f"_{teacher_model_size}_" + now_datetime)
+log_dir = os.path.join(log_dir, "ESKD_Logit_Harvesting_" + dataset + f"_{teacher_model_size}_" + now_datetime)
 os.mkdir(log_dir)
 logits_dir = os.path.join(log_dir, "logits")
 os.mkdir(logits_dir)
@@ -90,7 +90,7 @@ teacher_model.compile(optimizer=optimizer,
 train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
 val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
 prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0, epoch_max,
-                               format(val_acc[1], '.2f'), format(train_acc[1], '.3f'))
+                               format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
 train_logits, test_logits = TeacherUtils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
 save_logits(logits_dir, teacher_model_size, 0, epoch_max, train_logits, test_logits)
 
