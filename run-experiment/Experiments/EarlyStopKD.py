@@ -21,9 +21,9 @@ from datetime import datetime
 import tensorflow as tf
 from tensorflow.python.keras.optimizers import SGD
 # project imports
-import LoadDataset
+from Data import LoadDataset
 from Utils import TeacherUtils
-import KnowledgeDistillationModels
+from Models import KnowledgeDistillationModels
 
 # add high priority
 os.nice(1)
@@ -58,10 +58,10 @@ max = np.max(X_train)
 
 # ESKD experiment hyperparameters
 dataset = "cifar100"
-teacher_model_size = 10
+teacher_model_size = 2
 epoch_min = 0
-epoch_max = 100
-interval_size = 5
+epoch_max = 200
+interval_size = 10
 epoch_intervals = np.arange(epoch_min, epoch_max+interval_size, interval_size)
 
 # experiment directory structure
