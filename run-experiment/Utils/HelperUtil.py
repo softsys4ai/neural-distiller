@@ -1,6 +1,7 @@
 import numpy as np
 from Configuration import Config as cfg
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
+from tensorflow.python.keras.losses import KLDivergence as KL
 from tensorflow.python.keras.metrics import categorical_accuracy, top_k_categorical_accuracy
 from tensorflow.python.keras.layers import Lambda, concatenate, Activation
 from tensorflow.python.keras.models import Model
@@ -36,6 +37,15 @@ def knowledge_distillation_loss(logger, y_true, y_pred, alpha=cfg.alpha):
     y_pred, y_pred_softs = y_pred[:, :cfg.dataset_num_classes], y_pred[:, cfg.dataset_num_classes:]
     # loss = (1-alpha)*logloss(y_true, y_pred) + alpha*logloss(y_true_softs, y_pred_softs)
     loss = logloss(y_true, y_pred) + alpha * logloss(y_true_softs, y_pred_softs)
+    return loss
+
+def knowledge_distillation_loss_KL(logger, y_true, y_pred, alpha=cfg.alpha):
+    logger.info("compiling and training student with alpha: %s" % alpha)
+    # Extract the one-hot encoded values and the softs separately so that we can create two objective functions
+    y_true, y_true_softs = y_true[:, :cfg.dataset_num_classes], y_true[:, cfg.dataset_num_classes:]
+    y_pred, y_pred_softs = y_pred[:, :cfg.dataset_num_classes], y_pred[:, cfg.dataset_num_classes:]
+    # loss = (1-alpha)*logloss(y_true, y_pred) + alpha*logloss(y_true_softs, y_pred_softs)
+    loss = logloss(y_true, y_pred) + alpha * KL(y_true_softs, y_pred_softs)
     return loss
 
 
