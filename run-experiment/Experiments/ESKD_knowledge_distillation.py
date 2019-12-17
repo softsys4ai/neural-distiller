@@ -37,14 +37,14 @@ dataset_num_classes = 100
 alpha = 1.0  # TODO test different values for KL loss
 logits_dir = os.path.join(experiment_dir, "logits")
 model_size = 2
-student_epochs = 1
+student_epochs = 150
 logit_model_size = 10
 epoch_interval = 10  # TODO make the harvesting experiment directory name contain the epoch information
 total_epochs = 200
 arr_epochs = np.arange(0, total_epochs + epoch_interval, epoch_interval)
-min_temp = 5
+min_temp = 2
 max_temp = 20
-temp_interval = 5
+temp_interval = 2
 arr_temps = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
 # write student weights to file
@@ -166,6 +166,8 @@ for i in range(len(arr_epochs)):
     # load logits
     train_logits, test_logits = load_logits(logits_dir, logit_model_size, arr_epochs[i], total_epochs)
     for j in range(len(arr_temps)):
+        print("--------------------------Starting new KD step--------------------------")
+        print(f"teacher network logits {arr_epochs[i]}|{total_epochs}, student trained at temperature {arr_temps[j]}")
         # clear current session to free memory
         tf.keras.backend.clear_session()
         # apply temperature to logits and create modified targets for knowledge distillation
@@ -198,7 +200,8 @@ for i in range(len(arr_epochs)):
         # evaluate student model after training
         train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
         val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-        save_weights(models_dir, student_model, model_size, arr_epochs[i], total_epochs, arr_temps[i], val_acc[1], train_acc[1])
+        save_weights(models_dir, student_model, model_size, arr_epochs[i], total_epochs, arr_temps[j],
+                     format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
         # upon completion, delete the checkpoint file
         os.remove(checkpoint_filename)
         del student_model
