@@ -1,8 +1,14 @@
 virtual-env
 virtual-env-3.5
-venv
+.venv/
+venv/
+ENV/
 .idea
 *.h5
 *.pkl
 __pycache__
 .DS_STORE
+
+run-experiment/Logs
+
+*.pyc
