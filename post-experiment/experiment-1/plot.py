@@ -168,12 +168,13 @@ def plot_epoch_against_temp_against_vacc(min_epoch = 0, max_epoch = 200, epoch_i
              rotation_mode="anchor")
     ax.set_yticklabels(temp_intervals)
 
-    plt.pcolor(grouped_results, cmap="tab20c", vmin=0.39, vmax=0.445)
+    plt.pcolor(grouped_results, cmap="tab10", vmin=0.39, vmax=0.445)
     plt.colorbar()
-    plt.show()
 
-    save_path = os.path.join(PATH_TO_FIGURES, "epoch_temp_vacc_tab20c.png")
+    save_path = os.path.join(PATH_TO_FIGURES, "epoch_temp_vacc_tab10.png")
     plt.savefig(save_path)
+
+    plt.show()
 
 if __name__ == "__main__":
     plot_epoch_against_vacc()
