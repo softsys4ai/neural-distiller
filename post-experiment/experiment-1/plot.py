@@ -157,17 +157,23 @@ def plot_epoch_against_temp_against_vacc(min_epoch = 0, max_epoch = 200, epoch_i
 
     ax.set_title("Validation Accuracy w.r.t Temperature and Epoch Interval")
 
-    ax.set_xlabel("Epoch Interval")
-    ax.set_ylabel("Temperature")
+    ax.set_xlabel("Temperature")
+    ax.set_ylabel("Epoch Interval")
 
-    ax.set_xticks(epoch_intervals)
+    ax.set_xticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])
+    ax.set_yticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
     ax.set_xticklabels(epoch_intervals)
-    ax.set_yticklabels(temp_intervals * 2)
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+             rotation_mode="anchor")
+    ax.set_yticklabels(temp_intervals)
 
-    plt.pcolor(grouped_results, cmap="viridis", vmin=0.39, vmax=0.445)
+    plt.pcolor(grouped_results, cmap="tab20c", vmin=0.39, vmax=0.445)
     plt.colorbar()
     plt.show()
+
+    save_path = os.path.join(PATH_TO_FIGURES, "epoch_temp_vacc_tab20c.png")
+    plt.savefig(save_path)
 
 if __name__ == "__main__":
     plot_epoch_against_vacc()
