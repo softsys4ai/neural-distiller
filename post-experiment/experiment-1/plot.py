@@ -82,8 +82,8 @@ def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
     plt.ylim((0.39, 0.445))
     plt.xlim((0, 70))
     plt.legend(loc="lower right")
-    # save_path = os.path.join(PATH_TO_FIGURES, "max_mean_min.png")
-    # plt.savefig(save_path)
+    save_path = os.path.join(PATH_TO_FIGURES, "max_mean_min.png")
+    plt.savefig(save_path)
     plt.show()
 
     # Plotting average and max
@@ -170,5 +170,5 @@ def plot_epoch_against_temp_against_vacc(min_epoch = 0, max_epoch = 200, epoch_i
     plt.show()
 
 if __name__ == "__main__":
-    # plot_epoch_against_vacc()
+    plot_epoch_against_vacc()
     plot_epoch_against_temp_against_vacc()
