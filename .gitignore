@@ -1,4 +1,8 @@
 virtual-env
 virtual-env-3.5
+venv
 .idea
+*.h5
+*.pkl
 __pycache__
+.DS_STORE
