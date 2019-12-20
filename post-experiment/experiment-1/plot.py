@@ -5,11 +5,11 @@ import numpy as np
 import os
 import re
 
-PATH_TO_STUDENT_MODELS = "results/ESKD_Knowledge_Distillation_cifar100_2_16-12-19_23:17:30/models"
+PATH_TO_STUDENT_MODELS = "results/experiment-3/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
 PATH_TO_FIGURES = "results/figures"
 
 
-def group_results_by_interval_to_vacc(min_epoch=0, max_epoch=200, epoch_interval=10) -> list:
+def group_results_by_interval_to_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=5) -> list:
     """
     Parse results for validation accuracy and interval and group by interval
     :param min_epoch: Minimum epoch value for results
@@ -19,7 +19,7 @@ def group_results_by_interval_to_vacc(min_epoch=0, max_epoch=200, epoch_interval
     """
     # Collecting student model results and building dict for each epoch interval
     student_results = os.listdir(PATH_TO_STUDENT_MODELS)
-    results_groups = [[] for i in range(min_epoch, max_epoch + epoch_interval, epoch_interval)]
+    results_groups = [[] for i in range(min_epoch, max_logit_epochs + epoch_interval, epoch_interval)]
     for result in student_results:
         interval, vacc = re.findall(rf"model_2_(\d+)\|{max_epoch}_\d+_(\d+.\d+)", result)[0]
         interval = int(interval)
@@ -50,7 +50,7 @@ def plot_student_models():
 
 def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
     # Grabbing file names from experiment directory and grouping by iteration interval
-    grouped_results = group_results_by_interval_to_vacc(min_epoch=min_epoch, max_epoch=max_epoch, epoch_interval=epoch_interval)
+    grouped_results = group_results_by_interval_to_vacc()
     epoch_intervals = np.arange(min_epoch, max_epoch + epoch_interval, epoch_interval)
 
     # Calculating max, average, and minimum values for each interval
@@ -68,66 +68,68 @@ def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
     # Plotting min, average, and max on same graph
     plt.figure(0)
     # Plotting max validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy")
+    plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy", color="r")
     # Plotting mean validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy")
+    plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy", color="k")
     # Plotting min validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy")
+    plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy", color="b")
     plt.hlines(0.4109, 0, 200, colors="r", linestyles="dashed", label="Baseline Max Validation Accuracy")
-    plt.hlines(0.403121739, 0, 200, colors='g', linestyles="dashed", label="Baseline Mean Validation Accuracy")
+    plt.hlines(0.403121739, 0, 200, colors='k', linestyles="dashed", label="Baseline Mean Validation Accuracy")
 
     plt.xlabel("Epoch Interval")
     plt.xticks(epoch_intervals)
     plt.ylabel("Validation Accuracy")
-    plt.ylim((0.39, 0.445))
-    plt.xlim((0, 70))
+    plt.ylim((0.39, 0.46))
+    plt.xlim((0, 100))
     plt.legend(loc="lower right")
+    plt.legend(bbox_to_anchor=(1.0, 1.0))
     save_path = os.path.join(PATH_TO_FIGURES, "max_mean_min.png")
     plt.savefig(save_path)
     plt.show()
+    #
+    # # Plotting average and max
+    # plt.figure(1)
+    # # Plotting max validation accuracy against interval
+    # plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy")
+    # # Plotting mean validation accuracy against interval
+    # plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy")
+    # plt.xlabel("Epoch Interval")
+    # plt.xticks(epoch_intervals)
+    # plt.ylabel("Validation Accuracy")
+    # plt.ylim((0.39, 0.46))
+    # plt.legend(loc="lower right")
+    # plt.show()
+    #
+    # # Plotting min and average
+    # plt.figure(2)
+    # # Plotting min validation accuracy against interval
+    # plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy")
+    # # Plotting mean validation accuracy against interval
+    # plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy")
+    # plt.xlabel("Epoch Interval")
+    # plt.xticks(epoch_intervals)
+    # plt.ylabel("Validation Accuracy")
+    # plt.ylim((0.39, 0.46))
+    # plt.legend(loc="lower right")
+    # plt.show()
+    #
+    # # Plotting min and max
+    # plt.figure(3)
+    # # Plotting min validation accuracy against interval
+    # plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy")
+    # # Plotting max validation accuracy against interval
+    # plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy")
+    # plt.xlabel("Epoch Interval")
+    # plt.xticks(epoch_intervals)
+    # plt.ylabel("Validation Accuracy")
+    # plt.ylim((0.39, 0.46))
+    # plt.legend(loc="lower right")
+    # plt.show()
 
-    # Plotting average and max
-    plt.figure(1)
-    # Plotting max validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy")
-    # Plotting mean validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy")
-    plt.xlabel("Epoch Interval")
-    plt.xticks(epoch_intervals)
-    plt.ylabel("Validation Accuracy")
-    plt.ylim((0.39, 0.445))
-    plt.legend(loc="lower right")
-    plt.show()
 
-    # Plotting min and average
-    plt.figure(2)
-    # Plotting min validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy")
-    # Plotting mean validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy")
-    plt.xlabel("Epoch Interval")
-    plt.xticks(epoch_intervals)
-    plt.ylabel("Validation Accuracy")
-    plt.ylim((0.39, 0.42))
-    plt.legend(loc="lower right")
-    plt.show()
-
-    # Plotting min and max
-    plt.figure(3)
-    # Plotting min validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy")
-    # Plotting max validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy")
-    plt.xlabel("Epoch Interval")
-    plt.xticks(epoch_intervals)
-    plt.ylabel("Validation Accuracy")
-    plt.ylim(0.39, 0.445)
-    plt.legend(loc="lower right")
-    plt.show()
-
-
-def group_results_by_interval_to_temp_vacc(min_epoch=0, max_epoch=200, epoch_interval=10,
+def group_results_by_interval_to_temp_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=10,
                                            min_temp = 0, max_temp = 20, temp_interval = 2) -> list:
+
     """
     Parse results for validation accuracy and interval and group by interval
     :param min_epoch: Minimum epoch value for results
@@ -137,7 +139,8 @@ def group_results_by_interval_to_temp_vacc(min_epoch=0, max_epoch=200, epoch_int
     """
     # Collecting student model results and building dict for each epoch interval
     student_results = os.listdir(PATH_TO_STUDENT_MODELS)
-    results_groups = [np.zeros((max_epoch + epoch_interval - min_epoch)//epoch_interval) for i in range(min_temp, max_temp + temp_interval, temp_interval)]
+    # results_groups = [np.zeros((max_epoch + epoch_interval - min_epoch)//epoch_interval) for i in range(min_epoch, max_logit_epochs + epoch_interval, epoch_interval)]
+    results_groups = [np.zeros((max_logit_epochs + epoch_interval - min_epoch)//epoch_interval) for i in range(min_temp, max_temp + temp_interval, temp_interval)]
     for result in student_results:
         interval, temp, vacc = re.findall(rf"model_2_(\d+)\|{max_epoch}_(\d+)_(\d+.\d+)", result)[0]
         interval = int(interval)
@@ -147,18 +150,21 @@ def group_results_by_interval_to_temp_vacc(min_epoch=0, max_epoch=200, epoch_int
     return results_groups
 
 
-def plot_epoch_against_temp_against_vacc(min_epoch = 0, max_epoch = 200, epoch_interval=10,
+def plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=10,
                                          min_temp=0, max_temp=20, temp_interval=2):
-    grouped_results = group_results_by_interval_to_temp_vacc(min_epoch=min_epoch, max_epoch=max_epoch, epoch_interval=epoch_interval)
-    epoch_intervals = np.arange(min_epoch, max_epoch + epoch_interval, epoch_interval)
+    grouped_results = group_results_by_interval_to_temp_vacc(min_epoch=min_epoch, max_logit_epochs=max_logit_epochs,
+                                                             max_epoch=max_epoch, epoch_interval=epoch_interval,
+                                                             min_temp=min_temp, max_temp=max_temp,
+                                                             temp_interval=temp_interval)
+    epoch_intervals = np.arange(min_epoch, max_logit_epochs + epoch_interval, epoch_interval)
     temp_intervals = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
     fig, ax = plt.subplots()
 
     ax.set_title("Validation Accuracy w.r.t Temperature and Epoch Interval")
 
-    ax.set_xlabel("Temperature")
-    ax.set_ylabel("Epoch Interval")
+    ax.set_xlabel("Epoch Interval")
+    ax.set_ylabel("Temperature")
 
     ax.set_xticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])
     ax.set_yticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
@@ -168,14 +174,18 @@ def plot_epoch_against_temp_against_vacc(min_epoch = 0, max_epoch = 200, epoch_i
              rotation_mode="anchor")
     ax.set_yticklabels(temp_intervals)
 
-    plt.pcolor(grouped_results, cmap="tab10", vmin=0.39, vmax=0.445)
+    # colormode = "afmhot"
+    colormode = "rainbow"
+    plt.pcolor(grouped_results, cmap=colormode, vmin=0.40420, vmax=0.45020)
     plt.colorbar()
 
-    save_path = os.path.join(PATH_TO_FIGURES, "epoch_temp_vacc_tab10.png")
+    plotname = "epoch_temp_vacc_"+colormode+".png"
+    save_path = os.path.join(PATH_TO_FIGURES, plotname)
     plt.savefig(save_path)
 
     plt.show()
 
 if __name__ == "__main__":
-    plot_epoch_against_vacc()
-    plot_epoch_against_temp_against_vacc()
+    plot_epoch_against_vacc(min_epoch=0, max_epoch=100, epoch_interval=5)
+    plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=5,
+                                         min_temp=0, max_temp=10, temp_interval=1)
