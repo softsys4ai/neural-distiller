@@ -15,8 +15,8 @@ from art.attacks import FastGradientMethod
 from art.classifiers import KerasClassifier
 
 # project imports
-import LoadDataset
-import KnowledgeDistillationModels
+from Data import LoadDataset
+from Models import KnowledgeDistillationModels
 
 # EXPERIMENT PARAMETERS
 MIN_EPS = 0.1
