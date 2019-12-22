@@ -76,11 +76,11 @@ curr_student_model.compile(optimizer=optimizer,
                            metric=["acc"])
 for i in range(len(STUDENT_MODEL_WEIGHT_PATHS) - 1):
     print("\n--------------------------Starting new AR step--------------------------")
+    # load weights for the student model
+    print("[INFO] Loading student model weights...")
+    curr_student_model.load_weights(STUDENT_MODEL_WEIGHT_PATHS[i])
     for curr_eps in EPS_VALS:
         print(f"[INFO] Evaluating {STUDENT_MODEL_NAMES[i]} with FGSM at epsilon {format(curr_eps, '.1f')}...")
-        # load weights for the student model
-        print("[INFO] Loading student model weights...")
-        curr_student_model.load_weights(STUDENT_MODEL_WEIGHT_PATHS[i])
         # generate adversarial examples for the given model
         student_art_model = KerasClassifier(model=curr_student_model, clip_values=(dataset_min, dataset_max), use_logits=False)
         # generate adv. examples for current loaded model
@@ -94,6 +94,8 @@ for i in range(len(STUDENT_MODEL_WEIGHT_PATHS) - 1):
         print("[INFO] Completed adversarial evaluation...")
         print(f"Adversarial accuracy: {adv_acc}")
         print("[INFO] Cleaning up experiment variables...")
+        del X_test_adv
+        del predictions
+        print("[INFO] Recording adversarial robustness results to {}...")
+        df.to_csv(RESULTS_FILE, sep=',')
 
-print("[INFO] Recording adversarial robustness results to {}...")
-df.to_csv(RESULTS_FILE, sep=',')
