@@ -1,12 +1,9 @@
-import keras
+
 from keras.optimizers import SGD
-from keras.models import Sequential
-from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D
 import numpy as np
 
 from art.attacks import FastGradientMethod
 from art.classifiers import KerasClassifier
-from art.utils import load_mnist
 
 import KnowledgeDistillationModels
 import LoadDataset
