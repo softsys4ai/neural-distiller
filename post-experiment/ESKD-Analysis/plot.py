@@ -31,20 +31,20 @@ def group_results_by_interval_to_vacc(min_epoch=0, max_logit_epochs=100, max_epo
 def plot_student_models():
     """
     Plot student models from results of experiment 1.
-    Plot 1: Highest validation accuracy for each epoch interval
-    Plot 2: Validation Accuracy against epoch interval against temp
+    Plot 1: Highest test accuracy for each epoch interval
+    Plot 2: test Accuracy against epoch interval against temp
     :return:
     """
-    # -------- Plot 1 --------: (epoch interval, validation accuracy)
+    # -------- Plot 1 --------: (epoch interval, test accuracy)
     # Load model directory so that we can parse names
-    # Identify and parse highest validation accuracy for each interval
-    # Plot epoch interval against max validation accuracy
+    # Identify and parse highest test accuracy for each interval
+    # Plot epoch interval against max test accuracy
     plot_epoch_against_vacc()
 
-    # -------- Plot 2 --------: (epoch interval, temperature, validation accuracy)
+    # -------- Plot 2 --------: (epoch interval, temperature, test accuracy)
     # Load model directory so that we can parse names
-    # For each saved model, parse name for epoch interval, validation accuracy, and temp
-    # Plot for each model: interval against temperature, against validation accuracy
+    # For each saved model, parse name for epoch interval, test accuracy, and temp
+    # Plot for each model: interval against temperature, against test accuracy
     plot_epoch_against_temp_against_vacc()
 
 
@@ -67,18 +67,18 @@ def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
 
     # Plotting min, average, and max on same graph
     plt.figure(0)
-    # Plotting max validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy", color="r")
-    # Plotting mean validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy", color="k")
-    # Plotting min validation accuracy against interval
-    plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy", color="b")
-    plt.hlines(0.4109, 0, 200, colors="r", linestyles="dashed", label="Baseline Max Validation Accuracy")
-    plt.hlines(0.403121739, 0, 200, colors='k', linestyles="dashed", label="Baseline Mean Validation Accuracy")
+    # Plotting max test accuracy against interval
+    plt.plot(epoch_intervals, vacc_max, label="Max test Accuracy", color="r")
+    # Plotting mean test accuracy against interval
+    plt.plot(epoch_intervals, vacc_avg, label="Mean test Accuracy", color="k")
+    # Plotting min test accuracy against interval
+    plt.plot(epoch_intervals, vacc_min, label="Min test Accuracy", color="b")
+    plt.hlines(0.4109, 0, 200, colors="r", linestyles="dashed", label="Baseline Max test Accuracy")
+    plt.hlines(0.403121739, 0, 200, colors='k', linestyles="dashed", label="Baseline Mean test Accuracy")
 
     plt.xlabel("Epoch Interval")
     plt.xticks(epoch_intervals)
-    plt.ylabel("Validation Accuracy")
+    plt.ylabel("Test Accuracy")
     plt.ylim((0.39, 0.46))
     plt.xlim((0, 100))
     plt.legend(loc="lower right")
@@ -89,39 +89,39 @@ def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
     #
     # # Plotting average and max
     # plt.figure(1)
-    # # Plotting max validation accuracy against interval
-    # plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy")
-    # # Plotting mean validation accuracy against interval
-    # plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy")
+    # # Plotting max test accuracy against interval
+    # plt.plot(epoch_intervals, vacc_max, label="Max test Accuracy")
+    # # Plotting mean test accuracy against interval
+    # plt.plot(epoch_intervals, vacc_avg, label="Mean test Accuracy")
     # plt.xlabel("Epoch Interval")
     # plt.xticks(epoch_intervals)
-    # plt.ylabel("Validation Accuracy")
+    # plt.ylabel("Test Accuracy")
     # plt.ylim((0.39, 0.46))
     # plt.legend(loc="lower right")
     # plt.show()
     #
     # # Plotting min and average
     # plt.figure(2)
-    # # Plotting min validation accuracy against interval
-    # plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy")
-    # # Plotting mean validation accuracy against interval
-    # plt.plot(epoch_intervals, vacc_avg, label="Mean Validation Accuracy")
+    # # Plotting min test accuracy against interval
+    # plt.plot(epoch_intervals, vacc_min, label="Min test Accuracy")
+    # # Plotting mean test accuracy against interval
+    # plt.plot(epoch_intervals, vacc_avg, label="Mean test Accuracy")
     # plt.xlabel("Epoch Interval")
     # plt.xticks(epoch_intervals)
-    # plt.ylabel("Validation Accuracy")
+    # plt.ylabel("Test Accuracy")
     # plt.ylim((0.39, 0.46))
     # plt.legend(loc="lower right")
     # plt.show()
     #
     # # Plotting min and max
     # plt.figure(3)
-    # # Plotting min validation accuracy against interval
-    # plt.plot(epoch_intervals, vacc_min, label="Min Validation Accuracy")
-    # # Plotting max validation accuracy against interval
-    # plt.plot(epoch_intervals, vacc_max, label="Max Validation Accuracy")
+    # # Plotting min test accuracy against interval
+    # plt.plot(epoch_intervals, vacc_min, label="Min test Accuracy")
+    # # Plotting max test accuracy against interval
+    # plt.plot(epoch_intervals, vacc_max, label="Max test Accuracy")
     # plt.xlabel("Epoch Interval")
     # plt.xticks(epoch_intervals)
-    # plt.ylabel("Validation Accuracy")
+    # plt.ylabel("Test Accuracy")
     # plt.ylim((0.39, 0.46))
     # plt.legend(loc="lower right")
     # plt.show()
@@ -131,11 +131,11 @@ def group_results_by_interval_to_temp_vacc(min_epoch=0, max_logit_epochs=100, ma
                                            min_temp = 0, max_temp = 20, temp_interval = 2) -> list:
 
     """
-    Parse results for validation accuracy and interval and group by interval
+    Parse results for test accuracy and interval and group by interval
     :param min_epoch: Minimum epoch value for results
     :param max_epoch: Maximum epoch value for results
     :param epoch_interval: Iteration Interval for epoch values
-    :return: List with sublists for each epoch interval, containing validation accuracy
+    :return: List with sublists for each epoch interval, containing test accuracy
     """
     # Collecting student model results and building dict for each epoch interval
     student_results = os.listdir(PATH_TO_STUDENT_MODELS)
@@ -161,7 +161,7 @@ def plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_
 
     fig, ax = plt.subplots()
 
-    ax.set_title("Validation Accuracy w.r.t Temperature and Epoch Interval")
+    ax.set_title("Test Accuracy w.r.t Temperature and Epoch Interval")
 
     ax.set_xlabel("Epoch Interval")
     ax.set_ylabel("Temperature")
@@ -175,7 +175,7 @@ def plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_
     ax.set_yticklabels(temp_intervals)
 
     # colormode = "afmhot"
-    colormode = "rainbow"
+    colormode = "gnuplot2"
     plt.pcolor(grouped_results, cmap=colormode, vmin=0.40420, vmax=0.45020)
     plt.colorbar()
 
