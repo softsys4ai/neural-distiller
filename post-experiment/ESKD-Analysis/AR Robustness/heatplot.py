@@ -15,7 +15,7 @@ hm_data1 = pd.pivot_table(df_plot, values='eps_' + EPS,
                           columns='interval')
 plot = sns.heatmap(hm_data1, cmap='binary', vmin=df_min, vmax=df_max)
 plot.invert_yaxis()
-plt.title("Adversarial Accuracy w.r.t Temperature and Epoch Interval (Epsilon "+EPS+")")
+plt.title("Adversarial Accuracy w.r.t Temperature and Epoch Interval ("+ATTACK+", Epsilon "+EPS+")")
 fig = plot.get_figure()
 fig.savefig("AR_"+ATTACK+"_Eps_"+EPS+".png")
 plt.show()
