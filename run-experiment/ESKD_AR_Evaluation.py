@@ -17,7 +17,7 @@ import pandas as pd
 
 from keras.optimizers import SGD
 
-from art.attacks import FastGradientMethod
+from art.attacks import FastGradientMethod, BasicIterativeMethod
 from art.classifiers import KerasClassifier
 
 # project imports
@@ -91,7 +91,7 @@ for i in range(len(STUDENT_MODEL_WEIGHT_PATHS)):
         student_art_model = KerasClassifier(model=curr_student_model, clip_values=(dataset_min, dataset_max), use_logits=False)
         # generate adv. examples for current loaded model
         print("[INFO] Generating adversarial examples for the current model...")
-        attack_student_model = FastGradientMethod(classifier=student_art_model, eps=curr_eps)
+        attack_student_model = BasicIterativeMethod(classifier=student_art_model, eps=curr_eps)
         X_test_adv = attack_student_model.generate(x=X_test)
         print("[INFO] Evaluating student model's adversarial accuracy...")
         predictions = student_art_model.predict(X_test_adv)
