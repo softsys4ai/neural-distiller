@@ -33,8 +33,8 @@ EPS_VALS = np.arange(MIN_EPS, MAX_EPS+STEP_EPS-1e-2, STEP_EPS)
 # experiment results CSV
 RESULTS_FILE = "experiment3_adversarial_robustness.csv"
 # generate a list of paths to the student models
-MODEL_DIR = "/home/blakete/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
-# MODEL_DIR = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller/post-experiment/ESKD-Analysis/ESKD Accuracy/results/experiment-3/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
+# MODEL_DIR = "/home/blakete/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
+MODEL_DIR = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller/post-experiment/ESKD-Analysis/ESKD Accuracy/results/experiment-3/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
 DIR_QUERY = os.path.join(MODEL_DIR, "*.h5")
 STUDENT_MODEL_WEIGHT_PATHS = glob.glob(DIR_QUERY)
 # generate a list of parsed student model information
@@ -94,7 +94,7 @@ for i in range(len(STUDENT_MODEL_WEIGHT_PATHS)):
         print("[INFO] Generating adversarial examples for the current model...")
         # attack_student_model = FastGradientMethod(classifier=student_art_model, eps=curr_eps)
         attack_student_model = BasicIterativeMethod(classifier=student_art_model, eps_step=0.025, eps=curr_eps,
-                                                    max_iter=1, targeted=False, batch_size=1)
+                                                    max_iter=4, targeted=False, batch_size=1)
         X_test_adv = attack_student_model.generate(x=X_test)
         print("[INFO] Evaluating student model's adversarial accuracy...")
         predictions = student_art_model.predict(X_test_adv)

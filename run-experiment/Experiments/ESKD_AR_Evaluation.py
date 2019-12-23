@@ -15,8 +15,8 @@ from art.attacks import FastGradientMethod
 from art.classifiers import KerasClassifier
 
 # project imports
-from Data import LoadDataset
-from Models import KnowledgeDistillationModels
+import LoadDataset
+import KnowledgeDistillationModels
 
 # EXPERIMENT PARAMETERS
 MIN_EPS = 0.1
@@ -96,6 +96,6 @@ for i in range(len(STUDENT_MODEL_WEIGHT_PATHS) - 1):
         print("[INFO] Cleaning up experiment variables...")
         del X_test_adv
         del predictions
-        print("[INFO] Recording adversarial robustness results to {}...")
+        print(f"[INFO] Recording adversarial robustness results to {RESULTS_FILE}...")
         df.to_csv(RESULTS_FILE, sep=',')
 
