@@ -5,11 +5,11 @@ import numpy as np
 import os
 import re
 
-PATH_TO_STUDENT_MODELS = "results/experiment-3/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
+PATH_TO_STUDENT_MODELS = "results/experiment-1/ESKD_Knowledge_Distillation_cifar100_2_16-12-19_23:17:30/models"
 PATH_TO_FIGURES = "results/figures"
 
 
-def group_results_by_interval_to_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=5) -> list:
+def group_results_by_interval_to_vacc(min_epoch=0, max_logit_epochs=200, max_epoch=200, epoch_interval=10) -> list:
     """
     Parse results for validation accuracy and interval and group by interval
     :param min_epoch: Minimum epoch value for results
@@ -19,7 +19,7 @@ def group_results_by_interval_to_vacc(min_epoch=0, max_logit_epochs=100, max_epo
     """
     # Collecting student model results and building dict for each epoch interval
     student_results = os.listdir(PATH_TO_STUDENT_MODELS)
-    results_groups = [[] for i in range(min_epoch, max_logit_epochs + epoch_interval, epoch_interval)]
+    results_groups = [[] for i in range(min_epoch, max_logit_epochs + epoch_interval-1, epoch_interval)]
     for result in student_results:
         interval, vacc = re.findall(rf"model_2_(\d+)\|{max_epoch}_\d+_(\d+.\d+)", result)[0]
         interval = int(interval)
@@ -50,7 +50,7 @@ def plot_student_models():
 
 def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
     # Grabbing file names from experiment directory and grouping by iteration interval
-    grouped_results = group_results_by_interval_to_vacc()
+    grouped_results = group_results_by_interval_to_vacc(epoch_interval=epoch_interval)
     epoch_intervals = np.arange(min_epoch, max_epoch + epoch_interval, epoch_interval)
 
     # Calculating max, average, and minimum values for each interval
@@ -186,6 +186,6 @@ def plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_
     plt.show()
 
 if __name__ == "__main__":
-    plot_epoch_against_vacc(min_epoch=0, max_epoch=100, epoch_interval=5)
-    plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=5,
-                                         min_temp=0, max_temp=10, temp_interval=1)
+    plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10)
+    plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=200, max_epoch=200, epoch_interval=10,
+                                         min_temp=0, max_temp=20, temp_interval=2)

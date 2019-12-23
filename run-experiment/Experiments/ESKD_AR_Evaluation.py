@@ -25,7 +25,7 @@ STEP_EPS = 0.1
 EPS_VALS = np.arange(MIN_EPS, MAX_EPS+STEP_EPS-1e-2, STEP_EPS)
 
 # experiment results CSV
-RESULTS_FILE = "experiment3_adversarial_robustness.csv"
+RESULTS_FILE = "experiment3_AR_BIM.csv"
 # generate a list of paths to the student models
 MODEL_DIR = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller/post-experiment/ESKD-Analysis/results/experiment-3/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
 DIR_QUERY = os.path.join(MODEL_DIR, "*.h5")
