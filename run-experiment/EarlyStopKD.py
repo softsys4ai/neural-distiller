@@ -56,12 +56,17 @@ max = np.max(X_train)
 # X_train = X_train[:128]
 # Y_train = Y_train[:128]
 
+# Set explicit starting model path
+EXPLICIT_START_WEIGHT_PATH = "/home/blakete/model_10_0|200_0.01_0.008.h5"
+USE_EXPLICIT_START = True
+
 # ESKD experiment hyperparameters
+learning_rate = 0.01
 dataset = "cifar100"
 teacher_model_size = 10
 epoch_min = 0
-epoch_max = 200
-interval_size = 5
+epoch_max = 100
+interval_size = 1
 epoch_intervals = np.arange(epoch_min, epoch_max+interval_size, interval_size)
 
 # experiment directory structure
@@ -87,6 +92,8 @@ optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
                       metrics=["accuracy"])
+if (USE_EXPLICIT_START):
+	teacher_model.load_weights(EXPLICIT_START_WEIGHT_PATH)
 train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
 val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
 prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0, epoch_max,
@@ -109,7 +116,7 @@ for i in range(1, len(epoch_intervals)):
     teacher_model.load_weights(prev_model_path)
 
     # compile and train network
-    optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+    optimizer = SGD(lr=learning_rate, momentum=0.9, nesterov=True)
     teacher_model.compile(optimizer=optimizer,
                           loss="categorical_crossentropy",
                           metrics=["accuracy"])

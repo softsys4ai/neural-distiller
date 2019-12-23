@@ -13,6 +13,10 @@
 
 # external imports
 import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
+# The GPU id to use, usually either "0" or "1";
+os.environ["CUDA_VISIBLE_DEVICES"]="0";
+
 import pickle
 import numpy as np
 from datetime import datetime
@@ -31,7 +35,7 @@ from Utils import HelperUtil
 
 
 # setting up parameters for loading distillation logits
-experiment_dir = "/home/blakete/neural-distiller/run-experiment/ESKD_cifar100_10_16-12-19_11:19:41"
+experiment_dir = "/home/blakete/neural-distiller/run-experiment/ESKD_cifar100_10_20-12-19_17:44:50"
 dataset = "cifar100"
 dataset_num_classes = 100
 alpha = 1.0  # TODO test different values for KL loss
@@ -39,12 +43,12 @@ logits_dir = os.path.join(experiment_dir, "logits")
 model_size = 2
 student_epochs = 150
 logit_model_size = 10
-epoch_interval = 5  # TODO make the harvesting experiment directory name contain the epoch information
-total_epochs = 200
-arr_epochs = np.arange(0, total_epochs + epoch_interval, epoch_interval)
-min_temp = 1
-max_temp = 31
-temp_interval = 2
+epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
+total_epochs = 100
+arr_epochs = np.arange(5, total_epochs + epoch_interval, epoch_interval)
+min_temp = 0.25
+max_temp = 10
+temp_interval = 0.25
 arr_temps = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
 # write student weights to file
