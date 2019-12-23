@@ -6,13 +6,6 @@
 # train the size 10 teacher in 5 epoch intervals
 # harvest logits and save the model weights at each interval
 
-# STEP 2
-# Distill knowledge to student model for each set of logits
-
-# Step 3
-# Evaluate student models for robustness and accuracy
-
-
 # external dependencies
 import os
 import pickle
