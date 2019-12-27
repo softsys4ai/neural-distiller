@@ -53,9 +53,10 @@ for name in STUDENT_MODEL_NAMES:
     temperatures.append(float(temp))
     test_accs.append(float(test_acc))
     train_accs.append(float(train_acc))
-    # create dataframe with the parsed data
-    df = pd.DataFrame(list(zip(sizes, intervals, temperatures, test_accs, train_accs)),
-                      columns=['size', 'interval', 'temp', 'test_acc', 'train_acc'])
+
+# create dataframe with the parsed data
+df = pd.DataFrame(list(zip(sizes, intervals, temperatures, test_accs, train_accs)),
+                     columns=['size', 'interval', 'temp', 'test_acc', 'train_acc'])
 
 # loading dataset
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)

@@ -86,7 +86,7 @@ teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
                       metrics=["accuracy"])
 if (USE_EXPLICIT_START):
-	teacher_model.load_weights(EXPLICIT_START_WEIGHT_PATH)
+    teacher_model.load_weights(EXPLICIT_START_WEIGHT_PATH)
 train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
 val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
 prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0, epoch_max,
