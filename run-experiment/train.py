@@ -1,8 +1,12 @@
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
+# The GPU id to use, usually either "0" or "1";
+os.environ["CUDA_VISIBLE_DEVICES"]="0";
 import socket
+
 import logging
 import sys
+import traceback
 from optparse import OptionParser
 from datetime import datetime
 from Configuration import Config as cfg
@@ -87,8 +91,12 @@ def main():
     now = datetime.now()
     now_datetime = now.strftime("%d-%m-%Y_%H:%M:%S")
     if options.experiment == "search-alpha-temp-configurations":
-        log_dir = log_dir + "/" + cfg.dataset + "_grid_search_" + now_datetime
+        log_dir = log_dir + cfg.dataset + "_grid_search_" + now_datetime
         os.mkdir(log_dir)
+        logits_dir = log_dir + "/" + "saved_logits"
+        os.mkdir(logits_dir)
+        models_dir = log_dir + "/" + "saved_models"
+        os.mkdir(models_dir)
     log_file_name = "experiment_log"
     log_file = os.path.join(log_dir, log_file_name)
 
@@ -99,8 +107,8 @@ def main():
 
     try:
         if options.experiment == "search-alpha-temp-configurations":
-            session_log_file = log_dir + "/training_results.log"
-            GenericMultistageKD_CNN.run(logger, options, session_log_file)
+            session_log_file = log_dir + "/training_session.log"
+            GenericMultistageKD_CNN.run(logger, options, session_log_file, logits_dir, models_dir)
         elif options.experiment == "full-PaKD-compression":
             logger.error("Provided experiment1 type not yet implemented!")
             # TODO measure power consumption and inference time
@@ -109,8 +117,11 @@ def main():
         else:
             logger.error("Provided experiment1 type not supported!")
             return
-    except Exception as e:
-        logger.error("Error while running experiment1: {0}".format(str(e)))
+    except Exception:
+        traceback.print_exc()
+        error = traceback.format_exc()
+        # error.upper()
+        logging.error('Error encountered: %s' % error, exc_info=True)
 
 
 if __name__ == "__main__":

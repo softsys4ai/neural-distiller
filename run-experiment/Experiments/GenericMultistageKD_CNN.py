@@ -6,7 +6,8 @@ sys.path.append("..")  # Adds higher directory to python modules path.
 from Configuration import Config as cfg
 from Data import LoadDataset
 from Models import ModelLoader
-from Models import TeacherUtils
+from Models import KnowledgeDistillationModels
+from Utils import TeacherUtils
 from Utils import HelperUtil
 import datetime
 import json
@@ -14,18 +15,18 @@ import ast
 import os
 from keras import backend as K
 import tensorflow as tf
-from tensorflow.python.keras.layers import MaxPooling2D, Dense, Flatten, Activation, Conv2D, BatchNormalization, Dropout
-from tensorflow.python.keras.models import Sequential
+import numpy as np
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.models import load_model
 from tensorflow.python.keras.losses import categorical_crossentropy as logloss
 from tensorflow.python.keras.utils import multi_gpu_model
-from tensorflow.python.keras.optimizers import adadelta, SGD
+from tensorflow.python.keras.optimizers import adadelta, SGD, Adam
 from tensorflow.python.keras.backend import clear_session
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-import numpy as np
 
-# adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0) # artifact
+
 tf.set_random_seed(cfg.random_seed)
 np.random.seed(cfg.random_seed)
 
@@ -60,386 +61,6 @@ def create_meta(dataset, teacher_name, epochs, temp, alpha, order):
     metadata['order'] = str(order)
     return metadata
 
-
-def get_model(dataset, numClasses, X_train, net_size):
-    if dataset is "mnist":
-        return get_model_mnist(numClasses, X_train, net_size)
-    elif dataset is "cifar100":
-        return get_model_cifar100(numClasses, X_train, net_size)
-
-def get_model_mnist(numClasses, X_train, net_size):
-    # setting up model based on size
-    if net_size == 10:
-        model = Sequential([
-            Conv2D(256, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            Conv2D(128, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
-            Conv2D(32, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(128, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-    elif net_size == 8:
-        model = Sequential([
-            Conv2D(128, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
-            Conv2D(32, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
-            # Conv2D(8, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(96, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-    elif net_size == 6:
-        model = Sequential([
-            Conv2D(64, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            Conv2D(32, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
-            # Conv2D(8, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(64, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-        # model = load_model(cfg.teacher_model_dir + "/best_size_6_model.hdf5")
-        # previousModel = model
-        # continue
-    elif net_size == 4:
-        model = Sequential([
-            Conv2D(32, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(16, (3, 3), activation='relu'),
-            # Conv2D(8, (3, 3), activation='relu'),
-            MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(32, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-        # model = load_model(cfg.teacher_model_dir + "/best_size_4_model.hdf5")
-        # previousModel = model
-        # continue
-    elif net_size == 2:
-        # model = Sequential([
-        #     Conv2D(8, kernel_size=(3, 3),
-        #            activation='relu',
-        #            input_shape=X_train.shape[1:]),
-        #     MaxPooling2D(pool_size=(2, 2)),
-        #     Conv2D(4, (3, 3), activation='relu'),
-        #     MaxPooling2D(pool_size=(2, 2)),
-        #     Flatten(),
-        #     Dense(16, input_shape=X_train.shape[1:]),
-        #     Activation('relu'),
-        #     Dense(numClasses, name='logits'),
-        #     Activation('softmax'),
-        # ])
-        model = Sequential([
-            Dense(16, activation='relu', input_shape=X_train.shape[1:]),
-            Dense(16, activation='relu', input_shape=X_train.shape[1:]),
-            Activation('relu'),
-            Flatten(),
-            Dense(cfg.mnist_number_classes, name='logits'),
-            Activation('softmax'),
-        ])
-    else:
-        print('no model available for given size!')
-    return model
-
-def get_model_cifar100_raw_output(numClasses, X_train, net_size):
-    # setting up model based on size
-    if net_size == 10:
-        model = Sequential([
-            Conv2D(16, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(32, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
-            Conv2D(128, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(256, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(128, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-    elif net_size == 8:
-        model = Sequential([
-            Conv2D(16, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(32, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(128, (3, 3), activation='relu'),
-            # Conv2D(8, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(96, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-    elif net_size == 6:
-        model = Sequential([
-            Conv2D(16, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(32, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(64, (3, 3), activation='relu'),
-            # Conv2D(8, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(64, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-        # model = load_model(cfg.teacher_model_dir + "/best_size_6_model.hdf5")
-        # previousModel = model
-        # continue
-    elif net_size == 4:
-        model = Sequential([
-            Conv2D(16, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(32, (3, 3), activation='relu'),
-            # Conv2D(8, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(32, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax')  # Note that we add a normal softmax layer to begin with
-        ])
-        # model = load_model(cfg.teacher_model_dir + "/best_size_4_model.hdf5")
-        # previousModel = model
-        # continue
-    elif net_size == 2:
-        model = Sequential([
-            Conv2D(4, kernel_size=(3, 3),
-                   activation='relu',
-                   input_shape=X_train.shape[1:]),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Conv2D(8, (3, 3), activation='relu'),
-            # MaxPooling2D(pool_size=(2, 2)),
-            Flatten(),
-            Dense(16, input_shape=X_train.shape[1:]),
-            Activation('relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax'),
-        ])
-        # model = Sequential([
-        #     Dense(16, activation='relu', input_shape=X_train.shape[1:]),
-        #     Dense(16, activation='relu', input_shape=X_train.shape[1:]),
-        #     Activation('relu'),
-        #     Flatten(),
-        #     Dense(numClasses, name='logits'),
-        #     Activation('softmax'),
-        # ])
-    else:
-        print('no model available for given size!')
-    return model
-
-# '2': ['Conv32', 'MaxPool', 'Conv32', 'MaxPool', 'FC100'],
-# 	'4': ['Conv32', 'Conv32', 'MaxPool', 'Conv64', 'Conv64', 'MaxPool', 'FC100'],
-# 	'6': ['Conv32', 'Conv32', 'MaxPool', 'Conv64', 'Conv64', 'MaxPool','Conv128', 'Conv128' ,'FC100'],
-# 	'8': ['Conv32', 'Conv32', 'MaxPool', 'Conv64', 'Conv64', 'MaxPool', 'Conv128', 'Conv128', 'MaxPool',
-# 		  'Conv256', 'Conv256','MaxPool', 'FC64', 'FC100'],
-# 	'10': ['Conv32', 'Conv32', 'MaxPool', 'Conv64', 'Conv64', 'MaxPool', 'Conv128', 'Conv128', 'MaxPool',
-# 		   'Conv256', 'Conv256', 'Conv256', 'Conv256' , 'MaxPool', 'FC512', 'FC100'],
-def get_model_cifar100(numClasses, X_train, net_size):
-    # setting up model based on size
-    if net_size == 10:
-        model = Sequential([
-            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.4),
-            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.5),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.5),
-            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.5),
-            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.5),
-            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.6),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Flatten(),
-            Dense(512, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax'),
-        ])
-        # TODO add resnet8 here!
-    elif net_size == 8:
-        model = Sequential([
-            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.2),
-            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            Conv2D(256,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Flatten(),
-            Dense(64, activation='relu'),
-            Dense(numClasses, name='logits'),
-            Activation('softmax'),
-        ])
-    elif net_size == 6:
-        model = Sequential([
-            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.2),
-            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            Conv2D(128,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            Flatten(),
-            Dense(numClasses, name='logits'),
-            Activation('softmax'),
-        ])
-        # model = load_model(cfg.teacher_model_dir + "/best_size_6_model.hdf5")
-        # previousModel = model
-        # continue
-    elif net_size == 4:
-        model = Sequential([
-            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.2),
-            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            Conv2D(64,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Flatten(),
-            Dense(numClasses, name='logits'),
-            Activation('softmax'),
-        ])
-        # model = load_model(cfg.teacher_model_dir + "/best_size_4_model.hdf5")
-        # previousModel = model
-        # continue
-    elif net_size == 2:
-        model = Sequential([
-            Conv2D(32,  kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.2),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(32,  kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.3),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Flatten(),
-            Dense(numClasses, name='logits'),
-            Activation('softmax'),
-        ])
-    else:
-        print('no model available for given size!')
-    return model
-
 def find_largest_value(output_distribution):
     pos = 0
     max_val = output_distribution[pos]
@@ -450,35 +71,60 @@ def find_largest_value(output_distribution):
     return max_val
 
 # method to check for already saved copy of teacher knowledge
-def get_pretrained_teacher_logits(netSize, dataset, trainOrder):
+def get_pretrained_teacher_logits(logits_dir, netSize, alpha, dataset, trainOrder):
     # load pre-created soft targets for teacher
-    target_file = str(dataset) + "_" + str(netSize) + "_" + str(trainOrder) + "_soft_targets.pkl"
+    if netSize == cfg.max_net_size:
+        target_file = str(dataset) + "_" + str(netSize) + ".pkl"
+    else:
+        target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + ".pkl"
     target_file = target_file.replace(" ", "")
-    logitFileName = os.path.join(cfg.soft_targets_dir, target_file)
-    print("get_pretrained_teacher_logits")
-    print(logitFileName)
-    print(os.path.isfile(logitFileName))
+    logitFileName = os.path.join(logits_dir, target_file)
     if os.path.isfile(logitFileName): # check for logit file existence
         filehandler = open(logitFileName, 'rb')
-        Y_train_new = pickle.load(filehandler)
-        Y_test_new = pickle.load(filehandler)
-        return Y_train_new, Y_test_new
+        teacher_train_logits = pickle.load(filehandler)
+        teacher_test_logits = pickle.load(filehandler)
+        return teacher_train_logits, teacher_test_logits
     else:
         print("logits do not exist for netSize: %s" % str(netSize))
         return None, None
 
-def save_pretrained_teacher_logits(netSize, Y_train_new, Y_test_new, dataset, trainOrder):
-    target_file = str(dataset) + "_" + str(netSize) + "_" + str(trainOrder) + "_soft_targets.pkl"
+def save_pretrained_teacher_logits(logits_dir, netSize, alpha, teacher_train_logits, teacher_test_logits, dataset, trainOrder):
+    if netSize == cfg.max_net_size:
+        target_file = str(dataset) + "_" + str(netSize) + ".pkl"
+    else:
+        target_file = str(dataset) + "_" + str(netSize) + "_" + str(alpha) + "_" + str(trainOrder) + ".pkl"
     target_file = target_file.replace(" ", "")
-    logitFileName = os.path.join(cfg.soft_targets_dir, target_file)
+    logitFileName = os.path.join(logits_dir, target_file)
     filehandler = open(logitFileName, 'wb')
-    pickle.dump(Y_train_new, filehandler)
-    pickle.dump(Y_test_new, filehandler)
+    pickle.dump(teacher_train_logits, filehandler)
+    pickle.dump(teacher_test_logits, filehandler)
+    filehandler.close()
     print("saving pretrained teacher logits - size: %s, dataset: %s" % (netSize, dataset))
     print(logitFileName)
     print(os.path.isfile(logitFileName))
 
-def run(logger, options, session_log_file):
+def get_optimizer(type):
+    if type is "adam":
+        optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    elif type is "adadelta":
+        optimizer = adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0)
+    elif type is "sgd":
+        optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+    return optimizer
+
+def saved_model(logger, dataset, net_size, alpha, val_score, order, model, model_dir):
+    if net_size == cfg.max_net_size:
+        target_file_suffix = str(dataset) + "_" + str(net_size) + "_" + str(val_score[1])
+    else:
+        target_file_suffix = str(net_size) + "_" + str(alpha) + "_" + str(order) + "_" + str(val_score[1])
+    target_file_suffix = target_file_suffix.replace(" ", "")
+    target_file = target_file_suffix + ".h5"
+    modelWeightFile = os.path.join(model_dir, target_file)
+    model.save_weights(modelWeightFile)
+    logger.info("Saved trained model to: "+modelWeightFile)
+
+
+def run(logger, options, session_log_file, logits_dir, models_dir):
     logger.info(cfg.student_train_spacer + "GENERIC MULTISTAGE" + cfg.student_train_spacer)
 
     with open(session_log_file, "w") as f:
@@ -495,6 +141,55 @@ def run(logger, options, session_log_file):
 
     # loading training data
     X_train, Y_train, X_test, Y_test = LoadDataset.load_dataset_by_name(logger, cfg.dataset)
+    # mean subtraction regularization
+    if cfg.subtract_pixel_mean is True:
+        x_train_mean = np.mean(X_train, axis=0)
+        X_train -= x_train_mean
+        X_test -= x_train_mean
+    if cfg.use_fit_generator_student is True or cfg.use_fit_generator_teacher is True:
+        # data generator for on the fly training data manipulation
+        datagen = ImageDataGenerator(
+            # set input mean to 0 over the dataset
+            featurewise_center=False,
+            # set each sample mean to 0
+            samplewise_center=False,
+            # divide inputs by std of dataset
+            featurewise_std_normalization=False,
+            # divide each input by its std
+            samplewise_std_normalization=False,
+            # apply ZCA whitening
+            zca_whitening=False,
+            # epsilon for ZCA whitening
+            zca_epsilon=1e-06,
+            # randomly rotate images in the range (deg 0 to 180)
+            rotation_range=0,
+            # randomly shift images horizontally
+            width_shift_range=0.1,
+            # randomly shift images vertically
+            height_shift_range=0.1,
+            # set range for random shear
+            shear_range=0.,
+            # set range for random zoom
+            zoom_range=0.,
+            # set range for random channel shifts
+            channel_shift_range=0.,
+            # set mode for filling points outside the input boundaries
+            fill_mode='nearest',
+            # value used for fill_mode = "constant"
+            cval=0.,
+            # randomly flip images
+            horizontal_flip=True,
+            # randomly flip images
+            vertical_flip=False,
+            # set rescaling factor (applied before any other transformation)
+            rescale=None,
+            # set function that will be applied on each input
+            preprocessing_function=None,
+            # image data format, either "channels_first" or "channels_last"
+            data_format=None,
+            # fraction of images reserved for validation (strictly between 0 and 1)
+            validation_split=0.0)
+        datagen.fit(X_train)
     try:
         for order in order_combinations:
             for temp in temperatures:
@@ -519,10 +214,16 @@ def run(logger, options, session_log_file):
                         model = None
                         # perform KD if there is a previously trained model to work with
                         if previousModel is not None:
-                            model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                            model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                             logger.info("loading soft targets for student training...")
                             print("previous model to load logits for: %s" % str(previousModel))
-                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(previousModel, cfg.dataset, order)
+                            teacher_train_logits, teacher_test_logits = get_pretrained_teacher_logits(logits_dir, previousModel, alpha, cfg.dataset, order)
+                            Y_train_new, Y_test_new = TeacherUtils.convert_logits_to_soft_targets(temp, teacher_train_logits, teacher_test_logits, Y_train, Y_test)
+                            # # TODO remove next three lines
+                            # file_name = "/home/blakete/" + temp + "_" + previousModel + "_training_labels.npy"
+                            # filehandler = open(file_name, 'wb')
+                            # pickle.dump(Y_train_new, filehandler)
+                            # pickle.dump(Y_test_new, filehandler)
                             if Y_train_new is None or Y_test_new is None:
                                 logger.info("soft targets not loaded correctly!")
                             else:
@@ -532,9 +233,8 @@ def run(logger, options, session_log_file):
                                 # pickle.dump(Y_test_new, filehandler)
                                 model = HelperUtil.apply_knowledge_distillation_modifications(logger, model, temp)
                                 # model = multi_gpu_model(model, gpus=4)
-                                model.compile(
-                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
-                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
+                                optimizer = get_optimizer(cfg.student_optimizer)
+                                model.compile(optimizer=optimizer,
                                     loss=lambda y_true, y_pred: HelperUtil.knowledge_distillation_loss(logger, y_true, y_pred, alpha),
                                     metrics=[HelperUtil.acc])
                                 logger.info("training model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (order, net_size, temp, alpha))
@@ -543,26 +243,31 @@ def run(logger, options, session_log_file):
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
-                                model.fit(X_train, Y_train_new,
-                                          batch_size=cfg.student_batch_size,
-                                          epochs=epochs,
-                                          verbose=1,
-                                          callbacks=callbacks,
-                                          validation_data=(X_test, Y_test_new))
+                                if cfg.use_fit_generator_student is True:
+                                    model.fit(datagen.flow(X_train, Y_train_new, batch_size=cfg.student_batch_size),
+                                              validation_data=(X_test, Y_test_new),
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks)
+                                else:
+                                    model.fit(X_train, Y_train_new,
+                                              batch_size=cfg.student_batch_size,
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks,
+                                              validation_data=(X_test, Y_test_new))
                                 # model = HelperUtil.revert_knowledge_distillation_modifications(logger, model)
                                 del model
                                 # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train,
                                 #                                                                X_test, Y_test)
-                                model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                                 # model.summary()
                                 # load best model from checkpoint for evaluation
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(
-                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
-                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
-                                    loss=logloss,  # the same as the custom loss function
-                                    metrics=['accuracy'])
-                                model.summary()
+                                optimizer = get_optimizer(cfg.student_optimizer)
+                                model.compile(optimizer=optimizer,
+                                              loss=logloss,  # the same as the custom loss function
+                                              metrics=['accuracy'])
                                 train_score = model.evaluate(X_train, Y_train, verbose=0)
                                 val_score = model.evaluate(X_test, Y_test, verbose=0)
                                 result = create_result(net_size, temp, alpha, train_score, val_score)
@@ -570,11 +275,13 @@ def run(logger, options, session_log_file):
                                 experiment_result["experiment_results"].append(result)
                                 # # remove checkpoint of best model for new checkpoint
                                 # os.remove(cfg.checkpoint_path)
+                                # save the trained model the saved model directory
+                                saved_model(logger, cfg.dataset, net_size, alpha, val_score, order, model, models_dir)
                                 if order.index(net_size) < len(order)-1:
                                     # save soft targets
                                     logger.info("creating student training data...")
                                     Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train, Y_train, X_test, Y_test)
-                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
+                                    save_pretrained_teacher_logits(logits_dir, net_size, alpha, Y_train_new, Y_test_new, cfg.dataset, order)
                                     logger.info("done.")
                                 else:
                                     logger.info("skipping creation of student training data, we are @ target model...")
@@ -583,47 +290,54 @@ def run(logger, options, session_log_file):
                                 Y_test_new = None
                                 # set model to current net size to preserve in previousModel
                                 model = net_size
+
                         # if no previously trained model, train the network
                         else:
                             # load the already created soft targets
                             Y_train_new = None
                             Y_test_new = None
-                            Y_train_new, Y_test_new = get_pretrained_teacher_logits(net_size, cfg.dataset, order)
+                            val_score = None
+                            teacher_train_logits, teacher_test_logits = get_pretrained_teacher_logits(logits_dir, net_size, alpha, cfg.dataset, order)
                             # train network if not previously created logits
-                            if Y_train_new is None or Y_test_new is None:
+                            if teacher_train_logits is None or teacher_test_logits is None:
                                 if os.path.isfile(cfg.checkpoint_path):
                                     logger.info("removing previous checkpoint")
                                     os.remove(cfg.checkpoint_path) # remove previous checkpoint
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
-                                model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
-                                model.summary()
-                                model.compile(
-                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
-                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
-                                    loss=logloss,  # the same as the custom loss function
-                                    metrics=['accuracy'])
+                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                # model.summary()
+                                optimizer = get_optimizer(cfg.start_teacher_optimizer)
+                                model.compile(optimizer=optimizer,
+                                              loss=logloss,  # the same as the custom loss function
+                                              metrics=['accuracy'])
                                 # train network and save model with bet validation accuracy to cfg.checkpoint_path
                                 callbacks = [
                                         EarlyStopping(monitor='val_acc', patience=50, min_delta=0.00007),
                                         # ReduceLROnPlateau(monitor='val_acc', factor=0.1, patience=4, min_lr=0.0001),
                                         ModelCheckpoint(cfg.checkpoint_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
                                     ]
-                                model.fit(X_train, Y_train,
-                                          validation_data=(X_test, Y_test),
-                                          batch_size=cfg.student_batch_size,
-                                          epochs=epochs,
-                                          verbose=1,
-                                          callbacks=callbacks)
+                                if cfg.use_fit_generator_teacher is True:
+                                    model.fit(datagen.flow(X_train, Y_train, batch_size=cfg.student_batch_size),
+                                              validation_data=(X_test, Y_test),
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks)
+                                else:
+                                    model.fit(X_train, Y_train,
+                                              validation_data=(X_test, Y_test),
+                                              batch_size=cfg.student_batch_size,
+                                              epochs=epochs,
+                                              verbose=1,
+                                              callbacks=callbacks)
                                 # load best model from checkpoint for evaluation
                                 del model
-                                model = get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
                                 model.load_weights(cfg.checkpoint_path)
-                                model.compile(
-                                    # optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True),
-                                    optimizer=adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0),
-                                    loss=logloss,  # the same as the custom loss function
-                                    metrics=['accuracy'])
+                                optimizer = get_optimizer(cfg.start_teacher_optimizer)
+                                model.compile(optimizer=optimizer,
+                                              loss=logloss,  # the same as the custom loss function
+                                              metrics=['accuracy'])
                                 # evaluate network
                                 train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train,
                                                                                                Y_train,
@@ -632,13 +346,16 @@ def run(logger, options, session_log_file):
                                 result = create_result(net_size, None, None, train_score, val_score)
                                 logger.info(result)
                                 experiment_result["experiment_results"].append(result)
-                                logger.info("creating student training data...")
                                 if len(order) != 1:
-                                    Y_train_new, Y_test_new = TeacherUtils.createStudentTrainingData(model, temp, X_train,
+                                    logger.info("creating student training data...")
+                                    teacher_train_logits, teacher_test_logits = TeacherUtils.createStudentTrainingData(model, temp, X_train,
                                                                                                      Y_train, X_test,
                                                                                                      Y_test)
-                                    save_pretrained_teacher_logits(net_size, Y_train_new, Y_test_new, cfg.dataset, order)
-                                logger.info("done.")
+                                    save_pretrained_teacher_logits(logits_dir, net_size, alpha, teacher_train_logits, teacher_test_logits, cfg.dataset, order)
+                                    logger.info("done creating student training data.")
+                                # save the trained model the saved model directory
+                                saved_model(logger, cfg.dataset, net_size, alpha, val_score, order, model, models_dir)
+
                                 # # remove checkpoint of best model for new checkpoint
                                 # os.remove(cfg.checkpoint_path)
                             else:

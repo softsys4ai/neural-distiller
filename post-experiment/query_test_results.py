@@ -1,7 +1,7 @@
 import json
 
 data = []
-with open('/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Experiment-Logs/experiments_2019-10-23T13:25:50.732460.log') as f:
+with open('/Users/blakeedwards/Desktop/Repos/research/neural-distiller-2/run-experiment/Logs/experiments_2019-10-23T13:25:50.732460.log') as f:
     for _ in range(1):
         next(f)
     for line in f:
