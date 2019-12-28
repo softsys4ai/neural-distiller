@@ -79,7 +79,6 @@ optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 curr_student_model.compile(optimizer=optimizer,
                            loss="categorical_crossentropy",
                            metric=["acc"])
-curr_student_model.summary()
 
 for i in range(len(STUDENT_MODEL_WEIGHT_PATHS)):
     print("\n--------------------------Starting new AR step--------------------------")
