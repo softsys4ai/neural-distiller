@@ -14,7 +14,7 @@ from datetime import datetime
 import tensorflow as tf
 from keras import backend as K
 from keras.optimizers import SGD
-from keras.callbacks import EarlyStopping
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 # project imports
 from Data import LoadDataset
 from Utils import TeacherUtils
@@ -114,7 +114,8 @@ for i in range(1, num_models):
                           loss="categorical_crossentropy",
                           metrics=["accuracy"])
     callbacks = [
-        EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007)
+        EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007),
+        ModelCheckpoint("checkpoint-model.hf5", monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     ]
     teacher_model.fit(X_train, Y_train,
                       validation_data=(X_test, Y_test),
@@ -122,14 +123,13 @@ for i in range(1, num_models):
                       epochs=epochs,
                       verbose=1,
                       callbacks=callbacks)
-
+    teacher_model.load_weights("checkpoint-model.hf5")
     # evaluate and save model weights
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
     save_weights(models_dir, teacher_model, teacher_model_size, i, num_models,
                  format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
-
-
+    os.remove("checkpoint-model.hf5")  # remove previous checkpoint
 
 
 
