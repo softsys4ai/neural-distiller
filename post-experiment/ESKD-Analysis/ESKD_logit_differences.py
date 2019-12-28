@@ -31,7 +31,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-SAVE_FILENAME = "experiment3_logit_diffs.pkl"
+SAVE_FILENAME = "logit_diffs_"
 
 # load dataset
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
@@ -103,6 +103,8 @@ for i in range(len(STUDENT_MODEL_NAMES)):
     # load model weights for logit collection
     student_model_path = STUDENT_MODEL_PATHS[i]
     teacher_model_path = TEACHER_MODEL_PATHS[teacher_intervals.index(student_intervals[i])]
+    print(student_model_path)
+    print(teacher_model_path)
     student_model.load_weights(student_model_path)
     teacher_model.load_weights(teacher_model_path)
     # forward propogate and collect logits
@@ -117,9 +119,9 @@ for i in range(len(STUDENT_MODEL_NAMES)):
     curr_model_diffs.append(train_diff)
     curr_model_diffs.append(test_diff)
     logit_differences.append(curr_model_diffs)
-    print(f"[INFO] Dumping logit differences to: {SAVE_FILENAME}")
-    with open(SAVE_FILENAME, 'wb') as save_file:
-        pickle.dump(logit_differences, save_file)
 
+print(f"[INFO] Dumping logit differences to: {SAVE_FILENAME}")
+with open(SAVE_FILENAME, 'wb') as save_file:
+    pickle.dump(logit_differences, save_file)
 print("[INFO] Complete")
 
