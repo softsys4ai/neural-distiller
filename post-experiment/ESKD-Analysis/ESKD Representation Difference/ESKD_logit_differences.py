@@ -27,11 +27,13 @@ from keras.optimizers import SGD
 import os
 import re
 import glob
+import math
 import pickle
 import numpy as np
 import pandas as pd
 
-SAVE_FILENAME = "logit_diffs_"
+RESULTS_FILE = "experiment2_difference_results.csv"
+# SAVE_FILENAME = "logit_diffs_"
 
 # load dataset
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
@@ -81,6 +83,9 @@ def parse_info_from_teacher_names(teacher_names):
 
 student_sizes, student_intervals, student_temperatures, student_interval_max = parse_info_from_student_names(STUDENT_MODEL_NAMES)
 teacher_sizes, teacher_intervals, teacher_interval_max = parse_info_from_teacher_names(TEACHER_MODEL_NAMES)
+# create dataframe with the parsed data
+df = pd.DataFrame(list(zip(student_sizes, student_intervals, student_temperatures)),
+                     columns=['size', 'interval', 'temp'])
 
 # TODO check the parsed information to make sure that the student and teacher experiments are correct for each other
 
@@ -95,6 +100,10 @@ optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
                       metrics=["accuracy"])
+
+zeros = [0 for name in STUDENT_MODEL_NAMES]
+df["test_diff"] = zeros
+df["train_diff"] = zeros
 
 # iterate all student and teacher models, calculate the differences in their output distributions
 logit_differences = []
@@ -115,13 +124,17 @@ for i in range(len(STUDENT_MODEL_NAMES)):
     t_test_logits = teacher_model.predict(X_test)
     train_diff = np.subtract(t_train_logits, s_train_logits)
     test_diff = np.subtract(t_test_logits, s_test_logits)
-    curr_model_diffs = []
-    curr_model_diffs.append(train_diff)
-    curr_model_diffs.append(test_diff)
-    logit_differences.append(curr_model_diffs)
+    df.iloc[i, df.columns.get_loc("train_diff")] = math.sqrt(np.sum(np.square(train_diff)))
+    df.iloc[i, df.columns.get_loc("test_diff")] = math.sqrt(np.sum(np.square(test_diff)))
+    print(f"[INFO] Recording difference results to {RESULTS_FILE}...")
+    df.to_csv(RESULTS_FILE, sep=',')
+    # curr_model_diffs = []
+    # curr_model_diffs.append(train_diff)
+    # curr_model_diffs.append(test_diff)
+    # logit_differences.append(curr_model_diffs)
 
-print(f"[INFO] Dumping logit differences to: {SAVE_FILENAME}")
-with open(SAVE_FILENAME, 'wb') as save_file:
-    pickle.dump(logit_differences, save_file)
+# print(f"[INFO] Dumping logit differences to: {SAVE_FILENAME}")
+# with open(SAVE_FILENAME, 'wb') as save_file:
+#     pickle.dump(logit_differences, save_file)
 print("[INFO] Complete")
 
