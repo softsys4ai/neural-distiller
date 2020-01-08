@@ -42,13 +42,14 @@ alpha = 1.0  # TODO test different values for KL loss
 logits_dir = os.path.join(experiment_dir, "logits")
 model_size = 2
 student_epochs = 150
-logit_model_size = 10
+logit_model_size = 6
 epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
-total_epochs = 100
-arr_epochs = np.arange(5, total_epochs + epoch_interval, epoch_interval)
-min_temp = 0.25
+min_epochs = 1
+total_epochs = 150
+arr_epochs = np.arange(min_epochs, total_epochs + epoch_interval-1e-2, epoch_interval)
+min_temp = 1
 max_temp = 10
-temp_interval = 0.25
+temp_interval = 0.5
 arr_temps = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
 # write student weights to file
@@ -64,6 +65,9 @@ def knowledge_distillation_loss(y_true, y_pred, alpha=1.0):
     y_true, y_true_softs = y_true[:, :dataset_num_classes], y_true[:, dataset_num_classes:]
     y_pred, y_pred_softs = y_pred[:, :dataset_num_classes], y_pred[:, dataset_num_classes:]
     # loss = (1-alpha)*logloss(y_true, y_pred) + alpha*logloss(y_true_softs, y_pred_softs)
+    # original loss function that works for us
+    # loss = logloss(y_true, y_pred) + alpha * logloss(y_true_softs, y_pred_softs)
+    # testing this loss function, used by other works
     loss = logloss(y_true, y_pred) + alpha * logloss(y_true_softs, y_pred_softs)
     return loss
 
@@ -114,7 +118,7 @@ def normalizeStudentSoftTargets(Y_train_soft, Y_test_soft):
 
 
 def load_and_compile_student(X_train, model_size):
-    student_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, model_size, )
+    student_model = KnowledgeDistillationModels.get_model(dataset, dataset_num_classes, X_train, model_size, "resnet")
     return compile_student(student_model)
 
 

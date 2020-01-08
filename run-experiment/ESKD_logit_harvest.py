@@ -59,6 +59,7 @@ X_test = X_test[:128]
 Y_test = Y_test[:128]
 
 # ESKD experiment hyperparameters
+dataset_class_num = 100
 dataset = "cifar100"
 teacher_model_size = 6
 epoch_min = 0
@@ -84,7 +85,7 @@ os.mkdir(models_dir)
 
 
 # initialize and save starting network state
-teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, "resnet")
+teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, "resnet")
 optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
@@ -92,12 +93,12 @@ teacher_model.compile(optimizer=optimizer,
 train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
 val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
 prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0, epoch_max,
-                               format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
+                               format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
 train_logits, test_logits = TeacherUtils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
 save_logits(logits_dir, teacher_model_size, 0, epoch_max, train_logits, test_logits)
 
 # load model for current iteration
-teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, "resnet")
+teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, "resnet")
 # compile network for training
 optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 teacher_model.compile(optimizer=optimizer,
@@ -128,7 +129,7 @@ for i in range(1, len(epoch_intervals)):
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
     prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, curr_epochs, epoch_max,
-                                   format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
+                                   format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
     # create and save logits from model
     train_logits, test_logits = TeacherUtils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
     save_logits(logits_dir, teacher_model_size, curr_epochs, epoch_max, train_logits, test_logits)
