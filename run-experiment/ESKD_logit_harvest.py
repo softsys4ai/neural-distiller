@@ -52,18 +52,18 @@ X_test -= x_train_mean
 min = np.min(X_train)
 max = np.max(X_train)
 
-# # use when debugging
-# X_train = X_train[:128]
-# Y_train = Y_train[:128]
-# X_test = X_test[:128]
-# Y_test = Y_test[:128]
+# use when debugging
+X_train = X_train[:128]
+Y_train = Y_train[:128]
+X_test = X_test[:128]
+Y_test = Y_test[:128]
 
 # ESKD experiment hyperparameters
 dataset = "cifar100"
 teacher_model_size = 6
 epoch_min = 0
-epoch_max = 200
-interval_size = 10
+epoch_max = 150
+interval_size = 1
 epoch_intervals = np.arange(epoch_min, epoch_max+interval_size, interval_size)
 
 # experiment directory structure
@@ -96,6 +96,13 @@ prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0,
 train_logits, test_logits = TeacherUtils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
 save_logits(logits_dir, teacher_model_size, 0, epoch_max, train_logits, test_logits)
 
+# load model for current iteration
+teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, "resnet")
+# compile network for training
+optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+teacher_model.compile(optimizer=optimizer,
+                      loss="categorical_crossentropy",
+                      metrics=["accuracy"])
 
 # intermittent training and harvesting of logits for ESKD experiment
 for i in range(1, len(epoch_intervals)):
@@ -104,17 +111,12 @@ for i in range(1, len(epoch_intervals)):
     curr_epochs = epoch_intervals[i]
     print(f"Training size {teacher_model_size} teacher network {curr_epochs}|{epoch_max}")
 
-    # clear current session to free memory
-    tf.keras.backend.clear_session()
-    # load model for current iteration
-    teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, "resnet")
+    # # clear current session to free memory
+    # tf.keras.backend.clear_session()
+
     teacher_model.load_weights(prev_model_path)
 
-    # compile and train network
-    optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
-    teacher_model.compile(optimizer=optimizer,
-                          loss="categorical_crossentropy",
-                          metrics=["accuracy"])
+    # train network
     teacher_model.fit(X_train, Y_train,
                       validation_data=(X_test, Y_test),
                       batch_size=128,
@@ -130,7 +132,8 @@ for i in range(1, len(epoch_intervals)):
     # create and save logits from model
     train_logits, test_logits = TeacherUtils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
     save_logits(logits_dir, teacher_model_size, curr_epochs, epoch_max, train_logits, test_logits)
+
     # delete the model for the next training iteration
-    del teacher_model
-    del optimizer
+    # del teacher_model
+    # del optimizer
 
