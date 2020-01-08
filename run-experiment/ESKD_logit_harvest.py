@@ -59,7 +59,6 @@ max = np.max(X_train)
 # Y_test = Y_test[:128]
 
 # ESKD experiment hyperparameters
-model_type = "resnet"
 dataset = "cifar100"
 teacher_model_size = 6
 epoch_min = 0
@@ -85,7 +84,7 @@ os.mkdir(models_dir)
 
 
 # initialize and save starting network state
-teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, model_type)
+teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, "resnet")
 optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
@@ -108,7 +107,7 @@ for i in range(1, len(epoch_intervals)):
     # clear current session to free memory
     tf.keras.backend.clear_session()
     # load model for current iteration
-    teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, model_type)
+    teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, "resnet")
     teacher_model.load_weights(prev_model_path)
 
     # compile and train network
@@ -134,23 +133,4 @@ for i in range(1, len(epoch_intervals)):
     # delete the model for the next training iteration
     del teacher_model
     del optimizer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
