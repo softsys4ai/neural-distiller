@@ -5,11 +5,11 @@ import numpy as np
 import os
 import re
 
-PATH_TO_STUDENT_MODELS = "results/experiment-1/ESKD_Knowledge_Distillation_cifar100_2_16-12-19_23:17:30/models"
+PATH_TO_STUDENT_MODELS = "results/experiment-3/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
 PATH_TO_FIGURES = "results/figures"
 
 
-def group_results_by_interval_to_vacc(min_epoch=0, max_logit_epochs=200, max_epoch=200, epoch_interval=10) -> list:
+def group_results_by_interval_to_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=10) -> list:
     """
     Parse results for validation accuracy and interval and group by interval
     :param min_epoch: Minimum epoch value for results
@@ -48,10 +48,10 @@ def plot_student_models():
     plot_epoch_against_temp_against_vacc()
 
 
-def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
+def plot_epoch_against_vacc(min_epoch=0, max_logit_epochs=200, max_epoch=200, epoch_interval=10):
     # Grabbing file names from experiment directory and grouping by iteration interval
-    grouped_results = group_results_by_interval_to_vacc(epoch_interval=epoch_interval)
-    epoch_intervals = np.arange(min_epoch, max_epoch + epoch_interval, epoch_interval)
+    grouped_results = group_results_by_interval_to_vacc(min_epoch, max_logit_epochs, max_epoch, epoch_interval)
+    epoch_intervals = np.arange(min_epoch, max_logit_epochs + epoch_interval, epoch_interval)
 
     # Calculating max, average, and minimum values for each interval
     vacc_max = np.zeros(len(grouped_results))
@@ -73,16 +73,22 @@ def plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10):
     plt.plot(epoch_intervals, vacc_avg, label="Mean test Accuracy", color="k")
     # Plotting min test accuracy against interval
     plt.plot(epoch_intervals, vacc_min, label="Min test Accuracy", color="b")
-    plt.hlines(0.4109, 0, 200, colors="r", linestyles="dashed", label="Baseline Max test Accuracy")
-    plt.hlines(0.403121739, 0, 200, colors='k', linestyles="dashed", label="Baseline Mean test Accuracy")
+
+    # # ADADELTA optimizer, experiment2 baseline
+    # plt.hlines(0.4109, 0, 200, colors="r", linestyles="dashed", label="Baseline Max test Accuracy")
+    # plt.hlines(0.403121739, 0, 200, colors='k', linestyles="dashed", label="Baseline Mean test Accuracy")
+    # SGD optimizer, experiment2 baseline
+    plt.hlines(0.406, 0, 200, colors="r", linestyles="dashed", label="Baseline Max test Accuracy")
+    plt.hlines(0.3759, 0, 200, colors='k', linestyles="dashed", label="Baseline Mean test Accuracy")
+    plt.hlines(0.362, 0, 200, colors='b', linestyles="dashed", label="Baseline Min test Accuracy")
 
     plt.xlabel("Epoch Interval")
     plt.xticks(epoch_intervals)
     plt.ylabel("Test Accuracy")
-    plt.ylim((0.39, 0.46))
-    plt.xlim((0, 100))
+    plt.ylim((0.355, 0.46))
+    plt.xlim((5, 100))
     plt.legend(loc="lower right")
-    plt.legend(bbox_to_anchor=(1.0, 1.0))
+    # plt.legend(bbox_to_anchor=(1.0, 1.0))
     save_path = os.path.join(PATH_TO_FIGURES, "max_mean_min.png")
     plt.savefig(save_path)
     plt.show()
@@ -187,6 +193,6 @@ def plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_
     plt.show()
 
 if __name__ == "__main__":
-    plot_epoch_against_vacc(min_epoch=0, max_epoch=200, epoch_interval=10)
-    plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=200, max_epoch=200, epoch_interval=10,
-                                         min_temp=0, max_temp=20, temp_interval=2)
+    plot_epoch_against_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=5)
+    plot_epoch_against_temp_against_vacc(min_epoch=0, max_logit_epochs=100, max_epoch=200, epoch_interval=5,
+                                         min_temp=0, max_temp=10, temp_interval=1)

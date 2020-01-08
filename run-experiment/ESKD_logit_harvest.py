@@ -6,6 +6,13 @@
 # train the size 10 teacher in 5 epoch intervals
 # harvest logits and save the model weights at each interval
 
+# STEP 2
+# Distill knowledge to student model for each set of logits
+
+# Step 3
+# Evaluate student models for robustness and accuracy
+
+
 # external dependencies
 import os
 import pickle
@@ -48,18 +55,16 @@ max = np.max(X_train)
 # # use when debugging
 # X_train = X_train[:128]
 # Y_train = Y_train[:128]
-
-# Set explicit starting model path
-EXPLICIT_START_WEIGHT_PATH = "/home/blakete/model_10_0|200_0.01_0.008.h5"
-USE_EXPLICIT_START = True
+# X_test = X_test[:128]
+# Y_test = Y_test[:128]
 
 # ESKD experiment hyperparameters
-learning_rate = 0.01
+model_type = "resnet"
 dataset = "cifar100"
-teacher_model_size = 2
+teacher_model_size = 6
 epoch_min = 0
-epoch_max = 100
-interval_size = 1
+epoch_max = 200
+interval_size = 10
 epoch_intervals = np.arange(epoch_min, epoch_max+interval_size, interval_size)
 
 # experiment directory structure
@@ -71,7 +76,7 @@ epoch_intervals = np.arange(epoch_min, epoch_max+interval_size, interval_size)
 log_dir = os.getcwd()
 now = datetime.now()
 now_datetime = now.strftime("%d-%m-%y_%H:%M:%S")
-log_dir = os.path.join(log_dir, "ESKD_" + dataset + f"_{teacher_model_size}_" + now_datetime)
+log_dir = os.path.join(log_dir, "ESKD_Logit_Harvesting_" + dataset + f"_{teacher_model_size}_" + now_datetime)
 os.mkdir(log_dir)
 logits_dir = os.path.join(log_dir, "logits")
 os.mkdir(logits_dir)
@@ -80,17 +85,15 @@ os.mkdir(models_dir)
 
 
 # initialize and save starting network state
-teacher_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, teacher_model_size)
+teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, model_type)
 optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
                       metrics=["accuracy"])
-if (USE_EXPLICIT_START):
-    teacher_model.load_weights(EXPLICIT_START_WEIGHT_PATH)
 train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
 val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
 prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0, epoch_max,
-                               format(val_acc[1], '.2f'), format(train_acc[1], '.3f'))
+                               format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
 train_logits, test_logits = TeacherUtils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
 save_logits(logits_dir, teacher_model_size, 0, epoch_max, train_logits, test_logits)
 
@@ -105,11 +108,11 @@ for i in range(1, len(epoch_intervals)):
     # clear current session to free memory
     tf.keras.backend.clear_session()
     # load model for current iteration
-    teacher_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, teacher_model_size)
+    teacher_model = KnowledgeDistillationModels.get_model("cifar100", 100, X_train, teacher_model_size, model_type)
     teacher_model.load_weights(prev_model_path)
 
     # compile and train network
-    optimizer = SGD(lr=learning_rate, momentum=0.9, nesterov=True)
+    optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
     teacher_model.compile(optimizer=optimizer,
                           loss="categorical_crossentropy",
                           metrics=["accuracy"])

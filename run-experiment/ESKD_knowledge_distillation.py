@@ -114,7 +114,7 @@ def normalizeStudentSoftTargets(Y_train_soft, Y_test_soft):
 
 
 def load_and_compile_student(X_train, model_size):
-    student_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, model_size)
+    student_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, model_size, )
     return compile_student(student_model)
 
 

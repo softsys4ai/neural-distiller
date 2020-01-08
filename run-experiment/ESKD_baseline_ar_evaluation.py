@@ -74,7 +74,7 @@ for eps in EPS_VALS:
     df[("eps_"+str(format(eps, '.3f')))] = zeros
 
 print("[INFO] Loading student model...")
-curr_student_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, sizes[0])
+curr_student_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, sizes[0], )
 optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 curr_student_model.compile(optimizer=optimizer,
                            loss="categorical_crossentropy",

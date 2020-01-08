@@ -214,7 +214,8 @@ def run(logger, options, session_log_file, logits_dir, models_dir):
                         model = None
                         # perform KD if there is a previously trained model to work with
                         if previousModel is not None:
-                            model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                            model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train,
+                                                                          net_size, )
                             logger.info("loading soft targets for student training...")
                             print("previous model to load logits for: %s" % str(previousModel))
                             teacher_train_logits, teacher_test_logits = get_pretrained_teacher_logits(logits_dir, previousModel, alpha, cfg.dataset, order)
@@ -260,7 +261,8 @@ def run(logger, options, session_log_file, logits_dir, models_dir):
                                 del model
                                 # train_score, val_score = HelperUtil.calculate_unweighted_score(logger, model, X_train, Y_train,
                                 #                                                                X_test, Y_test)
-                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes,
+                                                                              X_train, net_size, )
                                 # model.summary()
                                 # load best model from checkpoint for evaluation
                                 model.load_weights(cfg.checkpoint_path)
@@ -305,7 +307,8 @@ def run(logger, options, session_log_file, logits_dir, models_dir):
                                     os.remove(cfg.checkpoint_path) # remove previous checkpoint
                                 logger.info("training teacher model...\norder:%s\nsize:%d\ntemp:%d\nalpha:%f" % (
                                 order, net_size, temp, alpha))
-                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes,
+                                                                              X_train, net_size, )
                                 # model.summary()
                                 optimizer = get_optimizer(cfg.start_teacher_optimizer)
                                 model.compile(optimizer=optimizer,
@@ -332,7 +335,8 @@ def run(logger, options, session_log_file, logits_dir, models_dir):
                                               callbacks=callbacks)
                                 # load best model from checkpoint for evaluation
                                 del model
-                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, net_size)
+                                model = KnowledgeDistillationModels.get_model(cfg.dataset, cfg.dataset_num_classes,
+                                                                              X_train, net_size, )
                                 model.load_weights(cfg.checkpoint_path)
                                 optimizer = get_optimizer(cfg.start_teacher_optimizer)
                                 model.compile(optimizer=optimizer,

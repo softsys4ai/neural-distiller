@@ -90,8 +90,8 @@ df = pd.DataFrame(list(zip(student_sizes, student_intervals, student_temperature
 # TODO check the parsed information to make sure that the student and teacher experiments are correct for each other
 
 # loading and compiling student and teacher models for test
-student_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, student_sizes[0])
-teacher_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, teacher_sizes[0])
+student_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, student_sizes[0], )
+teacher_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, teacher_sizes[0], )
 optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 student_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",

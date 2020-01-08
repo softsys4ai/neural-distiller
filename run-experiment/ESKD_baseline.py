@@ -85,7 +85,7 @@ os.mkdir(models_dir)
 
 # initialize and save starting network state
 if (USE_SAME_STARTING_WEIGHTS):
-    teacher_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, teacher_model_size)
+    teacher_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, teacher_model_size, )
     optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
     teacher_model.compile(optimizer=optimizer,
                           loss="categorical_crossentropy",
@@ -98,7 +98,7 @@ if (USE_SAME_STARTING_WEIGHTS):
                                    format(val_acc[1], '.2f'), format(train_acc[1], '.3f'))
 
 # intermittent training and harvesting of logits for ESKD experiment
-teacher_model = KnowledgeDistillationModels.get_model_cifar100(100, X_train, teacher_model_size)
+teacher_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, teacher_model_size, )
 for i in range(1, num_models):
 
     # setup current iteration params and load model

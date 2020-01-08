@@ -6,7 +6,7 @@ sns.set()
 
 RESULTS_FILE = "experiment2_difference_results.csv"
 EXP = "experiment2"
-CMAP = "gnuplot2"
+CMAP = "binary"
 df_plot = pd.read_csv(RESULTS_FILE)
 df = df_plot[df_plot.interval != 0]
 df_min = df['test_diff'].min()
