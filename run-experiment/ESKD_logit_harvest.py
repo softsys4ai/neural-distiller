@@ -20,6 +20,7 @@ import numpy as np
 from datetime import datetime
 import tensorflow as tf
 from tensorflow.python.keras.optimizers import SGD
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 # project imports
 from Data import LoadDataset
 from Utils import TeacherUtils
@@ -53,12 +54,13 @@ min = np.min(X_train)
 max = np.max(X_train)
 
 # use when debugging
-X_train = X_train[:128]
-Y_train = Y_train[:128]
-X_test = X_test[:128]
-Y_test = Y_test[:128]
+# X_train = X_train[:128]
+# Y_train = Y_train[:128]
+# X_test = X_test[:128]
+# Y_test = Y_test[:128]
 
 # ESKD experiment hyperparameters
+use_datagram = True
 dataset_class_num = 100
 dataset = "cifar100"
 teacher_model_size = 6
@@ -83,6 +85,49 @@ os.mkdir(logits_dir)
 models_dir = os.path.join(log_dir, "models")
 os.mkdir(models_dir)
 
+if (use_datagram):
+    datagen = ImageDataGenerator(
+        # set input mean to 0 over the dataset
+        featurewise_center=False,
+        # set each sample mean to 0
+        samplewise_center=False,
+        # divide inputs by std of dataset
+        featurewise_std_normalization=False,
+        # divide each input by its std
+        samplewise_std_normalization=False,
+        # apply ZCA whitening
+        zca_whitening=False,
+        # epsilon for ZCA whitening
+        zca_epsilon=1e-06,
+        # randomly rotate images in the range (deg 0 to 180)
+        rotation_range=0,
+        # randomly shift images horizontally
+        width_shift_range=0.1,
+        # randomly shift images vertically
+        height_shift_range=0.1,
+        # set range for random shear
+        shear_range=0.,
+        # set range for random zoom
+        zoom_range=0.,
+        # set range for random channel shifts
+        channel_shift_range=0.,
+        # set mode for filling points outside the input boundaries
+        fill_mode='nearest',
+        # value used for fill_mode = "constant"
+        cval=0.,
+        # randomly flip images
+        horizontal_flip=True,
+        # randomly flip images
+        vertical_flip=False,
+        # set rescaling factor (applied before any other transformation)
+        rescale=None,
+        # set function that will be applied on each input
+        preprocessing_function=None,
+        # image data format, either "channels_first" or "channels_last"
+        data_format=None,
+        # fraction of images reserved for validation (strictly between 0 and 1)
+        validation_split=0.0)
+    datagen.fit(X_train)
 
 # initialize and save starting network state
 teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, "resnet")
@@ -118,12 +163,19 @@ for i in range(1, len(epoch_intervals)):
     teacher_model.load_weights(prev_model_path)
 
     # train network
-    teacher_model.fit(X_train, Y_train,
-                      validation_data=(X_test, Y_test),
-                      batch_size=128,
-                      epochs=interval_size,
-                      verbose=1,
-                      callbacks=None)
+    if (use_datagram):
+        teacher_model.fit(datagen.flow(X_train, Y_train, batch_size=128),
+                          validation_data=(X_test, Y_test),
+                          epochs=interval_size,
+                          verbose=1,
+                          callbacks=None)
+    else:
+        teacher_model.fit(X_train, Y_train,
+                          validation_data=(X_test, Y_test),
+                          batch_size=128,
+                          epochs=interval_size,
+                          verbose=1,
+                          callbacks=None)
 
     # evaluate and save model weights
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
