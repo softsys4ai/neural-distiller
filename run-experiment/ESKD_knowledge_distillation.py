@@ -35,13 +35,14 @@ from Utils import HelperUtil
 
 
 # setting up parameters for loading distillation logits
-experiment_dir = "/home/blakete/neural-distiller/run-experiment/ESKD_cifar100_10_20-12-19_17:44:50"
+experiment_dir = "/home/blakete/experiment-results/ESKD/ESKD_Logit_Harvesting_cifar100_6_13-01-20_12:55:29"
 dataset = "cifar100"
+model_type = "resnet"
 dataset_num_classes = 100
 alpha = 1.0  # TODO test different values for KL loss
 logits_dir = os.path.join(experiment_dir, "logits")
 model_size = 2
-student_epochs = 150
+student_epochs = 200
 logit_model_size = 6
 epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
 min_epochs = 1
@@ -118,7 +119,7 @@ def normalizeStudentSoftTargets(Y_train_soft, Y_test_soft):
 
 
 def load_and_compile_student(X_train, model_size):
-    student_model = KnowledgeDistillationModels.get_model(dataset, dataset_num_classes, X_train, model_size, "resnet")
+    student_model = KnowledgeDistillationModels.get_model(dataset, dataset_num_classes, X_train, model_size, model_type)
     return compile_student(student_model)
 
 
@@ -138,7 +139,7 @@ def compile_student(student_model, KD=False, alpha=1.0):
 
 # method to load logits from the specified experiment directory
 def load_logits(logits_dir, model_size, curr_epochs, total_epochs):
-    logits_filename = os.path.join(logits_dir, f"logits_{model_size}_{curr_epochs}|{total_epochs}.pkl")
+    logits_filename = os.path.join(logits_dir, f"logits_{model_size}_{int(curr_epochs)}|{total_epochs}.pkl")
     with open(logits_filename, "rb") as file:
         teacher_train_logits = pickle.load(file)
         teacher_test_logits = pickle.load(file)
@@ -156,18 +157,14 @@ os.mkdir(models_dir)
 
 # load and shift data by train mean
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
-x_train_mean = np.mean(X_train, axis=0)
-X_train -= x_train_mean
-X_test -= x_train_mean
-min = np.min(X_train)
-max = np.max(X_train)
+X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
 
 # load and save model starting weights to be used for each experiment
 student_model = load_and_compile_student(X_train, model_size)
 train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
 val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
 starting_model_path = save_weights(models_dir, student_model, model_size, 0, total_epochs, 0,
-                               format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
+                               format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
 
 # iterate logits stored for each interval and distill a student model with them
 for i in range(len(arr_epochs)):
