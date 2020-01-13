@@ -94,7 +94,7 @@ if (use_datagram):
         # divide each input by its std
         samplewise_std_normalization=False,
         # apply ZCA whitening
-        zca_whitening=True,
+        zca_whitening=False,
         # epsilon for ZCA whitening
         zca_epsilon=1e-06,
         # randomly rotate images in the range (deg 0 to 180)
@@ -106,7 +106,7 @@ if (use_datagram):
         # set range for random shear
         shear_range=0.,
         # set range for random zoom
-        zoom_range=0.1,
+        zoom_range=0.,
         # set range for random channel shifts
         channel_shift_range=0.,
         # set mode for filling points outside the input boundaries
