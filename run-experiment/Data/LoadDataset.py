@@ -47,6 +47,20 @@ def load_cifar_100(logger):
     X_test /= 255
     return X_train, Y_train, X_test, Y_test
 
+def z_standardization(X_train, X_test):
+    means, std_devs = compute_mean_and_std_cifar100(X_train)
+    X_train = (X_train-means)/std_devs
+    X_test = (X_test - means) / std_devs
+    return X_train, X_test
+
+def compute_mean_and_std_cifar100(rgb_channel_dataset):
+    red_channel = np.dstack([rgb_channel_dataset[i, :, :, 0] for i in range(len(rgb_channel_dataset))])
+    green_channel = np.dstack([rgb_channel_dataset[i, :, :, 1] for i in range(len(rgb_channel_dataset))])
+    blue_channel = np.dstack([rgb_channel_dataset[i, :, :, 2] for i in range(len(rgb_channel_dataset))])
+    means = np.mean(red_channel), np.mean(green_channel), np.mean(blue_channel)
+    std_devs = np.std(red_channel), np.std(green_channel), np.std(blue_channel)
+    return means, std_devs
+
 def load_preprocessed_cifar100(logger):
     nb_classes = 100
     (X_train, y_train), (X_test, y_test) = cifar100.load_data()

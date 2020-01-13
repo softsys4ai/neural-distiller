@@ -47,13 +47,10 @@ def save_logits(logits_dir, model_size, curr_epochs, total_epochs, train_logits,
 
 
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
-x_train_mean = np.mean(X_train, axis=0)
-X_train -= x_train_mean
-X_test -= x_train_mean
-min = np.min(X_train)
-max = np.max(X_train)
+X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
 
-# use when debugging
+
+# # use when debugging
 # X_train = X_train[:128]
 # Y_train = Y_train[:128]
 # X_test = X_test[:128]
@@ -63,7 +60,8 @@ max = np.max(X_train)
 use_datagram = True
 dataset_class_num = 100
 dataset = "cifar100"
-teacher_model_size = 6
+model_type = "resnet"
+teacher_model_size = 2
 epoch_min = 0
 epoch_max = 150
 interval_size = 1
@@ -96,7 +94,7 @@ if (use_datagram):
         # divide each input by its std
         samplewise_std_normalization=False,
         # apply ZCA whitening
-        zca_whitening=False,
+        zca_whitening=True,
         # epsilon for ZCA whitening
         zca_epsilon=1e-06,
         # randomly rotate images in the range (deg 0 to 180)
@@ -108,7 +106,7 @@ if (use_datagram):
         # set range for random shear
         shear_range=0.,
         # set range for random zoom
-        zoom_range=0.,
+        zoom_range=0.1,
         # set range for random channel shifts
         channel_shift_range=0.,
         # set mode for filling points outside the input boundaries
@@ -130,7 +128,7 @@ if (use_datagram):
     datagen.fit(X_train)
 
 # initialize and save starting network state
-teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, "resnet")
+teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, model_type)
 optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
 teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
@@ -143,9 +141,11 @@ train_logits, test_logits = TeacherUtils.createStudentTrainingData(teacher_model
 save_logits(logits_dir, teacher_model_size, 0, epoch_max, train_logits, test_logits)
 
 # load model for current iteration
-teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, "resnet")
+teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, model_type)
 # compile network for training
-optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+learning_rates = [0.1, 0.2, 0.004, 0.0008]
+learning_rate_epochs = [0, 60, 120, 160]
+optimizer = SGD(lr=learning_rates[0], momentum=0.9, nesterov=True, decay=5e-4)
 teacher_model.compile(optimizer=optimizer,
                       loss="categorical_crossentropy",
                       metrics=["accuracy"])
@@ -158,7 +158,20 @@ for i in range(1, len(epoch_intervals)):
     print(f"Training size {teacher_model_size} teacher network {curr_epochs}|{epoch_max}")
 
     # # clear current session to free memory
-    # tf.keras.backend.clear_session()
+    try:
+        idx = learning_rate_epochs.index(curr_epochs)
+        print("[INFO] Updating learning rate!")
+        tf.keras.backend.clear_session()
+        print("[INFO] Re-building network!")
+        teacher_model = KnowledgeDistillationModels.get_model(dataset, dataset_class_num, X_train, teacher_model_size, model_type)
+        optimizer = SGD(lr=learning_rates[idx], momentum=0.9, nesterov=True, decay=5e-4)
+        teacher_model.compile(optimizer=optimizer,
+                              loss="categorical_crossentropy",
+                              metrics=["accuracy"])
+        print("[INFO] done!")
+    except:
+        print("[INFO] lr unchanged")
+
 
     teacher_model.load_weights(prev_model_path)
 

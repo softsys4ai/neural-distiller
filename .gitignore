@@ -12,3 +12,6 @@ __pycache__
 run-experiment/Logs
 
 *.pyc
+
+~$*
+*.xlsx
