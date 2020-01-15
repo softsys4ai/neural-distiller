@@ -12,9 +12,9 @@ import pickle
 import numpy as np
 from datetime import datetime
 import tensorflow as tf
-from keras import backend as K
-from keras.optimizers import SGD
-from keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.python.keras import backend as K
+from tensorflow.python.keras.optimizers import SGD
+from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
 # project imports
 from Data import LoadDataset
 from Utils import TeacherUtils
@@ -46,12 +46,9 @@ def reset_model_weights(model):
             layer.kernel.initializer.run(session=session)
 
 
+# load and normalize
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
-x_train_mean = np.mean(X_train, axis=0)
-X_train -= x_train_mean
-X_test -= x_train_mean
-min = np.min(X_train)
-max = np.max(X_train)
+X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
 
 # # use when debugging
 # X_train = X_train[:128]
@@ -63,8 +60,9 @@ USE_EXPLICIT_START = False
 USE_SAME_STARTING_WEIGHTS = False
 
 # ESKD experiment hyperparameters
-num_models = 100
-epochs = 150
+num_models = 2
+epochs = 200
+model_type = "resnet"
 learning_rate = 0.01
 dataset = "cifar100"
 teacher_model_size = 2
@@ -85,7 +83,7 @@ os.mkdir(models_dir)
 
 # initialize and save starting network state
 if (USE_SAME_STARTING_WEIGHTS):
-    teacher_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, teacher_model_size, )
+    teacher_model = KnowledgeDistillationModels.get_model(dataset, 100, X_train, teacher_model_size, model_type)
     optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
     teacher_model.compile(optimizer=optimizer,
                           loss="categorical_crossentropy",
@@ -95,10 +93,10 @@ if (USE_SAME_STARTING_WEIGHTS):
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
     prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0, num_models,
-                                   format(val_acc[1], '.2f'), format(train_acc[1], '.3f'))
+                                   format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
 
 # intermittent training and harvesting of logits for ESKD experiment
-teacher_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, teacher_model_size, )
+teacher_model = KnowledgeDistillationModels.get_model(dataset, 100, X_train, teacher_model_size, model_type)
 for i in range(1, num_models):
 
     # setup current iteration params and load model
@@ -129,7 +127,7 @@ for i in range(1, num_models):
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
     save_weights(models_dir, teacher_model, teacher_model_size, i, num_models,
-                 format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
+                 format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
     os.remove("checkpoint-model.hf5")  # remove previous checkpoint
 
 

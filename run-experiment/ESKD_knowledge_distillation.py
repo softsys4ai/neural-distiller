@@ -46,11 +46,11 @@ student_epochs = 200
 logit_model_size = 6
 epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
 min_epochs = 1
-total_epochs = 150
+total_epochs = 200
 arr_epochs = np.arange(min_epochs, total_epochs + epoch_interval-1e-2, epoch_interval)
 min_temp = 1
 max_temp = 10
-temp_interval = 0.5
+temp_interval = 1
 arr_temps = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
 # write student weights to file
@@ -155,7 +155,7 @@ os.mkdir(log_dir)
 models_dir = os.path.join(log_dir, "models")
 os.mkdir(models_dir)
 
-# load and shift data by train mean
+# load and normalize
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
 X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
 
