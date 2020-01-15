@@ -8,6 +8,8 @@
 
 # external dependencies
 import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
+os.environ["CUDA_VISIBLE_DEVICES"]="1";
 import pickle
 import numpy as np
 from datetime import datetime
