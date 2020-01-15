@@ -14,8 +14,7 @@
 # external imports
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
-# The GPU id to use, usually either "0" or "1";
-os.environ["CUDA_VISIBLE_DEVICES"]="0";
+os.environ["CUDA_VISIBLE_DEVICES"]="3";
 
 import pickle
 import numpy as np
@@ -35,8 +34,7 @@ from Utils import HelperUtil
 
 
 # setting up parameters for loading distillation logits
-# experiment_dir = "/home/blakete/experiment-results/ESKD/ESKD_Logit_Harvesting_cifar100_6_13-01-20_12:55:29"
-experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 3/ESKD_cifar100_10_16-12-19_11:19:41"
+experiment_dir = "/home/blakete/experiment-results/ESKD/ESKD_cifar100_10_20-12-19_17:44:50"
 dataset = "cifar100"
 model_type = "resnet"
 dataset_num_classes = 100
@@ -47,10 +45,10 @@ student_epochs = 200
 logit_model_size = 10
 epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
 min_epochs = 20
-total_epochs = 200
+total_epochs = 100
 arr_epochs = np.arange(min_epochs, total_epochs + epoch_interval-1e-2, epoch_interval)
 min_temp = 1
-max_temp = 10
+max_temp = 5
 temp_interval = 1
 arr_temps = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
@@ -160,12 +158,12 @@ os.mkdir(models_dir)
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
 X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
 
-# # load and save model starting weights to be used for each experiment
-# student_model = load_and_compile_student(X_train, model_size)
-# train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
-# val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-# starting_model_path = save_weights(models_dir, student_model, model_size, 0, total_epochs, 0,
-#                                format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
+# load and save model starting weights to be used for each experiment
+student_model = load_and_compile_student(X_train, model_size)
+train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
+val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
+starting_model_path = save_weights(models_dir, student_model, model_size, 0, total_epochs, 0,
+                               format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
 
 # iterate logits stored for each interval and distill a student model with them
 for i in range(len(arr_epochs)):
@@ -181,10 +179,8 @@ for i in range(len(arr_epochs)):
         # load student model
         student_model = load_and_compile_student(X_train, model_size)
         # modify student model for knowledge distillation
-        student_model.summary()
         student_model = HelperUtil.apply_knowledge_distillation_modifications(None, student_model, arr_temps[j])
         student_model = compile_student(student_model, True, alpha)
-        student_model.summary()
         # load starting model weights
         student_model.load_weights(starting_model_path)
         # train student model on hard and soft targets
