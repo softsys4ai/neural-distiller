@@ -14,8 +14,7 @@
 # external imports
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
-# The GPU id to use, usually either "0" or "1";
-os.environ["CUDA_VISIBLE_DEVICES"]="0";
+os.environ["CUDA_VISIBLE_DEVICES"]="3";
 
 import pickle
 import numpy as np
@@ -45,7 +44,7 @@ model_size = 2
 student_epochs = 200
 logit_model_size = 6
 epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
-min_epochs = 1
+min_epochs = 30
 total_epochs = 200
 arr_epochs = np.arange(min_epochs, total_epochs + epoch_interval-1e-2, epoch_interval)
 min_temp = 1
