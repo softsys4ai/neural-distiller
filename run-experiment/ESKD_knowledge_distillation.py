@@ -35,7 +35,8 @@ from Utils import HelperUtil
 
 
 # setting up parameters for loading distillation logits
-experiment_dir = "/home/blakete/experiment-results/ESKD/ESKD_Logit_Harvesting_cifar100_6_13-01-20_12:55:29"
+# experiment_dir = "/home/blakete/experiment-results/ESKD/ESKD_Logit_Harvesting_cifar100_6_13-01-20_12:55:29"
+experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training\ Results/Experiment\ 3/ESKD_cifar100_10_16-12-19_11\:19\:41"
 dataset = "cifar100"
 model_type = "resnet"
 dataset_num_classes = 100
@@ -45,7 +46,7 @@ model_size = 2
 student_epochs = 200
 logit_model_size = 6
 epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
-min_epochs = 1
+min_epochs = 30
 total_epochs = 200
 arr_epochs = np.arange(min_epochs, total_epochs + epoch_interval-1e-2, epoch_interval)
 min_temp = 1
@@ -139,7 +140,7 @@ def compile_student(student_model, KD=False, alpha=1.0):
 
 # method to load logits from the specified experiment directory
 def load_logits(logits_dir, model_size, curr_epochs, total_epochs):
-    logits_filename = os.path.join(logits_dir, f"logits_{model_size}_{int(curr_epochs)}|{total_epochs}.pkl")
+    logits_filename = os.path.join(logits_dir, f"logits_{model_size}_{curr_epochs}|{total_epochs}.pkl")
     with open(logits_filename, "rb") as file:
         teacher_train_logits = pickle.load(file)
         teacher_test_logits = pickle.load(file)
@@ -169,10 +170,10 @@ starting_model_path = save_weights(models_dir, student_model, model_size, 0, tot
 # iterate logits stored for each interval and distill a student model with them
 for i in range(len(arr_epochs)):
     # load logits
-    train_logits, test_logits = load_logits(logits_dir, logit_model_size, arr_epochs[i], total_epochs)
+    train_logits, test_logits = load_logits(logits_dir, logit_model_size, int(arr_epochs[i]), total_epochs)
     for j in range(len(arr_temps)):
         print("--------------------------Starting new KD step--------------------------")
-        print(f"teacher network logits {arr_epochs[i]}|{total_epochs}, student trained at temperature {arr_temps[j]}")
+        print(f"teacher network logits {int(arr_epochs[i])}|{total_epochs}, {model_type} student trained at temperature {arr_temps[j]}")
         # clear current session to free memory
         tf.keras.backend.clear_session()
         # apply temperature to logits and create modified targets for knowledge distillation
@@ -185,7 +186,7 @@ for i in range(len(arr_epochs)):
         # load starting model weights
         student_model.load_weights(starting_model_path)
         # train student model on hard and soft targets
-        checkpoint_filename = f"checkpoint_model_{model_size}_{arr_epochs[i]}|{total_epochs}.h5"
+        checkpoint_filename = f"checkpoint_model_{model_size}_{int(arr_epochs[i])}|{total_epochs}.h5"
         callbacks = [
             EarlyStopping(monitor='val_acc', patience=25, min_delta=0.001),
             ModelCheckpoint(checkpoint_filename, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
@@ -205,7 +206,7 @@ for i in range(len(arr_epochs)):
         # evaluate student model after training
         train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
         val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-        save_weights(models_dir, student_model, model_size, arr_epochs[i], total_epochs, arr_temps[j],
+        save_weights(models_dir, student_model, model_size, int(arr_epochs[i]), total_epochs, arr_temps[j],
                      format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
         # upon completion, delete the checkpoint file
         os.remove(checkpoint_filename)

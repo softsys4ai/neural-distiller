@@ -1,9 +1,22 @@
 
+# TODO test!
+
+# STEP 1
+# train the size 10 teacher in 5 epoch intervals
+# harvest logits and save the model weights at each interval
+
 # STEP 2
 # Distill knowledge to student model for each set of logits
 
+# Step 3
+# Evaluate student models for robustness and accuracy
+
 # external imports
 import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
+# The GPU id to use, usually either "0" or "1";
+os.environ["CUDA_VISIBLE_DEVICES"]="0";
+
 import pickle
 import numpy as np
 from datetime import datetime
@@ -22,20 +35,23 @@ from Utils import HelperUtil
 
 
 # setting up parameters for loading distillation logits
-experiment_dir = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller/run-experiment/Logs/ESKD_cifar100_1"
+# experiment_dir = "/home/blakete/experiment-results/ESKD/ESKD_Logit_Harvesting_cifar100_6_13-01-20_12:55:29"
+experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 3/ESKD_cifar100_10_16-12-19_11:19:41"
 dataset = "cifar100"
+model_type = "resnet"
 dataset_num_classes = 100
 alpha = 1.0  # TODO test different values for KL loss
 logits_dir = os.path.join(experiment_dir, "logits")
 model_size = 2
-student_epochs = 150
+student_epochs = 200
 logit_model_size = 10
-epoch_interval = 10  # TODO make the harvesting experiment directory name contain the epoch information
+epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
+min_epochs = 20
 total_epochs = 200
-arr_epochs = np.arange(0, total_epochs + epoch_interval, epoch_interval)
-min_temp = 2
-max_temp = 20
-temp_interval = 2
+arr_epochs = np.arange(min_epochs, total_epochs + epoch_interval-1e-2, epoch_interval)
+min_temp = 1
+max_temp = 10
+temp_interval = 1
 arr_temps = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
 # write student weights to file
@@ -51,6 +67,9 @@ def knowledge_distillation_loss(y_true, y_pred, alpha=1.0):
     y_true, y_true_softs = y_true[:, :dataset_num_classes], y_true[:, dataset_num_classes:]
     y_pred, y_pred_softs = y_pred[:, :dataset_num_classes], y_pred[:, dataset_num_classes:]
     # loss = (1-alpha)*logloss(y_true, y_pred) + alpha*logloss(y_true_softs, y_pred_softs)
+    # original loss function that works for us
+    # loss = logloss(y_true, y_pred) + alpha * logloss(y_true_softs, y_pred_softs)
+    # testing this loss function, used by other works
     loss = logloss(y_true, y_pred) + alpha * logloss(y_true_softs, y_pred_softs)
     return loss
 
@@ -101,7 +120,7 @@ def normalizeStudentSoftTargets(Y_train_soft, Y_test_soft):
 
 
 def load_and_compile_student(X_train, model_size):
-    student_model = KnowledgeDistillationModels.get_vanilla_model_cifar100(100, X_train, model_size, )
+    student_model = KnowledgeDistillationModels.get_model(dataset, dataset_num_classes, X_train, model_size, model_type)
     return compile_student(student_model)
 
 
@@ -137,28 +156,24 @@ os.mkdir(log_dir)
 models_dir = os.path.join(log_dir, "models")
 os.mkdir(models_dir)
 
-# load and shift data by train mean
+# load and normalize
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
-x_train_mean = np.mean(X_train, axis=0)
-X_train -= x_train_mean
-X_test -= x_train_mean
-min = np.min(X_train)
-max = np.max(X_train)
+X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
 
-# load and save model starting weights to be used for each experiment
-student_model = load_and_compile_student(X_train, model_size)
-train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
-val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-starting_model_path = save_weights(models_dir, student_model, model_size, 0, total_epochs, 0,
-                               format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
+# # load and save model starting weights to be used for each experiment
+# student_model = load_and_compile_student(X_train, model_size)
+# train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
+# val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
+# starting_model_path = save_weights(models_dir, student_model, model_size, 0, total_epochs, 0,
+#                                format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
 
 # iterate logits stored for each interval and distill a student model with them
 for i in range(len(arr_epochs)):
     # load logits
-    train_logits, test_logits = load_logits(logits_dir, logit_model_size, arr_epochs[i], total_epochs)
+    train_logits, test_logits = load_logits(logits_dir, logit_model_size, int(arr_epochs[i]), total_epochs)
     for j in range(len(arr_temps)):
         print("--------------------------Starting new KD step--------------------------")
-        print(f"teacher network logits {arr_epochs[i]}|{total_epochs}, student trained at temperature {arr_temps[j]}")
+        print(f"teacher network logits {int(arr_epochs[i])}|{total_epochs}, {model_type} student trained at temperature {arr_temps[j]}")
         # clear current session to free memory
         tf.keras.backend.clear_session()
         # apply temperature to logits and create modified targets for knowledge distillation
@@ -166,14 +181,16 @@ for i in range(len(arr_epochs)):
         # load student model
         student_model = load_and_compile_student(X_train, model_size)
         # modify student model for knowledge distillation
+        student_model.summary()
         student_model = HelperUtil.apply_knowledge_distillation_modifications(None, student_model, arr_temps[j])
         student_model = compile_student(student_model, True, alpha)
+        student_model.summary()
         # load starting model weights
         student_model.load_weights(starting_model_path)
         # train student model on hard and soft targets
-        checkpoint_filename = f"checkpoint_model_{model_size}_{arr_epochs[i]}|{total_epochs}.h5"
+        checkpoint_filename = f"checkpoint_model_{model_size}_{int(arr_epochs[i])}|{total_epochs}.h5"
         callbacks = [
-            EarlyStopping(monitor='val_acc', patience=25, min_delta=0.0001),
+            EarlyStopping(monitor='val_acc', patience=25, min_delta=0.001),
             ModelCheckpoint(checkpoint_filename, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
         ]
         student_model.fit(X_train, Y_train_new,
@@ -191,8 +208,8 @@ for i in range(len(arr_epochs)):
         # evaluate student model after training
         train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
         val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-        save_weights(models_dir, student_model, model_size, arr_epochs[i], total_epochs, arr_temps[j],
-                     format(val_acc[1], '.3f'), format(train_acc[1], '.3f'))
+        save_weights(models_dir, student_model, model_size, int(arr_epochs[i]), total_epochs, arr_temps[j],
+                     format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
         # upon completion, delete the checkpoint file
         os.remove(checkpoint_filename)
         del student_model
