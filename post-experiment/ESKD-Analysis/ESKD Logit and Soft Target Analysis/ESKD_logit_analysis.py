@@ -22,7 +22,8 @@
 from Data import LoadDataset
 from Models import KnowledgeDistillationModels
 
-from keras.optimizers import SGD
+from tensorflow.python.keras.optimizers import SGD
+from tensorflow.python.keras import backend as K
 
 import os
 import re
@@ -37,9 +38,11 @@ RESULTS_FILE = "experiment2_difference_results.csv"
 
 # load dataset
 X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
-x_train_mean = np.mean(X_train, axis=0)
-X_train -= x_train_mean
-X_test -= x_train_mean
+X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
+
+# uncomment to debug the code faster
+X_train = X_train[:128]
+X_test = X_test[:128]
 
 # load all model paths
 KD_EXPERIMENT_PATH = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller/post-experiment/ESKD-Analysis/ESKD Accuracy/results/experiment-3/ESKD_Knowledge_Distillation_cifar100_2_18-12-19_18:04:58/models"
@@ -81,6 +84,21 @@ def parse_info_from_teacher_names(teacher_names):
         intervals.append(int(interval))
     return sizes, intervals, interval_max
 
+# convert loaded logits to soft targets at a specified temperature
+def modified_kd_targets_from_logits(train_logits, test_logits, temp=1):
+    # create soft targets from loaded logits
+    if temp <= 0:
+        temp = 1
+    train_logits_t = train_logits / temp
+    test_logits_t = test_logits / temp
+    Y_train_soft = K.softmax(train_logits_t)
+    Y_test_soft = K.softmax(test_logits_t)
+    sess = K.get_session()
+    Y_train_soft = sess.run(Y_train_soft)
+    Y_test_soft = sess.run(Y_test_soft)
+    return Y_train_soft, Y_test_soft
+
+
 student_sizes, student_intervals, student_temperatures, student_interval_max = parse_info_from_student_names(STUDENT_MODEL_NAMES)
 teacher_sizes, teacher_intervals, teacher_interval_max = parse_info_from_teacher_names(TEACHER_MODEL_NAMES)
 # create dataframe with the parsed data
@@ -102,8 +120,12 @@ teacher_model.compile(optimizer=optimizer,
                       metrics=["accuracy"])
 
 zeros = [0 for name in STUDENT_MODEL_NAMES]
-df["test_diff"] = zeros
-df["train_diff"] = zeros
+df["test_logit_diff"] = zeros
+df["train_logit_diff"] = zeros
+df["test_soft_diff"] = zeros
+df["train_soft_diff"] = zeros
+df["avg_train_entropy"] = zeros
+df["avg_test_entropy"] = zeros
 
 # iterate all student and teacher models, calculate the differences in their output distributions
 logit_differences = []
@@ -122,19 +144,46 @@ for i in range(len(STUDENT_MODEL_NAMES)):
     s_test_logits = student_model.predict(X_test)
     t_train_logits = teacher_model.predict(X_train)
     t_test_logits = teacher_model.predict(X_test)
-    train_diff = np.subtract(t_train_logits, s_train_logits)
-    test_diff = np.subtract(t_test_logits, s_test_logits)
-    df.iloc[i, df.columns.get_loc("train_diff")] = math.sqrt(np.sum(np.square(train_diff)))
-    df.iloc[i, df.columns.get_loc("test_diff")] = math.sqrt(np.sum(np.square(test_diff)))
+    print(f"[INFO] Performing Euclidean Distance, Entropy, and KL Divergence Analysis...")
+    # calculating total Euclidean distance between student and teacher logits
+    train_logit_diff = np.subtract(t_train_logits, s_train_logits)
+    test_logit_diff = np.subtract(t_test_logits, s_test_logits)
+    df.iloc[i, df.columns.get_loc("train_logit_diff")] = math.sqrt(np.sum(np.square(train_logit_diff)))
+    df.iloc[i, df.columns.get_loc("test_logit_diff")] = math.sqrt(np.sum(np.square(test_logit_diff)))
+
+    # create soft targets at the correct temperature
+    temp = float(re.findall(rf"model_\d+_\d+\|\d+_(\d+)_\d+.\d+", STUDENT_MODEL_NAMES[i])[0])
+    t_train_soft_targets, t_test_soft_targets = modified_kd_targets_from_logits(t_train_logits, t_test_logits, temp)
+
+    # calculating total Euclidean distance between student and teacher soft targets
+    s_train_soft_targets, s_test_soft_targets = modified_kd_targets_from_logits(s_train_logits, s_test_logits, 1)
+    train_soft_diff = np.subtract(t_train_soft_targets, s_train_soft_targets)
+    test_soft_diff = np.subtract(t_test_soft_targets, s_test_soft_targets)
+    df.iloc[i, df.columns.get_loc("train_soft_diff")] = math.sqrt(np.sum(np.square(train_soft_diff)))
+    df.iloc[i, df.columns.get_loc("test_soft_diff")] = math.sqrt(np.sum(np.square(test_soft_diff)))
+
+    # calculating average entropy of teacher train logits
+    total_entropy = 0
+    for j in range(len(t_train_soft_targets)):
+        curr_entropy = 0
+        for k in range(len(t_train_soft_targets[0])):
+            curr_val = t_train_soft_targets[j][k]
+            curr_entropy += t_train_soft_targets[j][k] * math.log2(1 / t_train_soft_targets[j][k])
+        total_entropy += curr_entropy
+    avg_train_entropy = total_entropy / len(t_train_soft_targets)
+    df.iloc[i, df.columns.get_loc("avg_train_entropy")] = avg_train_entropy
+    # calculating average entropy of teacher train logits
+    total_entropy = 0
+    for j in range(len(t_test_soft_targets)):
+        curr_entropy = 0
+        for k in range(len(t_test_soft_targets[0])):
+            curr_entropy += t_test_soft_targets[j][k] * math.log2(1 / t_test_soft_targets[j][k])
+        total_entropy += curr_entropy
+    avg_train_entropy = total_entropy / len(t_test_soft_targets)
+    df.iloc[i, df.columns.get_loc("avg_test_entropy")] = avg_train_entropy
+
     print(f"[INFO] Recording difference results to {RESULTS_FILE}...")
     df.to_csv(RESULTS_FILE, sep=',')
-    # curr_model_diffs = []
-    # curr_model_diffs.append(train_diff)
-    # curr_model_diffs.append(test_diff)
-    # logit_differences.append(curr_model_diffs)
 
-# print(f"[INFO] Dumping logit differences to: {SAVE_FILENAME}")
-# with open(SAVE_FILENAME, 'wb') as save_file:
-#     pickle.dump(logit_differences, save_file)
 print("[INFO] Complete")
 

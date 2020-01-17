@@ -9,7 +9,7 @@
 # external dependencies
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
-os.environ["CUDA_VISIBLE_DEVICES"]="1";
+os.environ["CUDA_VISIBLE_DEVICES"]="0";
 import pickle
 import numpy as np
 from datetime import datetime
@@ -62,12 +62,12 @@ USE_EXPLICIT_START = False
 USE_SAME_STARTING_WEIGHTS = False
 
 # ESKD experiment hyperparameters
-num_models = 2
+num_models = 100
 epochs = 200
 model_type = "resnet"
 learning_rate = 0.01
 dataset = "cifar100"
-teacher_model_size = 2
+model_size = 2
 
 # experiment directory structure
 # ESKD_experiment_{datetime}
@@ -78,14 +78,14 @@ teacher_model_size = 2
 log_dir = os.getcwd()
 now = datetime.now()
 now_datetime = now.strftime("%d-%m-%y_%H:%M:%S")
-log_dir = os.path.join(log_dir, "ESKD_baseline_" + dataset + f"_{teacher_model_size}_" + now_datetime)
+log_dir = os.path.join(log_dir, "ESKD_baseline_" + dataset + f"_{model_size}_" + now_datetime)
 os.mkdir(log_dir)
 models_dir = os.path.join(log_dir, "models")
 os.mkdir(models_dir)
 
 # initialize and save starting network state
 if (USE_SAME_STARTING_WEIGHTS):
-    teacher_model = KnowledgeDistillationModels.get_model(dataset, 100, X_train, teacher_model_size, model_type)
+    teacher_model = KnowledgeDistillationModels.get_model(dataset, 100, X_train, model_size, model_type)
     optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
     teacher_model.compile(optimizer=optimizer,
                           loss="categorical_crossentropy",
@@ -94,15 +94,15 @@ if (USE_SAME_STARTING_WEIGHTS):
         teacher_model.load_weights(EXPLICIT_START_WEIGHT_PATH)
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
-    prev_model_path = save_weights(models_dir, teacher_model, teacher_model_size, 0, num_models,
+    prev_model_path = save_weights(models_dir, teacher_model, model_size, 0, num_models,
                                    format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
 
 # intermittent training and harvesting of logits for ESKD experiment
-teacher_model = KnowledgeDistillationModels.get_model(dataset, 100, X_train, teacher_model_size, model_type)
+teacher_model = KnowledgeDistillationModels.get_model(dataset, 100, X_train, model_size, model_type)
 for i in range(1, num_models):
 
     # setup current iteration params and load model
-    print(f"\nTraining size {teacher_model_size} network, {i}/{num_models}")
+    print(f"\nTraining size {model_size} network, {i}/{num_models}")
     # load model for current iteration
     if (USE_SAME_STARTING_WEIGHTS):
         teacher_model.load_weights(prev_model_path)
@@ -116,7 +116,7 @@ for i in range(1, num_models):
                           metrics=["accuracy"])
     callbacks = [
         EarlyStopping(monitor='val_acc', patience=20, min_delta=0.00007),
-        ModelCheckpoint("checkpoint-model.hf5", monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+        ModelCheckpoint("baseline-checkpoint-model.hf5", monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     ]
     teacher_model.fit(X_train, Y_train,
                       validation_data=(X_test, Y_test),
@@ -124,13 +124,13 @@ for i in range(1, num_models):
                       epochs=epochs,
                       verbose=1,
                       callbacks=callbacks)
-    teacher_model.load_weights("checkpoint-model.hf5")
+    teacher_model.load_weights("baseline-checkpoint-model.hf5")
     # evaluate and save model weights
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
-    save_weights(models_dir, teacher_model, teacher_model_size, i, num_models,
+    save_weights(models_dir, teacher_model, model_size, i, num_models,
                  format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
-    os.remove("checkpoint-model.hf5")  # remove previous checkpoint
+    os.remove("baseline-checkpoint-model.hf5")  # remove previous checkpoint
 
 
 

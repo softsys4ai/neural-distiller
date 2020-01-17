@@ -21,7 +21,7 @@ def apply_knowledge_distillation_modifications(logger, model, temp):
 
 
 def revert_knowledge_distillation_modifications(logger, model):
-    logits = model.layers[-5].output  # last 4 layers are KD modified, forget them
+    logits = model.get_layer('logits').output
     output = Activation('softmax')(logits)
     model2 = Model(model.input, output)  # reverted student model
     return model2

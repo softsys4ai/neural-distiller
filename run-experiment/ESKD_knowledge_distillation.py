@@ -14,7 +14,7 @@
 # external imports
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
-os.environ["CUDA_VISIBLE_DEVICES"]="3";
+os.environ["CUDA_VISIBLE_DEVICES"]="2";
 
 import pickle
 import numpy as np
@@ -34,8 +34,9 @@ from Utils import HelperUtil
 
 
 # setting up parameters for loading distillation logits
-# experiment_dir = "/home/blakete/experiment-results/ESKD/ESKD_Logit_Harvesting_cifar100_6_13-01-20_12:55:29"
-experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training\ Results/Experiment\ 3/ESKD_cifar100_10_16-12-19_11\:19\:41"
+USE_EXPLICIT_START_MODEL = True
+EXPLICIT_START_MODEL_PATH = "/home/blakete/resnet-experiment/neural-distiller/run-experiment/ESKD_Knowledge_Distillation_cifar100_2_16-01-20_18:05:34/model_2_0|200_0_0.01330_0.01308.h5"
+experiment_dir = "/home/blakete/resnet-experiment/neural-distiller/run-experiment/ESKD_Logit_Harvesting_cifar100_6_15-01-20_19:18:05"
 dataset = "cifar100"
 model_type = "resnet"
 dataset_num_classes = 100
@@ -44,8 +45,8 @@ logits_dir = os.path.join(experiment_dir, "logits")
 model_size = 2
 student_epochs = 200
 logit_model_size = 6
-epoch_interval = 1  # TODO make the harvesting experiment directory name contain the epoch information
-min_epochs = 30
+epoch_interval = 10  # TODO make the harvesting experiment directory name contain the epoch information
+min_epochs = 150
 total_epochs = 200
 arr_epochs = np.arange(min_epochs, total_epochs + epoch_interval-1e-2, epoch_interval)
 min_temp = 1
@@ -160,12 +161,17 @@ X_train, Y_train, X_test, Y_test = LoadDataset.load_cifar_100(None)
 X_train, X_test = LoadDataset.z_standardization(X_train, X_test)
 
 # load and save model starting weights to be used for each experiment
-student_model = load_and_compile_student(X_train, model_size)
-train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
-val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-starting_model_path = save_weights(models_dir, student_model, model_size, 0, total_epochs, 0,
-                               format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
+if not USE_EXPLICIT_START_MODEL:
+    student_model = load_and_compile_student(X_train, model_size)
+    train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
+    val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
+    starting_model_path = save_weights(models_dir, student_model, model_size, 0, total_epochs, 0,
+                                   format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
+else:
+    starting_model_path = EXPLICIT_START_MODEL_PATH
 
+# load student model
+student_model = load_and_compile_student(X_train, model_size)
 # iterate logits stored for each interval and distill a student model with them
 for i in range(len(arr_epochs)):
     # load logits
@@ -173,12 +179,8 @@ for i in range(len(arr_epochs)):
     for j in range(len(arr_temps)):
         print("--------------------------Starting new KD step--------------------------")
         print(f"teacher network logits {int(arr_epochs[i])}|{total_epochs}, {model_type} student trained at temperature {arr_temps[j]}")
-        # clear current session to free memory
-        tf.keras.backend.clear_session()
         # apply temperature to logits and create modified targets for knowledge distillation
         Y_train_new, Y_test_new = modified_kd_targets_from_logits(Y_train, Y_test, train_logits, test_logits, arr_temps[j])
-        # load student model
-        student_model = load_and_compile_student(X_train, model_size)
         # modify student model for knowledge distillation
         student_model = HelperUtil.apply_knowledge_distillation_modifications(None, student_model, arr_temps[j])
         student_model = compile_student(student_model, True, alpha)
@@ -196,12 +198,10 @@ for i in range(len(arr_epochs)):
                           verbose=1,
                           callbacks=callbacks,
                           validation_data=(X_test, Y_test_new))
-        # delete modified and reload unmodified student network
-        del student_model
-        student_model = load_and_compile_student(X_train, model_size)
+        student_model = HelperUtil.revert_knowledge_distillation_modifications(None, student_model)
+        student_model = compile_student(X_train, student_model)
         # load model from checkpoint and save it proper location with save weights method
         student_model.load_weights(checkpoint_filename)
-        student_model = compile_student(student_model)
         # evaluate student model after training
         train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
         val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
@@ -209,4 +209,3 @@ for i in range(len(arr_epochs)):
                      format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
         # upon completion, delete the checkpoint file
         os.remove(checkpoint_filename)
-        del student_model
