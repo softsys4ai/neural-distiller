@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 sns.set()
 
-RESULTS_FILE = "experiment2_difference_results.csv"
+RESULTS_FILE = "experiment2_logit_soft_analysis.csv"
 EXP = "experiment2"
 CMAP = "gnuplot2"
 
@@ -98,6 +98,27 @@ plt.savefig(EXP+"_soft_lineplot.png")
 plt.show()
 
 
+max_soft_diffs = np.zeros(len(epochs))
+min_soft_diffs = np.zeros(len(epochs))
+mean_soft_diffs = np.zeros(len(epochs))
+for i in range(len(epochs)):
+    temp_df = df[df.interval == epochs[int(i)]]
+    mean_soft_diffs[i] = temp_df['avg_train_entropy'].mean()
+
+# plot min, mean, max of soft differences
+plt.figure(0)
+plt.plot(epochs, mean_soft_diffs, label="Entropy Value", color="k")
+# plt.hlines(0., min_epoch, max_epoch, colors="r", linestyles="dashed", label="Baseline Max test AR Accuracy")
+# plt.hlines(0., min_epoch, max_epoch, colors='k', linestyles="dashed", label="Baseline Mean test AR Accuracy")
+plt.xlabel("Epoch Interval")
+epochs = np.arange(0, max_epoch+epoch_interval-1e-2, epoch_interval)
+plt.xticks(epochs)
+plt.ylabel("Entropy")
+plt.legend(loc="lower right")
+# plt.legend(bbox_to_anchor=(1.0, 1.0))
+plt.title("Teacher Logit Entropy w.r.t Epoch Interval")
+plt.savefig(EXP+"_entropy.png")
+plt.show()
 
 
 

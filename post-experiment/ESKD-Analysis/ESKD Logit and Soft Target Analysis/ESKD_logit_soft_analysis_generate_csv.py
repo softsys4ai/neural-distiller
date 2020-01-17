@@ -33,7 +33,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-RESULTS_FILE = "experiment2_difference_results.csv"
+RESULTS_FILE = "experiment2_logit_soft_analysis.csv"
 # SAVE_FILENAME = "logit_diffs_"
 
 # load dataset
@@ -163,23 +163,26 @@ for i in range(len(STUDENT_MODEL_NAMES)):
     df.iloc[i, df.columns.get_loc("test_soft_diff")] = math.sqrt(np.sum(np.square(test_soft_diff)))
 
     # calculating average entropy of teacher train logits
+    train_test_min = min(np.min(t_train_logits), np.min(t_test_logits))+1
+    t_train_logits += train_test_min
+    t_test_logits += train_test_min
     total_entropy = 0
-    for j in range(len(t_train_soft_targets)):
+    for j in range(len(t_train_logits)):
         curr_entropy = 0
-        for k in range(len(t_train_soft_targets[0])):
-            curr_val = t_train_soft_targets[j][k]
-            curr_entropy += t_train_soft_targets[j][k] * math.log2(1 / t_train_soft_targets[j][k])
+        for k in range(len(t_train_logits[0])):
+            curr_val = t_train_logits[j][k]
+            curr_entropy += t_train_logits[j][k] * math.log2(1 / t_train_logits[j][k])
         total_entropy += curr_entropy
-    avg_train_entropy = total_entropy / len(t_train_soft_targets)
+    avg_train_entropy = total_entropy / len(t_train_logits)
     df.iloc[i, df.columns.get_loc("avg_train_entropy")] = avg_train_entropy
     # calculating average entropy of teacher train logits
     total_entropy = 0
-    for j in range(len(t_test_soft_targets)):
+    for j in range(len(t_test_logits)):
         curr_entropy = 0
-        for k in range(len(t_test_soft_targets[0])):
-            curr_entropy += t_test_soft_targets[j][k] * math.log2(1 / t_test_soft_targets[j][k])
+        for k in range(len(t_test_logits[0])):
+            curr_entropy += t_test_logits[j][k] * math.log2(1 / t_test_logits[j][k])
         total_entropy += curr_entropy
-    avg_train_entropy = total_entropy / len(t_test_soft_targets)
+    avg_train_entropy = total_entropy / len(t_test_logits)
     df.iloc[i, df.columns.get_loc("avg_test_entropy")] = avg_train_entropy
 
     print(f"[INFO] Recording difference results to {RESULTS_FILE}...")
