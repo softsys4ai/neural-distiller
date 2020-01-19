@@ -16,13 +16,6 @@
 8. **References**
 
 ## 1. Overview
-<b>Background:</b><br>Almost everyone today uses a smart mobile phone that they carry with them at all times. The ability to run powerful artificial intelligence (AI) technologies on our phones would revolutionize the world and equip mobile devices with an increasing amount of functionality. However, we do not want AI technologies to drain our battery and require us to charge our phones multiple times per day in order to run them. Our project will reduce the work needed to run AI technologies and enable them to be run on devices constrained by battery, power, and storage, like our mobile phones.
-<br><br><b>Significance:</b><br>
-Our project is significant because it will allow large neural networks, that achieve state-of-the-art accuracy in a variety of different fields including, but not limited to, computer vision, natural language processing, and speech recognition, to be run on small devices [7, 13]. Neural networks perform the best on these tasks but in order for them to become more accurate they grow in size, thus becoming more expensive to run. Our project intends to combat this issue by compressing neural networks through the removal of unnecessary components. This is important because it will allow them to run on smaller devices with less computational power, storage, and memory bandwidth. This is crucial because if we do not compress large neural networks, we will not be able to use them in real world applications because not everyone has access to a supercomputer.
-<br>
-
-<b>Goal:</b><br>
-The goal of this project is to publish the compression results of the PaKD model compression technique, develop our code base to generically compress deep neural networks, compress a neural network by at least 11 times and increase its speed by an average of 4 times [4].
 
 ## 2. Dependencies
 ### Software
@@ -30,13 +23,55 @@ The goal of this project is to publish the compression results of the PaKD model
 Minimum memory requirement: 3GB of RAM
 
 ## 3. Pruning
-overview of implemented pruning methods
 
 ## 4. Knowledge Distillation
 overview of implemented knowledge distillation (KD) methods
 
 ## 5. Project Structure
-navigation of project and component hierarchy
+├── LICENSE
+├── Makefile           <- Makefile with commands like `make data` or `make train`
+├── README.md          <- The top-level README for developers using this project.
+├── data
+│   ├── external       <- Data from third party sources.
+│   ├── interim        <- Intermediate data that has been transformed.
+│   ├── processed      <- The final, canonical data sets for modeling.
+│   └── raw            <- The original, immutable data dump.
+│
+├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+│
+├── models             <- Trained and serialized models, model predictions, or model summaries
+│
+├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
+│                         the creator's initials, and a short `-` delimited description, e.g.
+│                         `1.0-jqp-initial-data-exploration`.
+│
+├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+│
+├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures        <- Generated graphics and figures to be used in reporting
+│
+├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
+│                         generated with `pip freeze > requirements.txt`
+│
+├── setup.py           <- Make this project pip installable with `pip install -e`
+├── src                <- Source code for use in this project.
+│   ├── __init__.py    <- Makes src a Python module
+│   │
+│   ├── data           <- Scripts to download or generate data
+│   │   └── make_dataset.py
+│   │
+│   ├── features       <- Scripts to turn raw data into features for modeling
+│   │   └── build_features.py
+│   │
+│   ├── models         <- Scripts to train models and then use trained models to make
+│   │   │                 predictions
+│   │   ├── predict_model.py
+│   │   └── train_model.py
+│   │
+│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
+│       └── visualize.py
+│
+└── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
 
 ## 6. Getting Started
 
