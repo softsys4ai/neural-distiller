@@ -1,7 +1,7 @@
 Neural-Distillation
 ==============================
 
-Exploration and analysis of deep neural network knowledge distillation techniques.
+Exploration and analysis of deep neural network knowledge distillation techniques: teacher assisted knowledge distillation, multistage knowledge distillation, early stop knowledge distillation.
 
 Project Organization
 ------------
