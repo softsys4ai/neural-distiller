@@ -30,7 +30,6 @@ overview of implemented knowledge distillation (KD) methods
 
 ## 5. Project Organization
 
-Project Organization
 ------------
 
     ├── LICENSE
