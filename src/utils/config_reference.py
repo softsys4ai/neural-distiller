@@ -5,16 +5,16 @@ import numpy as np
 # logging
 spacer = "--------------------------------"
 
-# # remote configurations
-# log_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs"
-# util_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/utils"
+# remote configurations
+log_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs"
+util_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/utils"
 
-# local configurations
-log_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/logs"
-util_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/utils"
+# # local configurations
+# log_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/logs"
+# util_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/utils"
 
 #  training
-model_type = "vanilla"
+model_type = "resnet"
 dataset = "cifar100"
 network_input_shape = (28, 28, 1)
 dataset_num_classes = 100
@@ -24,8 +24,8 @@ use_fit_generator_teacher = False
 use_fit_generator_student = False
 teacher_optimizer = "sgd"
 student_optimizer = "sgd"
-teacher_model_size = 2
-student_model_size = 2
+teacher_model_size = 6
+student_model_size = 6
 
 # 0. eskd_teacher_logits_train
 debug0 = False
@@ -37,14 +37,15 @@ epoch_intervals0 = np.arange(epoch_min0, epoch_max0+interval_size0, interval_siz
 
 # 1. eskd_knowledge_distillation_train
 USE_EXPLICIT_START_MODEL = False
-EXPLICIT_START_MODEL_PATH = "/home/blakete/resnet-experiment/neural-distiller/run-experiment/ESKD_Knowledge_Distillation_cifar100_2_16-01-20_18:05:34/model_2_0|200_0_0.01330_0.01308.h5"
-# remote
-logit_experiment_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs/ESKD_Logit_Harvesting_cifar100_6_21-01-20_22:40:14"
-# # local
-# logit_experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 3/ESKD_cifar100_10_16-12-19_11:19:41"
+EXPLICIT_START_MODEL_PATH = ""
+EXPLICIT_START_MODEL_WEIGHT_PATH = ""
+# # remote
+# logit_experiment_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs/ESKD_Logit_Harvesting_cifar100_6_21-01-20_22:40:14"
+# local
+logit_experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 3/ESKD_cifar100_10_16-12-19_11:19:41"
 logits_dir = os.path.join(logit_experiment_dir, "logits")
 alpha = 1.0
-student_epochs = 1
+student_epochs = 150
 teacher_logit_model_size = 10
 teacher_logit_distillation_epoch_interval = 1
 min_teacher_logit_epoch = 0
@@ -74,12 +75,14 @@ EPS_VALS = np.arange(MIN_EPS, MAX_EPS + STEP_EPS - 1e-2, STEP_EPS)
 
 
 # 3. eskd_baseline_train
-debug3 = True
+debug3 = False
 USE_EXPLICIT_START = False
 EXPLICIT_START_WEIGHT_PATH = "/home/blakete/model_10_0|200_0.01_0.008.h5"
 USE_SAME_STARTING_WEIGHTS = False
-num_models_to_train = 100
-baseline_models_train_epochs = 2
+USE_BASELINE_DATA_AUGMENTATION = True
+USE_BASELINE_LR_SCHEDULER = True
+num_models_to_train = 2
+baseline_models_train_epochs = 200
 model_size = 2
 
 
