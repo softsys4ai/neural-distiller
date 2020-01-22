@@ -5,13 +5,13 @@ import numpy as np
 # logging
 spacer = "--------------------------------"
 
-# remote configurations
-log_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs"
-util_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/utils"
+# # remote configurations
+# log_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs"
+# util_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/utils"
 
-# # local configurations
-# log_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/logs"
-# util_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/utils"
+# local configurations
+log_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/logs"
+util_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/utils"
 
 #  training
 model_type = "vanilla"
@@ -24,7 +24,7 @@ use_fit_generator_teacher = False
 use_fit_generator_student = False
 teacher_optimizer = "sgd"
 student_optimizer = "sgd"
-teacher_model_size = 6
+teacher_model_size = 2
 student_model_size = 2
 
 # 0. eskd_teacher_logits_train
@@ -41,13 +41,14 @@ EXPLICIT_START_MODEL_PATH = "/home/blakete/resnet-experiment/neural-distiller/ru
 logit_experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 3/ESKD_cifar100_10_16-12-19_11:19:41"
 logits_dir = os.path.join(logit_experiment_dir, "logits")
 alpha = 1.0
-student_epochs = 200
+student_epochs = 1
 teacher_logit_model_size = 10
-teacher_logit_distillation_epoch_interval = 5
-min_teacher_logit_epoch = 5
+teacher_logit_distillation_epoch_interval = 1
+min_teacher_logit_epoch = 0
+max_teacher_logit_epochs = 150
 total_teacher_logit_epochs = 200
 arr_of_distillation_epochs = np.arange(min_teacher_logit_epoch,
-                                       total_teacher_logit_epochs + teacher_logit_distillation_epoch_interval - 1e-2,
+                                       max_teacher_logit_epochs + teacher_logit_distillation_epoch_interval - 1e-2,
                                        teacher_logit_distillation_epoch_interval)
 min_temp = 1
 max_temp = 10
@@ -55,7 +56,7 @@ temp_interval = 1
 arr_of_distillation_temps = np.arange(min_temp, max_temp + temp_interval, temp_interval)
 
 # 2. eskd_student_noise_and_adversarial_evaluation
-MODEL_DIR = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 1/ESKD_Knowledge_Distillation_cifar100_2_16-12-19_23:17:30/models"
+MODEL_DIR = ""
 attack_type = "fgm"
 MEAN = 0
 SIGMA = 0.1

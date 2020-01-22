@@ -19,6 +19,7 @@ from datetime import datetime
 import tensorflow as tf
 from tensorflow.python.keras import backend as K
 from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.models import load_model
 from tensorflow.python.keras.losses import KLDivergence as KL
 from tensorflow.python.keras.metrics import categorical_accuracy
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -37,6 +38,15 @@ def save_weights(models_dir, model, model_size, curr_epochs, total_epochs, train
     model.save_weights(model_path)
     return model_path
 
+def save_model(models_dir, model, model_size, curr_epochs, total_epochs, train_temp, val_acc, train_acc):
+    model_filename = f"model_{model_size}_{curr_epochs}|{total_epochs}_{train_temp}_{val_acc}_{train_acc}.h5"
+    weight_filename = f"model_weights_{model_size}_{curr_epochs}|{total_epochs}_{train_temp}_{val_acc}_{train_acc}.h5"
+    model_path = os.path.join(models_dir, model_filename)
+    model_weight_path = os.path.join(models_dir, weight_filename)
+    model.save(model_path)
+    model.save_weights(model_weight_path)
+    del model
+    return model_path, model_weight_path
 
 def knowledge_distillation_loss(y_true, y_pred, alpha=1.0):
     # Extract the one-hot encoded values and the softs separately so that we can create two objective functions
@@ -141,7 +151,7 @@ def run():
         student_model = load_and_compile_student(X_train, cfg.student_model_size)
         train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
         val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-        starting_model_path = save_weights(models_dir, student_model, cfg.student_model_size, 0, cfg.total_teacher_logit_epochs, 0,
+        starting_model_path, starting_model_weight_path = save_model(models_dir, student_model, cfg.student_model_size, 0, cfg.total_teacher_logit_epochs, 0,
                                        format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
     else:
         starting_model_path = cfg.EXPLICIT_START_MODEL_PATH
@@ -153,15 +163,21 @@ def run():
         # load logits
         train_logits, test_logits = load_logits(cfg.logits_dir, cfg.teacher_logit_model_size, int(cfg.arr_of_distillation_epochs[i]), cfg.total_teacher_logit_epochs)
         for j in range(len(cfg.arr_of_distillation_temps)):
-            print("--------------------------Starting new KD step--------------------------")
+            print("\n--------------------------Starting new KD step--------------------------")
             print(f"teacher network logits {int(cfg.arr_of_distillation_epochs[i])}|{cfg.total_teacher_logit_epochs}, {cfg.model_type} student trained at temperature {cfg.arr_of_distillation_temps[j]}")
+            print("[INFO] Creating knowledge distillation targets...")
             # apply temperature to logits and create modified targets for knowledge distillation
             Y_train_new, Y_test_new = modified_kd_targets_from_logits(Y_train, Y_test, train_logits, test_logits, cfg.arr_of_distillation_temps[j])
+            print("[INFO] Loading starting model...")
+            # load starting model
+            student_model = load_model(starting_model_path)
+            print("[INFO] Preparing starting model for knowledge distillation...")
             # modify student model for knowledge distillation
-            student_model = helper_util.apply_knowledge_distillation_modifications(None, student_model, cfg.arr_of_distillation_temps[j])
+            student_model = helper_util.apply_knowledge_distillation_modifications(None, student_model,
+                                                                                   cfg.arr_of_distillation_temps[j])
             student_model = compile_student(student_model, True, cfg.alpha)
             # load starting model weights
-            student_model.load_weights(starting_model_path)
+            student_model.load_weights(starting_model_weight_path)
             # train student model on hard and soft targets
             checkpoint_filename = f"checkpoint_model_{cfg.student_model_size}_{int(cfg.arr_of_distillation_epochs[i])}|{cfg.total_teacher_logit_epochs}.h5"
             callbacks = [
@@ -174,14 +190,18 @@ def run():
                               verbose=1,
                               callbacks=callbacks,
                               validation_data=(X_test, Y_test_new))
-            student_model = helper_util.revert_knowledge_distillation_modifications(None, student_model)
-            student_model = compile_student(X_train, student_model)
+            print("[INFO] Loading starting model...")
+            # load starting model
+            student_model = load_model(starting_model_path)
+            print("[INFO] Loading student knowledge distillation weights...")
             # load model from checkpoint and save it proper location with save weights method
             student_model.load_weights(checkpoint_filename)
+            print("[INFO] Evaluating student model...")
             # evaluate student model after training
             train_acc = student_model.evaluate(X_train, Y_train, verbose=0)
             val_acc = student_model.evaluate(X_test, Y_test, verbose=0)
-            save_weights(models_dir, student_model, cfg.student_model_size, int(cfg.arr_of_distillation_epochs[i]), cfg.total_teacher_logit_epochs, cfg.arr_of_distillation_temps[j],
+            print("[INFO] Saving student model and cleaning up training session...")
+            save_model(models_dir, student_model, cfg.student_model_size, int(cfg.arr_of_distillation_epochs[i]), cfg.total_teacher_logit_epochs, cfg.arr_of_distillation_temps[j],
                          format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
             # upon completion, delete the checkpoint file
             os.remove(checkpoint_filename)
