@@ -13,8 +13,9 @@ import numpy as np
 from datetime import datetime
 import tensorflow as tf
 from tensorflow.python.keras import backend as K
-from tensorflow.keras.optimizers import SGD
-# from tensorflow.python.keras.optimizers import SGD
+from tensorflow.python.keras.optimizers import SGD
+from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
 # project imports
 from data import load_dataset
@@ -47,6 +48,17 @@ def reset_model_weights(model):
         if hasattr(layer, 'kernel_initializer'):
             layer.kernel.initializer.run(session=session)
 
+def step_decay(epoch):
+    lrate = 0.1
+    if epoch >= 60:
+        lrate /= 5
+    if epoch >= 120:
+        lrate /= 5
+    if epoch >= 160:
+        lrate /= 5
+    print(f"[INFO] Current learning rate is {lrate}")
+    return lrate
+
 def run():
     # load and normalize
     X_train, Y_train, X_test, Y_test = load_dataset.load_cifar_100(None)
@@ -69,7 +81,7 @@ def run():
     # initialize and save starting network state
     if (cfg.USE_SAME_STARTING_WEIGHTS):
         baseline_student_model = knowledge_distillation_models.get_model(cfg.dataset, 100, X_train, cfg.student_model_size, cfg.model_type)
-        optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+        optimizer = SGD(lr=0.1, nesterov=True, momentum=0.9, decay=5e-4)
         baseline_student_model.compile(optimizer=optimizer,
                               loss="categorical_crossentropy",
                               metrics=["accuracy"])
@@ -81,11 +93,60 @@ def run():
                                        format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
 
     # intermittent training and harvesting of logits for ESKD experiment
-    baseline_student_model = knowledge_distillation_models.get_model(cfg.dataset, 100, X_train, cfg.student_model_size, cfg.model_type)
+    try:
+        baseline_student_model = knowledge_distillation_models.get_model(cfg.dataset, 100, X_train, cfg.student_model_size, cfg.model_type)
+    except:
+        print("[ERROR] Error thrown while loading the model...")
     for i in range(1, cfg.num_models_to_train):
 
         # setup current iteration params and load model
         print(f"\nTraining size {cfg.student_model_size} network, {i}/{cfg.num_models_to_train}")
+
+        # check if using data augmentation
+        if (cfg.USE_BASELINE_DATA_AUGMENTATION):
+            datagen = ImageDataGenerator(
+                # set input mean to 0 over the cfg.dataset
+                featurewise_center=False,
+                # set each sample mean to 0
+                samplewise_center=False,
+                # divide inputs by std of cfg.dataset
+                featurewise_std_normalization=False,
+                # divide each input by its std
+                samplewise_std_normalization=False,
+                # apply ZCA whitening
+                zca_whitening=False,
+                # epsilon for ZCA whitening
+                zca_epsilon=1e-06,
+                # randomly rotate images in the range (deg 0 to 180)
+                rotation_range=0,
+                # randomly shift images horizontally
+                width_shift_range=0.1,
+                # randomly shift images vertically
+                height_shift_range=0.1,
+                # set range for random shear
+                shear_range=0.,
+                # set range for random zoom
+                zoom_range=0.,
+                # set range for random channel shifts
+                channel_shift_range=0.,
+                # set mode for filling points outside the input boundaries
+                fill_mode='nearest',
+                # value used for fill_mode = "constant"
+                cval=0.,
+                # randomly flip images
+                horizontal_flip=True,
+                # randomly flip images
+                vertical_flip=False,
+                # set rescaling factor (applied before any other transformation)
+                rescale=None,
+                # set function that will be applied on each input
+                preprocessing_function=None,
+                # image data format, either "channels_first" or "channels_last"
+                data_format=None,
+                # fraction of images reserved for validation (strictly between 0 and 1)
+                validation_split=0.0)
+            datagen.fit(X_train)
+
         # load model for current iteration
         if (cfg.USE_SAME_STARTING_WEIGHTS):
             baseline_student_model.load_weights(prev_model_path)
@@ -102,12 +163,24 @@ def run():
             EarlyStopping(monitor='val_accuracy', patience=30, min_delta=0.00007),
             ModelCheckpoint(chckpnt, monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=True, mode='max')
         ]
-        baseline_student_model.fit(X_train, Y_train,
-                          validation_data=(X_test, Y_test),
-                          batch_size=128,
-                          epochs=cfg.baseline_models_train_epochs,
-                          verbose=1,
-                          callbacks=callbacks)
+        if cfg.USE_BASELINE_LR_SCHEDULER:
+            print("[INFO] Using learning rate scheduler...")
+            lrate = LearningRateScheduler(step_decay)
+            callbacks.append(lrate)
+        if (cfg.USE_BASELINE_DATA_AUGMENTATION):
+            print("[INFO] Training with data augmentation...")
+            baseline_student_model.fit(datagen.flow(X_train, Y_train, batch_size=128),
+                              validation_data=(X_test, Y_test),
+                              epochs=cfg.baseline_models_train_epochs,
+                              verbose=1,
+                              callbacks=callbacks)
+        else:
+            baseline_student_model.fit(X_train, Y_train,
+                              validation_data=(X_test, Y_test),
+                              batch_size=128,
+                              epochs=cfg.baseline_models_train_epochs,
+                              verbose=1,
+                              callbacks=callbacks)
         baseline_student_model.load_weights(chckpnt)
         # evaluate and save model weights
         train_acc = baseline_student_model.evaluate(X_train, Y_train, verbose=0)
