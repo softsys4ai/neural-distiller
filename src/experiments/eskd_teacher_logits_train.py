@@ -120,7 +120,7 @@ def run():
 
     # initialize and save starting network state
     teacher_model = knowledge_distillation_models.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, cfg.teacher_model_size, cfg.model_type)
-    optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+    optimizer = SGD(lr=cfg.learning_rate, momentum=0.9, nesterov=True)
     teacher_model.compile(optimizer=optimizer,
                           loss="categorical_crossentropy",
                           metrics=["accuracy"])
