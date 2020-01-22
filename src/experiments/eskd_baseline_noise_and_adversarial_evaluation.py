@@ -2,12 +2,6 @@
 # Step 3
 # Evaluate student models for robustness and accuracy
 
-# external imports
-import os
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
-# The GPU id to use, 0-4;
-os.environ["CUDA_VISIBLE_DEVICES"]="2";
-
 # external dependencies
 import os
 import re

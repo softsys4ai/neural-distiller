@@ -1,10 +1,11 @@
+
 from matplotlib import pyplot as plt
 
 import numpy as np
 
 import os
 import re
-import config_reference as cfg
+from utils import config_reference as cfg
 
 PATH_TO_STUDENT_MODELS = ""
 PATH_TO_FIGURES = cfg.figures_path

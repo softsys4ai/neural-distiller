@@ -1,9 +1,10 @@
+
 import os
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import config_reference as cfg
+from utils import config_reference as cfg
 sns.set()
 
 # TODO add gaussian noise plots to this file
