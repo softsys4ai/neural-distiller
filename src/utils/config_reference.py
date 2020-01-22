@@ -38,7 +38,10 @@ epoch_intervals0 = np.arange(epoch_min0, epoch_max0+interval_size0, interval_siz
 # 1. eskd_knowledge_distillation_train
 USE_EXPLICIT_START_MODEL = False
 EXPLICIT_START_MODEL_PATH = "/home/blakete/resnet-experiment/neural-distiller/run-experiment/ESKD_Knowledge_Distillation_cifar100_2_16-01-20_18:05:34/model_2_0|200_0_0.01330_0.01308.h5"
-logit_experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 3/ESKD_cifar100_10_16-12-19_11:19:41"
+# remote
+logit_experiment_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs/ESKD_Logit_Harvesting_cifar100_6_21-01-20_22:40:14"
+# # local
+# logit_experiment_dir = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 3/ESKD_cifar100_10_16-12-19_11:19:41"
 logits_dir = os.path.join(logit_experiment_dir, "logits")
 alpha = 1.0
 student_epochs = 1
