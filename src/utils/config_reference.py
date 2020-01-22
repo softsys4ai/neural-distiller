@@ -6,8 +6,12 @@ import numpy as np
 spacer = "--------------------------------"
 
 # remote configurations
-log_dir="/Users/blakeedwards/Desktop/Repos/personal/Neural-Distillation/neural-distillation/src/logs"
-util_dir="/Users/blakeedwards/Desktop/Repos/personal/Neural-Distillation/neural-distillation/src/utils"
+log_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs"
+util_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/utils"
+
+# # local configurations
+# log_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/logs"
+# util_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/utils"
 
 #  training
 model_type = "vanilla"
@@ -24,7 +28,7 @@ teacher_model_size = 6
 student_model_size = 2
 
 # 0. eskd_teacher_logits_train
-debug0 = True
+debug0 = False
 use_datagen0 = True
 epoch_min0 = 0
 epoch_max0 = 200
@@ -90,7 +94,7 @@ EPS_VALS4 = np.arange(MIN_EPS, MAX_EPS + STEP_EPS - 1e-2, STEP_EPS)
 
 
 # plotting and figures
-figures_path = "/Users/blakeedwards/Desktop/Repos/personal/Neural-Distillation/neural-distillation/src/visualization/figures"
+figures_path = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/visualization/figures"
 generated_csv_path = "/Users/blakeedwards/Desktop/Repos/personal/Neural-Distillation/neural-distillation/data/raw"
 
 
