@@ -16,6 +16,7 @@ import numpy as np
 from datetime import datetime
 import tensorflow as tf
 from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 # project imports
 from data import load_dataset
@@ -30,6 +31,15 @@ def save_weights(models_dir, model, model_size, curr_epochs, total_epochs, val_a
     model.save_weights(model_path)
     return model_path
 
+def save_model(models_dir, model, model_size, curr_epochs, total_epochs, val_acc, train_acc):
+    model_filename = f"model_{model_size}_{curr_epochs}|{total_epochs}_{val_acc}_{train_acc}.h5"
+    weight_filename = f"model_weights_{model_size}_{curr_epochs}|{total_epochs}_{val_acc}_{train_acc}.h5"
+    model_path = os.path.join(models_dir, model_filename)
+    model_weight_path = os.path.join(models_dir, weight_filename)
+    model.save(model_path)
+    model.save_weights(model_weight_path)
+    del model
+    return model_path
 
 # write teacher logits to file
 def save_logits(logits_dir, model_size, curr_epochs, total_epochs, train_logits, test_logits):
@@ -116,20 +126,10 @@ def run():
                           metrics=["accuracy"])
     train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
-    prev_model_path = save_weights(models_dir, teacher_model, cfg.teacher_model_size, 0, cfg.epoch_max0,
-                                   format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
     train_logits, test_logits = teacher_utils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
     save_logits(logits_dir, cfg.teacher_model_size, 0, cfg.epoch_max0, train_logits, test_logits)
-
-    # load model for current iteration
-    teacher_model = knowledge_distillation_models.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, cfg.teacher_model_size, cfg.model_type)
-    # compile network for training
-    learning_rates = [0.1, 0.2, 0.004, 0.0008]
-    learning_rate_epochs = [0, 60, 120, 160]
-    optimizer = SGD(lr=learning_rates[0], momentum=0.9, nesterov=True, decay=5e-4)
-    teacher_model.compile(optimizer=optimizer,
-                          loss="categorical_crossentropy",
-                          metrics=["accuracy"])
+    prev_model_path = save_model(models_dir, teacher_model, cfg.teacher_model_size, 0, cfg.epoch_max0,
+                                 format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
 
     # intermittent training and harvesting of logits for ESKD experiment
     for i in range(1, len(cfg.epoch_intervals0)):
@@ -137,26 +137,11 @@ def run():
         # setup current iteration params and load model
         curr_epochs = cfg.epoch_intervals0[i]
         print(f"Training size {cfg.teacher_model_size} teacher network {curr_epochs}|{cfg.epoch_max0}")
-
-        # # clear current session to free memory
-        try:
-            idx = learning_rate_epochs.index(curr_epochs)
-            print("[INFO] Updating learning rate!")
-            tf.keras.backend.clear_session()
-            print("[INFO] Re-building network!")
-            teacher_model = knowledge_distillation_models.get_model(cfg.dataset, cfg.dataset_num_classes, X_train, cfg.teacher_model_size, cfg.model_type)
-            optimizer = SGD(lr=learning_rates[idx], momentum=0.9, nesterov=True, decay=5e-4)
-            teacher_model.compile(optimizer=optimizer,
-                                  loss="categorical_crossentropy",
-                                  metrics=["accuracy"])
-            print("[INFO] done!")
-        except:
-            print("[INFO] lr unchanged")
-
-
-        teacher_model.load_weights(prev_model_path)
+        print("[INFO] Loading saved model...")
+        teacher_model = load_model(prev_model_path)
 
         # train network
+        print("[INFO] Training loaded model...")
         if (cfg.use_datagen0):
             teacher_model.fit(datagen.flow(X_train, Y_train, batch_size=128),
                               validation_data=(X_test, Y_test),
@@ -170,17 +155,14 @@ def run():
                               epochs=cfg.interval_size0,
                               verbose=1,
                               callbacks=None)
-
+        print("[INFO] Evaluating model...")
         # evaluate and save model weights
         train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
         val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
-        prev_model_path = save_weights(models_dir, teacher_model, cfg.teacher_model_size, curr_epochs, cfg.epoch_max0,
-                                       format(val_acc[1], '.4f'), format(train_acc[1], '.4f'))
         # create and save logits from model
+        print("[INFO] Creating and saving model logits...")
         train_logits, test_logits = teacher_utils.createStudentTrainingData(teacher_model, None, X_train, None, X_test, None)
         save_logits(logits_dir, cfg.teacher_model_size, curr_epochs, cfg.epoch_max0, train_logits, test_logits)
-
-        # delete the model for the next training iteration
-        # del teacher_model
-        # del optimizer
+        prev_model_path = save_model(models_dir, teacher_model, cfg.teacher_model_size, curr_epochs, cfg.epoch_max0,
+                                     format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
 
