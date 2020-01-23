@@ -32,7 +32,7 @@ import math
 import pickle
 import numpy as np
 import pandas as pd
-import config_reference as cfg
+from utils import config_reference as cfg
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
@@ -54,7 +54,7 @@ TEACHER_DIR_QUERY = os.path.join(LOGIT_EXPERIMENT_PATH, "*.h5")
 STUDENT_MODEL_PATHS = glob.glob(STUDENT_DIR_QUERY)
 TEACHER_MODEL_PATHS = glob.glob(TEACHER_DIR_QUERY)
 
-# parse information from student model names
+# remove file path to parse information from model names
 student_rm_path = KD_EXPERIMENT_PATH + "/"
 STUDENT_MODEL_NAMES = [x[len(student_rm_path):] for x in STUDENT_MODEL_PATHS]
 teacher_rm_path = LOGIT_EXPERIMENT_PATH + "/"

@@ -13,7 +13,7 @@ from datetime import datetime
 from utils import config_reference
 from experiments import multistage_knowledge_distillation_train, eskd_teacher_logits_train, \
     eskd_knowledge_distillation_train, eskd_student_noise_and_adversarial_evaluation, \
-    eskd_baseline_train, eskd_baseline_noise_and_adversarial_evaluation
+    eskd_baseline_train, eskd_baseline_noise_and_adversarial_evaluation, eskd_teacher_train_and_collect_logits
 
 
 def config_option_parser():
@@ -111,9 +111,9 @@ def main():
             print(f"Selected: {options.experiment}")
             session_log_file = log_dir + "/training_session.log"
             multistage_knowledge_distillation_train.run(None, options, session_log_file, logits_dir, models_dir)
-        elif options.experiment == "eskd_teacher_logits_train":
+        elif options.experiment == "eskd_teacher_train_and_collect_logits":
             print(f"Selected: {options.experiment}")
-            eskd_teacher_logits_train.run()
+            eskd_teacher_train_and_collect_logits.run()
         elif options.experiment == "eskd_knowledge_distillation_train":
             print(f"Selected: {options.experiment}")
             eskd_knowledge_distillation_train.run()

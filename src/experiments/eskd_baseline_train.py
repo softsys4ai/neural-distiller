@@ -158,7 +158,7 @@ def run():
         baseline_student_model.compile(optimizer=optimizer,
                               loss="categorical_crossentropy",
                               metrics=["accuracy"])
-        chckpnt = log_dir + "/baseline-checkpoint-model.hf5"
+        chckpnt = "baseline-checkpoint-model.hf5"
         callbacks = [
             EarlyStopping(monitor='val_accuracy', patience=30, min_delta=0.00007),
             ModelCheckpoint(chckpnt, monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=True, mode='max')

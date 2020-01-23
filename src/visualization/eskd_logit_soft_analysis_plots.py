@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import config_reference as cfg
+from utils import config_reference as cfg
 sns.set()
 
 RESULTS_FILE = os.path.join(cfg.generated_csv_path, "logit_soft_analysis.csv")

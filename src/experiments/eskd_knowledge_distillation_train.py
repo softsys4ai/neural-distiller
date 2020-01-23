@@ -155,6 +155,7 @@ def run():
                                        format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
     else:
         starting_model_path = cfg.EXPLICIT_START_MODEL_PATH
+        starting_model_weight_path = cfg.EXPLICIT_START_MODEL_WEIGHT_PATH
 
     # load student model
     student_model = load_and_compile_student(X_train, cfg.student_model_size)
@@ -181,7 +182,7 @@ def run():
             # train student model on hard and soft targets
             checkpoint_filename = f"checkpoint_model_{cfg.student_model_size}_{int(cfg.arr_of_distillation_epochs[i])}|{cfg.total_teacher_logit_epochs}.h5"
             callbacks = [
-                EarlyStopping(monitor='val_acc', patience=25, min_delta=0.001),
+                EarlyStopping(monitor='val_acc', patience=15, min_delta=0.001),
                 ModelCheckpoint(checkpoint_filename, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
             ]
             student_model.fit(X_train, Y_train_new,
