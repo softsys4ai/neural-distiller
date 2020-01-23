@@ -25,15 +25,13 @@ use_fit_generator_student = False
 teacher_optimizer = "sgd"
 student_optimizer = "sgd"
 teacher_model_size = 6
-student_model_size = 6
+student_model_size = 2
 
 # 0. eskd_teacher_logits_train
-debug0 = False
+debug0 = True
 use_datagen0 = True
-epoch_min0 = 0
+USE_TEACHER_LR_SCHEDULER = True
 epoch_max0 = 200
-interval_size0 = 1
-epoch_intervals0 = np.arange(epoch_min0, epoch_max0+interval_size0, interval_size0)
 
 # 1. eskd_knowledge_distillation_train
 USE_EXPLICIT_START_MODEL = False
