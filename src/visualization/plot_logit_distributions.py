@@ -5,7 +5,7 @@ from keras.datasets import cifar100
 import numpy as np
 from tensorflow.python.keras.utils import np_utils
 import matplotlib.pyplot as plt
-import config_reference as cfg
+from utils import config_reference as cfg
 
 def convert_logits_to_soft_targets(temp, normalize, teacher_train_logits, teacher_test_logits, Y_train, Y_test):
     # softmax at raised temperature

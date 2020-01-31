@@ -140,9 +140,9 @@ def run():
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)[1]
     save_weights(models_dir, teacher_model, 0, val_acc, train_acc)
     # setup training callbacks and train model
-    chckpnt = os.path.join(models_dir, "model_{epoch}_{val_accuracy:.5f}_{accuracy:.5f}.h5")
+    chckpnt = os.path.join(models_dir, "model_{epoch}_{val_acc:.5f}_{acc:.5f}.h5")
     callbacks = [
-        ModelCheckpoint(chckpnt, monitor='val_accuracy', verbose=1, save_best_only=False, save_weights_only=True,
+        ModelCheckpoint(chckpnt, verbose=1, save_best_only=False, save_weights_only=True,
                         mode='max')
     ]
     if cfg.USE_TEACHER_LR_SCHEDULER:

@@ -95,6 +95,7 @@ def run():
     # intermittent training and harvesting of logits for ESKD experiment
     try:
         baseline_student_model = knowledge_distillation_models.get_model(cfg.dataset, 100, X_train, cfg.student_model_size, cfg.model_type)
+        baseline_student_model.summary()
     except:
         print("[ERROR] Error thrown while loading the model...")
     for i in range(1, cfg.num_models_to_train):
@@ -158,10 +159,10 @@ def run():
         baseline_student_model.compile(optimizer=optimizer,
                               loss="categorical_crossentropy",
                               metrics=["accuracy"])
-        chckpnt = "baseline-checkpoint-model.hf5"
+        chckpnt = f"baseline_checkpoint_{i}|{cfg.num_models_to_train}.hf5"
         callbacks = [
-            EarlyStopping(monitor='val_accuracy', patience=30, min_delta=0.00007),
-            ModelCheckpoint(chckpnt, monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=True, mode='max')
+            EarlyStopping(monitor='val_acc', patience=30, min_delta=0.00007),
+            ModelCheckpoint(chckpnt, monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=True, mode='max')
         ]
         if cfg.USE_BASELINE_LR_SCHEDULER:
             print("[INFO] Using learning rate scheduler...")

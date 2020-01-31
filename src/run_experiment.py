@@ -11,7 +11,7 @@ import traceback
 from optparse import OptionParser
 from datetime import datetime
 from utils import config_reference
-from experiments import multistage_knowledge_distillation_train, eskd_teacher_logits_train, \
+from experiments import multistage_knowledge_distillation_train, \
     eskd_knowledge_distillation_train, eskd_student_noise_and_adversarial_evaluation, \
     eskd_baseline_train, eskd_baseline_noise_and_adversarial_evaluation, eskd_teacher_train_and_collect_logits
 
@@ -116,7 +116,7 @@ def main():
             eskd_teacher_train_and_collect_logits.run()
         elif options.experiment == "eskd_knowledge_distillation_train":
             print(f"Selected: {options.experiment}")
-            eskd_knowledge_distillation_train.run()
+            eskd_knowledge_distillation_train.run(options.gpu)
         elif options.experiment == "eskd_student_noise_and_adversarial_evaluation":
             print(f"Selected: {options.experiment}")
             eskd_student_noise_and_adversarial_evaluation.run()

@@ -111,7 +111,7 @@ def load_and_compile_student(X_train, model_size):
 
 
 def compile_student(student_model, KD=False, alpha=1.0):
-    optimizer = SGD(lr=0.01, momentum=0.9, nesterov=True)
+    optimizer = SGD(lr=cfg.learning_rate, momentum=0.9, nesterov=True)
     if (KD):
         # todo resolve slicing bug with KL loss function
         student_model.compile(optimizer=optimizer,
@@ -132,7 +132,7 @@ def load_logits(logits_dir, model_size, curr_epochs, total_epochs):
         teacher_test_logits = pickle.load(file)
     return teacher_train_logits, teacher_test_logits
 
-def run():
+def run(training_gpu):
     # create experiment run directory for each session's model weights and logits
     log_dir = cfg.log_dir
     now = datetime.now()
@@ -180,13 +180,13 @@ def run():
             # load starting model weights
             student_model.load_weights(starting_model_weight_path)
             # train student model on hard and soft targets
-            checkpoint_filename = f"checkpoint_model_{cfg.student_model_size}_{int(cfg.arr_of_distillation_epochs[i])}|{cfg.total_teacher_logit_epochs}.h5"
+            checkpoint_filename = f"checkpoint_model_{int(training_gpu)}_{cfg.student_model_size}_{int(cfg.arr_of_distillation_epochs[i])}|{cfg.total_teacher_logit_epochs}_{cfg.arr_of_distillation_temps[j]}_.h5"
             callbacks = [
-                EarlyStopping(monitor='val_acc', patience=15, min_delta=0.001),
+                EarlyStopping(monitor='val_acc', patience=30, min_delta=0.001),
                 ModelCheckpoint(checkpoint_filename, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
             ]
             student_model.fit(X_train, Y_train_new,
-                              batch_size=128,
+                              batch_size=cfg.train_batch_size,
                               epochs=cfg.student_epochs,
                               verbose=1,
                               callbacks=callbacks,
