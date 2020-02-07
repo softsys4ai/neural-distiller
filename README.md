@@ -1,4 +1,4 @@
-# PAKD Model Compression
+# PaKD Model Compression
 <b>Project:</b> Multi-stage Compression of Deep Neural Networks through Pruning and Knowledge Distillation<br>
 <b>Lead Professor:</b> Dr. Pooyan Jamshidi<br>
 <b>Project lead:</b> Blake Edwards<br>
