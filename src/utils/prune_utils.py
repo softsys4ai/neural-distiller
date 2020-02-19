@@ -1,6 +1,6 @@
 import numpy as np
 from tensorflow_model_optimization.sparsity import keras as sparsity
-from Utils import HelperUtil
+from utils import helper_util
 
 
 def prune(logger, model, X_train, Y_train, X_test, Y_test, numTrainingSamples, batchSize, epochs, initSparse, endSparse):

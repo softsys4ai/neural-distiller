@@ -8,6 +8,7 @@ ENV/
 *.pkl
 __pycache__
 .DS_STORE
+src/data/datasets/
 
 run-experiment/Logs
 
