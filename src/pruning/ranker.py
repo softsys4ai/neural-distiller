@@ -1,7 +1,17 @@
+"""
+@author: Stephen Baione (sbaione@email.sc.edu)
+@desription: Implementation of ranker object, that applies neural network pruning ranking techniques and returns the
+results. When results are returned, execution of pruning is controlled by pruner, based on specified sparsity.
+"""
+
+from pruning.prune_config import get_supported_prune_levels, get_supported_prune_methods
+from pruning.prune_wrapper import PruneWrapper
+
 import tensorflow as tf
 
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Layer
+from tensorflow.python.keras.models import Model
+from tensorflow.python.keras.layers import Layer
+from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
 
 import tensorflow_model_optimization as tmot
 from tensorflow_model_optimization.python.core.sparsity import keras as sparsity
@@ -23,10 +33,6 @@ L2 norm
 
 Returns list of ints that represent layer index
 """
-from .prune_config import get_supported_prune_levels, get_supported_prune_methods
-from .prune_wrapper import PruneWrapper
-
-from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
 
 
 class Ranker(object):
@@ -50,12 +56,6 @@ class Ranker(object):
         taylor_func = taylor_funcs.get(rank_level)
         taylor_func(X_test, Y_test, **kwargs)
 
-    def _build_masked_model(self, model, wrapped_layer: PruneWrapper):
-
-        model_layers = [wrapped_layer]
-        for layer in model.layers:
-            model_layers.append(layer)
-
     def _rank_taylor_first_order_by_layer(self, X_test, Y_test, **kwargs):
         pass
 
@@ -68,9 +68,9 @@ class Ranker(object):
         For multivariate, output:
         Θ(z) = abs(1/m * sum((dc/dAct.) * Act.))
         """
-        #TODO:// Finish implementation and Testing
+        # TODO:// Finish implementation and Testing
         ranks = {}
-        #TODO:// Make loss obj variable to models
+        # TODO:// Make loss obj variable to models
         loss_obj = SparseCategoricalCrossentropy(from_logits=True)
 
         # This naming convention follows ResNet50, which I've been testing with. Must be changed to be more general.
@@ -92,6 +92,7 @@ class Ranker(object):
             
             """
             for channel in channels:
+                conv_filter_index
                 for conv_filter_index in filters:
                     new_mask_vals = mask.numpy()
                     new_mask_vals[:, :, channel, conv_filter_index] = 0.0
@@ -99,7 +100,7 @@ class Ranker(object):
                     conv_layer.prune()
                     # Activation of convolutional layer
                     activation = conv_layer.output
-                    #TODO:// Make own function
+
                     with tf.GradientTape() as tape:
                         tape.watch(activation)
                         predictions = model(inputs)
@@ -107,10 +108,6 @@ class Ranker(object):
                     score = tf.math.reduce_mean(tape.gradient(loss, activation) * activation)
                     ranks[score] = (layer_index, channel, conv_filter_index)
         return sorted(ranks.items())
-
-    def _evaluate_model(self, X_test, Y_test):
-        model = self._model
-        predictions = model.evaluate()
 
     def _rank_taylor_first_order_by_weights(self, X_test, Y_test, **kwargs):
         pass

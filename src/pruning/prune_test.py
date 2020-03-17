@@ -1,3 +1,13 @@
+"""
+@author: Stephen Baione
+@description: Test pruning classes and functionality
+# TODO:// After POF, start using VGG16 and ResNet50 for pruning
+"""
+
+from pruning.prune_wrapper import PruneWrapper
+from pruning.pruner import Pruner
+from pruning.ranker import Ranker
+
 import tensorflow as tf
 import numpy as np
 
@@ -8,10 +18,6 @@ from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
 
 from tensorflow.python.keras import datasets
-
-from .prune_wrapper import PruneWrapper
-from .pruner import Pruner
-from .ranker import Ranker
 
 
 def load_dataset():
@@ -62,14 +68,6 @@ def test_pruner(model, X_train, Y_train, X_test, Y_test):
     pruner.prune(sparsity=0.5)
 
 
-def test_ranker(model, new_model, X_test, Y_test):
-    ranker_old = Ranker(model)
-    ranker_new = Ranker(new_model)
-    old_grads = ranker_old._get_gradients(model, X_test, Y_test)
-    new_grads = ranker_new._get_gradients(new_model, X_test, Y_test)
-
-
-
 def rebuild_model(model, layers, X_train, Y_train):
     new_model = Sequential()
     for layer in layers:
@@ -82,10 +80,7 @@ def test():
     (X_train, Y_train), (X_test, Y_test) = load_dataset()
     model = load_model()
     train_model(model, X_train, Y_train)
-    model, new_model = test_wrapper(model, X_train, Y_train, X_test, Y_test)
-    test_ranker(model, new_model, X_test, Y_test)
+    test_pruner(model, X_train, Y_train, X_test, Y_test)
 
 
-    
-if __name__ == "__main__":
-    test()
+test()

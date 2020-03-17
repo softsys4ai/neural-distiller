@@ -4,22 +4,7 @@
  * @description Implements pruner object for pruning neural networks
 """
 
-# What do I need?
-# Model, X_test, Y_test, X_train, Y_train, Cost function, rank function
-#
-#
-#
-#
-#
-#
-#
-#
-#
-
-
-
-
-# Step 1: Implement ranking algorithms for neural network pruning:
+# Implement ranking algorithms for neural network pruning:
 # - Taylor: First order
 # - Oracle
 # - Taylor: Second Order        for
@@ -28,22 +13,22 @@
 # - filter-wise
 
 
-# Step 2: Implement pruning functionality for neural network
-# Package: Tensorflow_model_optimization
+# Implement pruning functionality for neural network
+# Package: TensorFlow_model_optimization
 
-# Step 3: Tie it all together: rank -> prune -> fine tune -> repeat
+# Tie it all together: rank -> prune -> fine tune -> repeat
 
+from pruning.prune_config import get_supported_prune_levels, get_supported_prune_methods
+from pruning.prune_wrapper import PruneWrapper
+from pruning.ranker import Ranker
 
-# Class for scheduling and executing pruning  for keras model
-
-import tensorflow.compat.v1 as tf
-tf.enable_eager_execution()
+import tensorflow as tf
 
 from tensorflow.python.keras.layers import Layer, Conv2D
 from tensorflow.python.keras.models import Model
-from .prune_config import get_supported_prune_levels, get_supported_prune_methods
-from .prune_wrapper import PruneWrapper
-from .ranker import Ranker
+
+from pprint import pprint as pprint
+
 
 class Pruner(object):
     def __init__(self, model: Model, X_test, Y_test, prune_level: str, prune_method: str):
@@ -65,7 +50,8 @@ class Pruner(object):
         params = self.model.count_params()
         sparsity = int(params * sparsity)
         ranked_weights = self.rank_weights()
-        print(ranked_weights)
+        pprint(ranked_weights)
+        # TODO:// Prune specified number of weights based on sparsity
 
     def rank_weights(self):
         ranker = self.ranker
@@ -86,11 +72,3 @@ class Pruner(object):
 
     def set_prune_method(self, prune_method):
         self.prune_method = prune_method
-
-
-
-
-
-
-
-

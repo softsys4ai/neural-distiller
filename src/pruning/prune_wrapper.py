@@ -1,3 +1,9 @@
+"""
+@author: Stephen Baione (sbaione@email.sc.edu)
+@description: TensorFlow Layer Wrapper to extend functionality for neural network pruning.
+                Based on pruning Gate Decorator Pattern
+"""
+
 import tensorflow as tf
 
 from tensorflow.python.keras.applications import ResNet50
@@ -14,11 +20,11 @@ import os
 import sys
 import re
 
-
 """
 Wrapper implementation notes:
 def build(self, input_shape): -> 
 """
+
 
 class PruneWrapper(Wrapper):
     """
@@ -28,6 +34,7 @@ class PruneWrapper(Wrapper):
     prune_level - The level of the neural network in which the pruning will be applied to
     prune_method - The method that will be used to evaluate and rank model at the prune_level
     """
+
     def __init__(self, layer: Layer, prune_level: str = "weights", **kwargs):
         super(PruneWrapper, self).__init__(layer, **kwargs)
 
@@ -36,8 +43,8 @@ class PruneWrapper(Wrapper):
 
         # Validating prune_level
         if prune_level not in ("weights", "filter"):
-            raise ValueError("Incompatible prune_level:\n\n" /
-                             "Supported Levels:\n" /
+            raise ValueError("Incompatible prune_level:\n\n"
+                             "Supported Levels:\n"
                              "weights\nfilter")
 
         self.prune_level = prune_level
@@ -48,18 +55,20 @@ class PruneWrapper(Wrapper):
     # Build function to add mask variable to graph
     def build(self, input_shape):
         super(PruneWrapper, self).build(input_shape)
-        self.layer.build(input_shape=input_shape)
+        if not self.built:
+            self.layer.build(input_shape=input_shape)
 
-        layer = self.layer
-        # Mask to track weight pruning
-        wandb = layer.get_weights()
-        weights = wandb[0]
-        self.mask = tf.Variable(initial_value=tf.ones(weights.shape, dtype=tf.float32, name=None),
-                               trainable=False,
-                               name=f"{layer.name}_mask",
-                               dtype=tf.float32,
-                               aggregation=tf.VariableAggregation.MEAN,
-                               shape=weights.shape)
+            layer = self.layer
+            # Mask to track weight pruning
+            wandb = layer.get_weights()
+            weights = wandb[0]
+            self.mask = tf.Variable(initial_value=tf.ones(weights.shape, dtype=tf.float32, name=None),
+                                    trainable=False,
+                                    name=f"{layer.name}_mask",
+                                    dtype=tf.float32,
+                                    aggregation=tf.VariableAggregation.MEAN,
+                                    shape=weights.shape)
+        self.built = True
 
     def call(self, inputs, training=False, **kwargs):
         if training:
@@ -90,8 +99,8 @@ class PruneWrapper(Wrapper):
 
     def set_prune_level(self, prune_level):
         if prune_level not in ("weights", "filter", "layer"):
-            raise ValueError("Incompatible prune_level:\n\n" /
-                             "Supported Levels:\n" /
+            raise ValueError("Incompatible prune_level:\n\n"
+                             "Supported Levels:\n"
                              "weights\nfilter\nlayer")
         self.prune_level = prune_level
 
@@ -108,7 +117,7 @@ class PruneWrapper(Wrapper):
         new_mask = tf.ones_like(mask)
         self.set_mask(new_mask)
 
-    def revertlayer(self):
+    def revert_layer(self):
         self.reset_mask()
         layer = self.layer
         wandb = layer.get_weights()
