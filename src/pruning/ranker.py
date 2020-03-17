@@ -1,5 +1,4 @@
-import tensorflow.compat.v1 as tf
-tf.enable_eager_execution()
+import tensorflow as tf
 
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Layer
@@ -77,7 +76,7 @@ class Ranker(object):
         # This naming convention follows ResNet50, which I've been testing with. Must be changed to be more general.
         # Probably should parse layers and populate list based on type(layer)
         conv_layers: [PruneWrapper] = [PruneWrapper(layer) for layer in model.layers if layer.name.count("conv") == 2]
-        sample = X_test[:100]
+        inputs = X_test[:100]
         label = Y_test[:100]
         for layer_index, conv_layer in enumerate(conv_layers):
             weights = conv_layer.get_weights()
@@ -98,13 +97,13 @@ class Ranker(object):
                     new_mask_vals[:, :, channel, conv_filter_index] = 0.0
                     conv_layer.set_mask(new_mask_vals)
                     conv_layer.prune()
-
+                    # Activation of convolutional layer
+                    activation = conv_layer.output
                     #TODO:// Make own function
                     with tf.GradientTape() as tape:
-                        tape.watch(conv_layer.output)
-                        predictions = model.predict(sample)
+                        tape.watch(activation)
+                        predictions = model(inputs)
                         loss = loss_obj(predictions, label)
-
                     score = tf.math.reduce_mean(tape.gradient(loss, activation) * activation)
                     ranks[score] = (layer_index, channel, conv_filter_index)
         return sorted(ranks.items())
