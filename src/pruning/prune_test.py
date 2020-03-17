@@ -1,6 +1,7 @@
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
+import numpy as np
 
-from tensorflow.python.keras.layers import Layer, Conv2D, Dense, Flatten, Dropout
+from tensorflow.python.keras.layers import Layer, Conv2D, Dense, Flatten, MaxPool2D, Dropout
 from tensorflow.python.keras.models import Model, Sequential
 
 from tensorflow.python.keras.optimizers import Adam
@@ -8,28 +9,34 @@ from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
 
 from tensorflow.python.keras import datasets
 
-from prune_wrapper import PruneWrapper
-from pruner import Pruner
-from ranker import Ranker
+from .prune_wrapper import PruneWrapper
+from .pruner import Pruner
+from .ranker import Ranker
+
 
 def load_dataset():
     mnist = datasets.mnist
     (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
     X_train, X_test = X_train / 255.0, X_test / 255.0
+    X_train, X_test = np.expand_dims(X_train, axis=-1), np.expand_dims(X_test, axis=-1)
+    (X_train, Y_train), (X_test, Y_test) = (X_train[:10000], Y_train[:10000]), (X_test[:10000], Y_test[:10000])
     return (X_train, Y_train), (X_test, Y_test)
 
 
 def load_model():
     model = Sequential()
-    model.add(Flatten(input_shape=(28, 28)))
-    model.add(Dense(128, activation="relu"))
-    model.add(Dropout(0.2))
-    model.add(Dense(10))
-    model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=['accuracy'])
+    model.add(Conv2D(8, kernel_size=5, activation='relu', input_shape=(28, 28, 1)))
+    model.add(MaxPool2D())
+    model.add(Conv2D(16, kernel_size=5, activation='relu'))
+    model.add(MaxPool2D())
+    model.add(Flatten())
+    model.add(Dense(256, activation='relu'))
+    model.add(Dense(10, activation='softmax'))
+    model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
     return model
 
 
-def train_model(model, X_train, Y_train, epochs=10):
+def train_model(model, X_train, Y_train, epochs=15):
     model.fit(X_train, Y_train, epochs=epochs)
 
 
@@ -50,12 +57,17 @@ def test_wrapper(model, X_train, Y_train, X_test, Y_test):
     return model, new_model
 
 
+def test_pruner(model, X_train, Y_train, X_test, Y_test):
+    pruner = Pruner(model, X_test, Y_test, prune_level="filter", prune_method="taylor_first_order")
+    pruner.prune(sparsity=0.5)
+
+
 def test_ranker(model, new_model, X_test, Y_test):
     ranker_old = Ranker(model)
     ranker_new = Ranker(new_model)
     old_grads = ranker_old._get_gradients(model, X_test, Y_test)
     new_grads = ranker_new._get_gradients(new_model, X_test, Y_test)
-    print("thing")
+
 
 
 def rebuild_model(model, layers, X_train, Y_train):

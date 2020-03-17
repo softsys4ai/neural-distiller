@@ -24,8 +24,8 @@ L2 norm
 
 Returns list of ints that represent layer index
 """
-from prune_config import get_supported_prune_levels, get_supported_prune_methods
-from prune_wrapper import PruneWrapper
+from .prune_config import get_supported_prune_levels, get_supported_prune_methods
+from .prune_wrapper import PruneWrapper
 
 from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
 
@@ -40,7 +40,7 @@ class Ranker(object):
         self._validate_rank_level(rank_level)
 
         rank_func = self.get_method_to_func_mapping().get(rank_method)
-        rank_func(rank_level, **kwargs)
+        rank_func(X_test, Y_test, rank_level, **kwargs)
 
     def rank_taylor_first_order(self, X_test, Y_test, rank_level: str, **kwargs):
         taylor_funcs = {
@@ -49,9 +49,10 @@ class Ranker(object):
             "weight": self._rank_taylor_first_order_by_weights
         }
         taylor_func = taylor_funcs.get(rank_level)
-        taylor_func(**kwargs)
+        taylor_func(X_test, Y_test, **kwargs)
 
     def _build_masked_model(self, model, wrapped_layer: PruneWrapper):
+
         model_layers = [wrapped_layer]
         for layer in model.layers:
             model_layers.append(layer)
@@ -76,9 +77,9 @@ class Ranker(object):
         # This naming convention follows ResNet50, which I've been testing with. Must be changed to be more general.
         # Probably should parse layers and populate list based on type(layer)
         conv_layers: [PruneWrapper] = [PruneWrapper(layer) for layer in model.layers if layer.name.count("conv") == 2]
-        sample = X_test[0]
-        label = Y_test[0]
-        for conv_layer in conv_layers:
+        sample = X_test[:100]
+        label = Y_test[:100]
+        for layer_index, conv_layer in enumerate(conv_layers):
             weights = conv_layer.get_weights()
             filters = range(conv_layer.get_filters())
             channels = range(conv_layer.get_channels())
@@ -88,7 +89,7 @@ class Ranker(object):
             For each filter in each channel of each layer:
             Set the mask over the filter
             Calculate the estimated loss using the first_order_taylor_expansion
-            Store {channel, filter_index, estimated_cost}
+            Store {estimated_cost: (layer, channel, filter_index)}
             
             """
             for channel in channels:
@@ -100,35 +101,17 @@ class Ranker(object):
 
                     #TODO:// Make own function
                     with tf.GradientTape() as tape:
-                        activation = conv_layer.activation(sample)
-                        predictions = model.predict(sample, label)
+                        tape.watch(conv_layer.output)
+                        predictions = model.predict(sample)
                         loss = loss_obj(predictions, label)
 
                     score = tf.math.reduce_mean(tape.gradient(loss, activation) * activation)
-                    ranks[(channel, conv_filter_index)] = score
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    ranks[score] = (layer_index, channel, conv_filter_index)
+        return sorted(ranks.items())
 
     def _evaluate_model(self, X_test, Y_test):
         model = self._model
         predictions = model.evaluate()
-
 
     def _rank_taylor_first_order_by_weights(self, X_test, Y_test, **kwargs):
         pass
@@ -140,7 +123,7 @@ class Ranker(object):
             "weight": self._rank_taylor_second_order_by_weights
         }
         taylor_func = taylor_funcs.get(rank_level)
-        taylor_func(X_test, Y_test,**kwargs)
+        taylor_func(X_test, Y_test, **kwargs)
 
     def _rank_taylor_second_order_by_layer(self, X_test, Y_test, **kwargs):
         pass
@@ -183,6 +166,3 @@ class Ranker(object):
     def _validate_rank_method(rank_method):
         if rank_method not in get_supported_prune_methods():
             raise ValueError("Unsupported rank_method")
-
-
-
