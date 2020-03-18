@@ -15,3 +15,6 @@ run-experiment/Logs
 
 ~$*
 *.xlsx
+
+# Tensorflow models
+models-2.1.0*/

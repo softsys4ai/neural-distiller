@@ -55,19 +55,18 @@ class PruneWrapper(Wrapper):
     # Build function to add mask variable to graph
     def build(self, input_shape):
         super(PruneWrapper, self).build(input_shape)
-        if not self.built:
-            self.layer.build(input_shape=input_shape)
+        self.layer.build(input_shape=input_shape)
 
-            layer = self.layer
-            # Mask to track weight pruning
-            wandb = layer.get_weights()
-            weights = wandb[0]
-            self.mask = tf.Variable(initial_value=tf.ones(weights.shape, dtype=tf.float32, name=None),
-                                    trainable=False,
-                                    name=f"{layer.name}_mask",
-                                    dtype=tf.float32,
-                                    aggregation=tf.VariableAggregation.MEAN,
-                                    shape=weights.shape)
+        layer = self.layer
+        # Mask to track weight pruning
+        wandb = layer.get_weights()
+        weights = wandb[0]
+        self.mask = tf.Variable(initial_value=tf.ones(weights.shape, dtype=tf.float32, name=None),
+                                trainable=False,
+                                name=f"{layer.name}_mask",
+                                dtype=tf.float32,
+                                aggregation=tf.VariableAggregation.MEAN,
+                                shape=weights.shape)
         self.built = True
 
     def call(self, inputs, training=False, **kwargs):

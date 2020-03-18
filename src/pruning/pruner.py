@@ -72,3 +72,11 @@ class Pruner(object):
 
     def set_prune_method(self, prune_method):
         self.prune_method = prune_method
+
+
+if __name__ == "__main__":
+    (X_train, Y_train), (X_test, Y_test) = prune_test.load_dataset()
+    model = prune_test.load_model()
+    prune_test.train_model(model, X_train, Y_train, epochs=2)
+    pruner = Pruner(model, X_test, Y_test, prune_level="filter", prune_method="taylor_first_order")
+    pruner.prune(sparsity=0.5)

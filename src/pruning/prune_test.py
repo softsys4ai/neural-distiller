@@ -5,7 +5,6 @@
 """
 
 from pruning.prune_wrapper import PruneWrapper
-from pruning.pruner import Pruner
 from pruning.ranker import Ranker
 
 import tensorflow as tf
@@ -63,11 +62,6 @@ def test_wrapper(model, X_train, Y_train, X_test, Y_test):
     return model, new_model
 
 
-def test_pruner(model, X_train, Y_train, X_test, Y_test):
-    pruner = Pruner(model, X_test, Y_test, prune_level="filter", prune_method="taylor_first_order")
-    pruner.prune(sparsity=0.5)
-
-
 def rebuild_model(model, layers, X_train, Y_train):
     new_model = Sequential()
     for layer in layers:
@@ -80,7 +74,7 @@ def test():
     (X_train, Y_train), (X_test, Y_test) = load_dataset()
     model = load_model()
     train_model(model, X_train, Y_train)
-    test_pruner(model, X_train, Y_train, X_test, Y_test)
 
 
-test()
+
+
