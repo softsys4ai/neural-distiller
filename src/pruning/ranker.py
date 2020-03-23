@@ -79,7 +79,6 @@ class Ranker(object):
         inputs = X_test[:100]
         label = Y_test[:100]
         for layer_index, conv_layer in enumerate(conv_layers):
-            weights = conv_layer.get_weights()
             filters = range(conv_layer.get_filters())
             channels = range(conv_layer.get_channels())
             mask = conv_layer.get_mask()
@@ -92,20 +91,20 @@ class Ranker(object):
             
             """
             for channel in channels:
-                conv_filter_index
                 for conv_filter_index in filters:
                     new_mask_vals = mask.numpy()
                     new_mask_vals[:, :, channel, conv_filter_index] = 0.0
                     conv_layer.set_mask(new_mask_vals)
                     conv_layer.prune()
-                    # Activation of convolutional layer
-                    activation = conv_layer.output
 
                     with tf.GradientTape() as tape:
-                        tape.watch(activation)
+                        tape.watch(conv_layer.output)
                         predictions = model(inputs)
-                        loss = loss_obj(predictions, label)
-                    score = tf.math.reduce_mean(tape.gradient(loss, activation) * activation)
+                        loss = loss_obj(label, predictions)
+                    # Activation of weights of conv_layer
+                    activation = tape.watched_variables()[0]
+                    grads = tape.gradient(loss, activation)
+                    score = tf.math.reduce_mean(grads * activation)
                     ranks[score] = (layer_index, channel, conv_filter_index)
         return sorted(ranks.items())
 
