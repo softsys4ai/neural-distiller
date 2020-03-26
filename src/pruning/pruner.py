@@ -34,6 +34,7 @@ from pprint import pprint as pprint
 
 class Pruner(object):
     def __init__(self, model: Model, X_train, Y_train, X_test, Y_test, prune_level: str, prune_method: str):
+        assert model is not None
         self.model = model
         self.pruned_model = None
 

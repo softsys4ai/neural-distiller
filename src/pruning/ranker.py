@@ -11,6 +11,7 @@ import tensorflow as tf
 
 from tensorflow.python.keras.models import Model
 from tensorflow.python.keras.layers import Layer
+from tensorflow.python.keras.layers import Conv2D
 from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
 
 import tensorflow_model_optimization as tmot
@@ -75,7 +76,7 @@ class Ranker(object):
 
         # This naming convention follows ResNet50, which I've been testing with. Must be changed to be more general.
         # Probably should parse layers and populate list based on type(layer)
-        conv_layers: [PruneWrapper] = [PruneWrapper(layer) for layer in model.layers if layer.name.count("conv") == 2]
+        conv_layers: [PruneWrapper] = [PruneWrapper(layer) for layer in model.layers if layer.__class__ == Conv2D]
         inputs = X_test[:100]
         label = Y_test[:100]
         for layer_index, conv_layer in enumerate(conv_layers):
@@ -98,7 +99,7 @@ class Ranker(object):
                     conv_layer.prune()
 
                     with tf.GradientTape() as tape:
-                        tape.watch(conv_layer.output)
+                        tape.watch(conv_layer.layer.output)
                         predictions = model(inputs)
                         loss = loss_obj(label, predictions)
                     # Activation of weights of conv_layer
