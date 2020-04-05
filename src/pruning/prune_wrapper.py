@@ -51,12 +51,10 @@ class PruneWrapper(Wrapper):
 
         # Kwargs
         self.scope = kwargs.get("scope", "")
-        self.build(layer.input_shape)
 
     # Build function to add mask variable to graph
     def build(self, input_shape):
         super(PruneWrapper, self).build(input_shape)
-        self.layer.build(input_shape=input_shape)
 
         layer = self.layer
         # Mask to track weight pruning
@@ -71,10 +69,7 @@ class PruneWrapper(Wrapper):
         self.built = True
 
     def call(self, inputs, training=None, **kwargs):
-        if training is None:
-            training = K.learning_phase()
-
-        return self.layer.call(inputs)
+        return self.mask * self.layer.call(inputs)
 
     def get_filters(self):
         return self.layer.filters
