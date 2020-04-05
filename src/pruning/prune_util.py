@@ -30,7 +30,7 @@ def load_dataset(dataset: str, test_size=10000):
     return (X_train, Y_train), (X_test, Y_test)
 
 
-def load_model(model_type:str):
+def load_model(model_type: str):
     model = None
 
     if model_type == "mnist":
@@ -46,8 +46,10 @@ def compile_model(model: Model, optimizer="adam", loss="sparse_categorical_cross
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
 
-def train_model(model, X_train, Y_train, X_test, Y_test, epochs=5):
-    model.fit(X_train, Y_train, epochs=epochs, validation_data=(X_test, Y_test))
+def train_model(model, X_train, Y_train, X_test, Y_test, callbacks=None, epochs=5, verbose=1):
+    if callbacks is not None:
+        model.fit(X_train, Y_train, epochs=epochs, callbacks=callbacks, validation_data=(X_test, Y_test))
+    model.fit(X_train, Y_train, epochs=epochs, validation_data=(X_test, Y_test), verbose=verbose)
 
 
 def save_model_h5(model: Model, file_path=None, include_optimizer=True):
@@ -73,12 +75,11 @@ def compress_model_zip(model: Model, file_path=None):
     return file_path
 
 
-def evaluate_model_size(models: [Model], name="", uncompressed_path=None, compressed_path=None):
-    for model in models:
-        _uncompressed_path = save_model_h5(model, file_path=uncompressed_path, include_optimizer=False)
-        _compressed_path = compress_model_zip(model, file_path=compressed_path)
-        return f"Size of {name} model before compression {os.path.getsize(_uncompressed_path) / float(2**20)} MB\n" \
-               f"Size of {name} model after compression {os.path.getsize(_compressed_path) / float(2**20)} MB\n"
+def evaluate_model_size(model: Model, name="", uncompressed_path=None, compressed_path=None):
+    _uncompressed_path = save_model_h5(model, file_path=uncompressed_path, include_optimizer=False)
+    _compressed_path = compress_model_zip(model, file_path=compressed_path)
+    return f"Size of {name} model before compression {os.path.getsize(_uncompressed_path) / float(2**20)} MB\n" \
+           f"Size of {name} model after compression {os.path.getsize(_compressed_path) / float(2**20)} MB\n"
 
 
 def format_experiment_name(prune_method: str, prune_level: str, model_type: str, **prune_params):
@@ -90,3 +91,11 @@ def format_experiment_name(prune_method: str, prune_level: str, model_type: str,
     params = params[:-1]
 
     return f"method_{prune_method}_level_{prune_level}_model_type_{model_type}_{params}"
+
+
+def evaluate_percentage_of_zeros(model: Model):
+    evaluation = ""
+    for i, w in enumerate(model.get_weights()):
+        evaluation += f"{model.weights[i].name} -- Total: {w.size}, Zeros: {np.sum(w==0) / w.size * 100}\n"
+    evaluation += "\n"
+    return evaluation
