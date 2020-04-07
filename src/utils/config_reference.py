@@ -5,13 +5,13 @@ import numpy as np
 # logging
 spacer = "--------------------------------"
 
-# remote configurations
-log_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs"
-util_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/utils"
+# # remote configurations
+# log_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/logs"
+# util_dir = "/home/blakete/cookie-cutter-neural-distiller/neural-distiller/src/utils"
 
-# # local configurations
-# log_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/logs"
-# util_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/utils"
+# local configurations
+log_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/logs"
+util_dir="/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/utils"
 
 #  training
 model_type = "resnet"
@@ -24,7 +24,7 @@ use_fit_generator_teacher = False
 use_fit_generator_student = False
 teacher_optimizer = "sgd"
 student_optimizer = "sgd"
-teacher_model_size = 6
+teacher_model_size = 10
 student_model_size = 2
 
 # 0. eskd_teacher_logits_train
@@ -85,7 +85,9 @@ model_size = 2
 
 
 # 4. eskd_baseline_noise_and_adversarial_evaluation
-MODEL_DIR4 = "/Users/blakeedwards/Desktop/Repos/personal/Neural-Distillation/neural-distillation/src/logs/ESKD_baseline_cifar100_2_19-01-20_14:59:09/models"
+MODEL_DIR4 = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 2/ESKD_Knowledge_Distillation_cifar100_2_17-12-19_20:33:15/models"
+USE_GAUSS_NOISE = True
+USE_ADV_ATTACK = False
 attack_type4 = "fgm"
 MEAN4 = 0
 MIN_SIGMA4 = 0.1
@@ -100,8 +102,8 @@ EPS_VALS4 = np.arange(MIN_EPS, MAX_EPS + STEP_EPS - 1e-2, STEP_EPS)
 
 # plotting and figures
 figures_path = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/src/visualization/figures"
-generated_csv_path = "/Users/blakeedwards/Desktop/Repos/personal/Neural-Distillation/neural-distillation/data/raw"
-
+processed_csv_path = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/data/processed"
+raw_data_path = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller-softsys4ai/data/raw"
 
 
 

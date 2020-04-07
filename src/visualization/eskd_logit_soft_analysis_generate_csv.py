@@ -30,14 +30,17 @@ import re
 import glob
 import math
 import pickle
+from datetime import datetime
 import numpy as np
 import pandas as pd
 from utils import config_reference as cfg
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
-RESULTS_FILE = "logit_analysis.csv"
-ENTROPY_RESULTS_FILE = "logit_entropy_analysis.csv"
+
+dt = str(datetime.now().isoformat())
+RESULTS_FILE = f"logit_analysis_{dt}.csv"
+ENTROPY_RESULTS_FILE = f"logit_entropy_analysis_{dt}.csv"
 
 FAST_MODE = True
 INCLUDE_LOGIT_DIFF = False
@@ -56,8 +59,8 @@ if FAST_MODE:
     X_test = X_test[:10000]
 
 # load all model paths
-KD_EXPERIMENT_PATH = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/Training-Results/Experiment 2/ESKD_Knowledge_Distillation_cifar100_2_17-12-19_20:33:15/models"
-LOGIT_EXPERIMENT_PATH = "/Users/blakeedwards/Documents/jamshidi-offline-research/ESKD/ResNet-Results/Teacher-Logit-Results/ESKD_Logit_Harvesting_cifar100_6_23-01-20_21:33:10/logits"
+KD_EXPERIMENT_PATH = "/Users/blakeedwards/Desktop/remote-files/ESKD_Logit_Harvesting_cifar100_6_23-01-20_21\:33\:10/models"
+LOGIT_EXPERIMENT_PATH = "/Users/blakeedwards/Desktop/remote-files/ESKD_Logit_Harvesting_cifar100_6_23-01-20_21:33:10/logits"
 STUDENT_DIR_QUERY = os.path.join(KD_EXPERIMENT_PATH, "*.h5")
 TEACHER_DIR_QUERY = os.path.join(LOGIT_EXPERIMENT_PATH, "*.pkl")
 STUDENT_MODEL_PATHS = glob.glob(STUDENT_DIR_QUERY)

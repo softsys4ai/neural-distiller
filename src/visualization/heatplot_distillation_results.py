@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 from utils import config_reference as cfg
 
-with open("resnet_distillation_results_4.txt") as f:
+with open(os.path.join(cfg.raw_data_path, "resnet_distillation_results_4.txt")) as f:
     content = f.readlines()
 # you may also want to remove whitespace characters like `\n` at the end of each line
 content = [x.strip() for x in content]
@@ -19,7 +19,10 @@ temperatures = []
 test_accs = []
 train_accs = []
 for model in content:
-    size, interval, temp, test_acc, train_acc = re.findall(rf"model_(\d+)_(\d+)\|\d+_(\d+)_(\d+.\d+)_(\d+.\d+).", model)[0]
+    try:
+        size, interval, temp, test_acc, train_acc = re.findall(rf"model_(\d+)_(\d+)\|\d+_(\d+)_(\d+.\d+)_(\d+.\d+).", model)[0]
+    except:
+        print(f"[ERROR] when parsing: {model}")
     sizes.append(int(size))
     intervals.append(int(interval))
     temperatures.append(float(temp))
@@ -34,11 +37,12 @@ df = pd.DataFrame(list(zip(sizes, intervals, temperatures, test_accs, train_accs
 df_plot = df[df.interval != 0]
 df_min = df_plot['test_acc'].min()
 df_max = df_plot['test_acc'].max()
+df_min = 0.47
 
 hm_data1 = pd.pivot_table(df_plot, values='test_acc',
                           index=['temp'],
                           columns='interval')
-plot = sns.heatmap(hm_data1, cmap="gnuplot2", vmin=df_min, vmax=df_max)
+plot = sns.heatmap(hm_data1, cmap="binary", vmin=df_min, vmax=df_max)
 plot.invert_yaxis()
 plt.title("Student Test Accuracy w.r.t Temperature and Epoch Interval")
 fig = plot.get_figure()

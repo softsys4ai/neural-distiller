@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import config_reference as cfg
+from utils import config_reference as cfg
 sns.set()
 
 LOGIT_DIFFERENCE_PATH = "/Users/blakeedwards/Desktop/Repos/research/neural-distiller/post-experiment/ESKD-Analysis/experiment3_logit_diffs.pkl"

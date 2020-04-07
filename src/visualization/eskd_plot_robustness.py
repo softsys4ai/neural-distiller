@@ -9,25 +9,34 @@ sns.set()
 
 # TODO add gaussian noise plots to this file
 
-RESULTS_FILE = "/Users/blakeedwards/Desktop/Repos/personal/Neural-Distillation/neural-distillation/src/logs/ESKD_student_noise_and_adv_evaluation_cifar100_2_19-01-20_15:53:30/results.csv"
+RESULTS_FILE = os.path.join(cfg.raw_data_path, "resnet_adversarial_results.csv")
 EXP = "experiment2"
-ATTACK = "FGM"
-EPS = "0.100"
+EPS = "0.050"
+SIG = "0.200"
+USE_EPS = False
+if USE_EPS:
+    COL_NAME = 'eps_' + EPS
+    ATTACK = "FGM"
+else:
+    COL_NAME = 'sig_' + SIG
+    ATTACK = "GAUSS_NOISE"
+
 
 FIG_DIR = "figures"
-CMAP = "gnuplot2"
-df_plot = pd.read_csv(RESULTS_FILE)
-df = df_plot[df_plot.interval != 0]
-df_min = df['eps_'+EPS].min()
-df_max = df['eps_'+EPS].max()
-hm_data1 = pd.pivot_table(df_plot, values='eps_' + EPS,
+CMAP = "binary"
+df = pd.read_csv(RESULTS_FILE)
+df_plot = df[df.interval != 0]
+df_min = df[COL_NAME].min()
+df_max = df[COL_NAME].max()
+hm_data1 = pd.pivot_table(df_plot, values=COL_NAME,
                           index=['temp'],
                           columns='interval')
+df_min = 0.18
 plot = sns.heatmap(hm_data1, cmap=CMAP, vmin=df_min, vmax=df_max)
 plot.invert_yaxis()
-plt.title("Adversarial Accuracy w.r.t Temperature and Epoch Interval ("+ATTACK+", Epsilon "+EPS+")")
+plt.title("Adversarial Accuracy w.r.t Temperature and Epoch Interval ("+COL_NAME+")")
 fig = plot.get_figure()
-fig.savefig(os.path.join(cfg.figures_path, EXP+"_AR_"+ATTACK+"_Eps_"+EPS+"_heatplot.png"))
+fig.savefig(os.path.join(cfg.figures_path, EXP+"_AR_"+ATTACK+"_"+COL_NAME+"_heatplot.png"))
 plt.show()
 
 # find max accuracy for each epoch interval
@@ -61,8 +70,8 @@ plt.xlim((min_epoch, max_epoch))
 plt.ylabel("Adversarial Test Accuracy")
 plt.legend(loc="lower right")
 # plt.legend(bbox_to_anchor=(1.0, 1.0))
-plt.title("Adversarial Robustness Accuracy w.r.t. Temperature and Epoch Interval ("+ATTACK+")")
-plt.savefig(os.path.join(cfg.figures_path,  EXP+"_AR_"+ATTACK+"_Eps_"+EPS+"_lineplot.png"))
+plt.title("Adversarial Robustness Accuracy w.r.t. Temperature and Epoch Interval ("+COL_NAME+")")
+plt.savefig(os.path.join(cfg.figures_path, EXP+"_AR_"+ATTACK+"_"+COL_NAME+"_lineplot.png"))
 plt.show()
 
 
