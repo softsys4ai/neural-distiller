@@ -69,7 +69,7 @@ class PruneWrapper(Wrapper):
         self.built = True
 
     def call(self, inputs, training=None, **kwargs):
-        return self.mask * self.layer.call(inputs)
+        return self.layer.call(inputs)
 
     def get_filters(self):
         return self.layer.filters
@@ -118,7 +118,7 @@ class PruneWrapper(Wrapper):
         wandb = layer.get_weights()
         original_weights = self.get_original_weights()
         wandb[0] = original_weights
-        layer.set_weights(original_weights)
+        layer.set_weights(wandb)
         self.layer = layer
 
     def prune(self):

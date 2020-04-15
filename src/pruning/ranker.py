@@ -76,37 +76,41 @@ class Ranker(object):
 
         # This naming convention follows ResNet50, which I've been testing with. Must be changed to be more general.
         # Probably should parse layers and populate list based on type(layer)
-        conv_layers: [PruneWrapper] = [PruneWrapper(layer) for layer in model.layers if layer.__class__ == Conv2D]
         inputs = X_test[:100]
-        label = Y_test[:100]
-        for layer_index, conv_layer in enumerate(conv_layers):
-            filters = range(conv_layer.get_filters())
-            channels = range(conv_layer.get_channels())
-            mask = conv_layer.get_mask()
+        labels = Y_test[:100]
+        for index, layer in enumerate(model.layers):
+            if isinstance(layer, PruneWrapper) and not isinstance(layer, tf.keras.layers.InputLayer):
+                if isinstance(layer.layer, tf.keras.layers.Conv2D):
+                    filters = range(layer.get_filters())
+                    channels = range(layer.get_channels())
+                    mask = layer.get_mask()
 
-            """
-            For each filter in each channel of each layer:
-            Set the mask over the filter
-            Calculate the estimated loss using the first_order_taylor_expansion
-            Store {estimated_cost: (layer, channel, filter_index)}
-            
-            """
-            for channel in channels:
-                for conv_filter_index in filters:
-                    new_mask_vals = mask.numpy()
-                    new_mask_vals[:, :, channel, conv_filter_index] = 0.0
-                    conv_layer.set_mask(new_mask_vals)
-                    conv_layer.prune()
+                    """
+                    For each filter in each channel of each layer:
+                    Set the mask over the filter
+                    Calculate the estimated loss using the first_order_taylor_expansion
+                    Store {estimated_cost: (layer, channel, filter_index)}
+                    
+                    """
+                    for channel in channels:
+                        for conv_filter_index in filters:
+                            print(index, layer.name, channel, conv_filter_index)
+                            new_mask_vals = mask.numpy()
+                            new_mask_vals[:, :, channel, conv_filter_index] = 0.0
+                            layer.set_mask(new_mask_vals)
+                            layer.prune()
 
-                    with tf.GradientTape() as tape:
-                        tape.watch(conv_layer.layer.output)
-                        predictions = model(inputs)
-                        loss = loss_obj(label, predictions)
-                    # Activation of weights of conv_layer
-                    activation = tape.watched_variables()[0]
-                    grads = tape.gradient(loss, activation)
-                    score = tf.math.reduce_mean(grads * activation)
-                    ranks[score] = (layer_index, channel, conv_filter_index)
+                            with tf.GradientTape() as tape:
+                                tape.watch(layer.layer.output)
+                                predictions = model(inputs)
+                                loss = loss_obj(labels, predictions)
+                            # Activation of weights of conv_layer
+                            activation = tape.watched_variables()[0]
+                            grads = tape.gradient(loss, activation)
+                            score = tf.math.reduce_mean(grads * activation).numpy()
+                            ranks[score] = (index, channel, conv_filter_index)
+                            layer.reset_mask()
+                            layer.revert_layer()
         return sorted(ranks.items())
 
     def _rank_taylor_first_order_by_weights(self, X_test, Y_test, **kwargs):

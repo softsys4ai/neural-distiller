@@ -96,6 +96,6 @@ def format_experiment_name(prune_method: str, prune_level: str, model_type: str,
 def evaluate_percentage_of_zeros(model: Model):
     evaluation = ""
     for i, w in enumerate(model.get_weights()):
-        evaluation += f"{model.weights[i].name} -- Total: {w.size}, Zeros: {np.sum(w==0) / w.size * 100}\n"
+        evaluation += f"{model.weights[i].name} -- Total: {w.size}, Zeros: {np.sum(w==0) / w.size * 100}%\n"
     evaluation += "\n"
     return evaluation

@@ -37,7 +37,6 @@ class Pruner(object):
     def __init__(self, model: Model, X_train, Y_train, X_test, Y_test, prune_level: str, prune_method: str):
         assert model is not None
         self.model = model
-        self.pruned_model = None
 
         if prune_level not in get_supported_prune_levels():
             raise ValueError("Unsupported prune_level")
@@ -46,12 +45,25 @@ class Pruner(object):
 
         self.prune_level = prune_level
         self.prune_method = prune_method
+        self.pruned_model = self.copy_model(model)
         self.ranker = Ranker(model)
 
         self.X_train = X_train
         self.Y_train = Y_train
         self.X_test = X_test
         self.Y_test = Y_test
+
+    def copy_model(self, model):
+        def _wrap_model(layer):
+            # If layer is input layer, output layer, or layer that has no weights
+            if (isinstance(layer, tf.keras.layers.InputLayer)) \
+                    or (layer == model.layers[-1]) \
+                    or (len(layer.get_weights()) == 0):
+                return layer.__class__.from_config(layer.get_config())
+            elif self.prune_level == "filters" and isinstance(layer, tf.keras.layers.Conv2D):
+                return PruneWrapper(layer)
+            return PruneWrapper(layer)
+        return tf.keras.models.clone_model(model, input_tensors=model.inputs, clone_function=_wrap_model)
 
     # sparsity is percentage of network params that should remain after prune
     def prune(self, **kwargs):
