@@ -55,7 +55,8 @@ class Ranker(object):
             "weight": self._rank_taylor_first_order_by_weights
         }
         taylor_func = taylor_funcs.get(rank_level)
-        taylor_func(X_test, Y_test, **kwargs)
+        return taylor_func(X_test, Y_test, **kwargs)
+
 
     def _rank_taylor_first_order_by_layer(self, X_test, Y_test, **kwargs):
         pass

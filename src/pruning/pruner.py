@@ -46,7 +46,6 @@ class Pruner(object):
         self.prune_level = prune_level
         self.prune_method = prune_method
         self.pruned_model = self.copy_model(model)
-        self.ranker = Ranker(model)
 
         self.X_train = X_train
         self.Y_train = Y_train
@@ -87,19 +86,65 @@ class Pruner(object):
         prune_method = self.get_prune_method()
         if prune_method == "low_magnitude":
             pruned_model = self._prune_low_magnitude(model, X_train, Y_train, X_test, Y_test, **kwargs)
+        elif prune_method == "taylor_first_order":
+            pruned_model = self._prune_taylor_first_order(**kwargs)
 
         self.pruned_model = pruned_model
-
-    def rank_weights(self):
-        ranker = self.ranker
-        ranked_weights = ranker.rank(self.X_test, self.Y_test, self.prune_method, self.prune_level)
-        return ranked_weights
 
     def evaluate_pruned_model(self, verbose=0):
         pruned_model = self.pruned_model
         X_test = self.X_test
         Y_test = self.Y_test
         return pruned_model.evaluate(X_test, Y_test, verbose=verbose)
+
+    def _prune_taylor_first_order(self, **kwargs):
+
+        def _wrap_model(layer):
+            if isinstance(layer, tf.keras.layers.InputLayer) or layer == model.layers[-1] or len(layer.get_weights()) == 0:
+                return layer.__class__.from_config(layer.get_config())
+            elif isinstance(layer, tf.keras.layers.Conv2D):
+                return PruneWrapper(layer, prune_level="filter")
+            return layer.__class__.from_config(layer.get_config())
+
+        continue_epochs = kwargs.get("continue_epochs", 5)
+        prune_n_lowest = kwargs.get("prune_n_lowest", 10)
+
+        model = self.model
+        (X_train, Y_train), (X_test, Y_test) = (self.X_train, self.Y_train), (self.X_test, self.Y_test)
+
+        wrapped_model = tf.keras.models.clone_model(model, input_tensors=model.inputs, clone_function=_wrap_model)
+        prune_util.compile_model(wrapped_model)
+
+        callbacks = kwargs.get("callbacks", None)
+        if callbacks is None:
+            prune_util.train_model(wrapped_model, X_train, Y_train, X_test, Y_test,
+                                   epochs=continue_epochs)
+        else:
+            prune_util.train_model(wrapped_model, X_train, Y_train, X_test, Y_test,
+                                   epochs=continue_epochs, callbacks=callbacks)
+        model_ranker = Ranker(wrapped_model)
+        sorted_ranks = model_ranker.rank_taylor_first_order(X_test, Y_test, "filter")
+
+        lowest_n_ranks = sorted_ranks[:prune_n_lowest]
+        for (score, (layer, channel, filter_index)) in lowest_n_ranks:
+            mask = wrapped_model.layers[layer].get_mask()
+            new_mask_vals = mask.numpy()
+            new_mask_vals[:, :, channel, filter_index] = 0.0
+            wrapped_model.layers[layer].set_mask(new_mask_vals)
+            wrapped_model.layers[layer].prune()
+
+        stripped_model = tf.keras.models.clone_model(wrapped_model,
+                                                     input_tensors=wrapped_model.inputs,
+                                                     clone_function=self._strip_wrappers)
+        prune_util.compile_model(stripped_model)
+
+        return stripped_model
+
+    @staticmethod
+    def _strip_wrappers(layer):
+        if isinstance(layer, PruneWrapper):
+            return layer.layer
+        return layer
 
     @staticmethod
     def _prune_low_magnitude(_model, _X_train, _Y_train, _X_test, _Y_test, **kwargs):
