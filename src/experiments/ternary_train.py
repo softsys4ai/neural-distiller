@@ -1,6 +1,7 @@
 
 # ternary network training
 import os
+import json
 import math
 import numpy as np
 from tqdm import tqdm
@@ -9,6 +10,12 @@ from datetime import datetime
 from utils import config_reference as cfg
 import tensorflow.python.keras.backend as K
 # tf.compat.v1.disable_eager_execution()
+
+
+# save configuration json object to log directory
+def save_config(session_config, log_dir):
+    with open(os.path.join(log_dir, "session_config.json"), 'w') as json_file:
+        json.dump(session_config, json_file)
 
 # write weights to file
 def save_weights(models_dir, model, epoch, total_epochs, val_acc, ternary=False):
@@ -80,23 +87,65 @@ x_test = (x_test / 255).reshape((-1, 28, 28, 1))
 y_test = tf.keras.utils.to_categorical(y_test, 10)
 
 # Hyper-parameters
-batch_size = 64
-epochs = 50
+lr = 0.001
+epochs = 400
+batch_size = 32
+dataset = "mnist"
 weight_init = tf.keras.initializers.RandomUniform(minval=-1.0, maxval=1.0, seed=None)
-optimizer = tf.keras.optimizers.SGD(lr=0.002, decay=1e-6, momentum=0.9, nesterov=True)
-optimizer2 = tf.keras.optimizers.SGD(lr=0.002, decay=1e-6, momentum=0.9, nesterov=True)
 
-# Build model
+# optimizer = tf.keras.optimizers.SGD(lr=lr, decay=1e-6, momentum=0.9, nesterov=True)
+# optimizer2 = tf.keras.optimizers.SGD(lr=lr, decay=1e-6, momentum=0.9, nesterov=True)
+optimizer = tf.keras.optimizers.Adam(lr=lr)
+optimizer2 = tf.keras.optimizers.Adam(lr=lr)
+
+# Saving configurations to the logging directory
+sess_config = {'lr': lr, 'batch_size': batch_size, 'dataset': dataset, 'train_epochs': epochs, 'completed_epochs': 0}
+save_config(sess_config, log_dir)
+
+# build respective model
+trainable = True
+
+# mnist model
 model = tf.keras.models.Sequential()
-# model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', kernel_initializer=weight_init,
-#                                  input_shape=(28, 28, 1)))
-# model.add(tf.keras.layers.Conv2D(64, kernel_size=(3, 3), activation='relu', kernel_initializer=weight_init,
-#                                  input_shape=(28, 28, 1)))
-model.add(tf.keras.layers.Flatten(input_shape=(28, 28, 1))) # include at front of FC networks
-# model.add(tf.keras.layers.Flatten())
-model.add(tf.keras.layers.Dense(32, activation='sigmoid', kernel_initializer=weight_init))
+model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3), activation='sigmoid', kernel_initializer=weight_init,
+                                 input_shape=(28, 28, 1), trainable=trainable))
+model.add(tf.keras.layers.MaxPool2D((2, 2)))
+model.add(tf.keras.layers.Dropout(0.25))
+model.add(tf.keras.layers.Conv2D(64, kernel_size=(3, 3), activation='sigmoid', kernel_initializer=weight_init,
+                                 trainable=trainable))
+model.add(tf.keras.layers.MaxPool2D((2, 2)))
+model.add(tf.keras.layers.Dropout(0.25))
+model.add(tf.keras.layers.Flatten())
+# model.add(tf.keras.layers.Flatten(input_shape=(28, 28, 1))) # include at front of FC networks
+model.add(tf.keras.layers.Dense(64, activation='sigmoid', kernel_initializer=weight_init))
 model.add(tf.keras.layers.Dense(32, activation='sigmoid', kernel_initializer=weight_init))
 model.add(tf.keras.layers.Dense(10, activation='softmax', kernel_initializer=weight_init))
+
+# # cifar 10 model
+# model = tf.keras.models.Sequential()
+# model.add(tf.keras.models.Conv2D(32, (3, 3), padding='same',
+#                  input_shape=x_train.shape[1:]))
+# model.add(tf.keras.models.Activation('relu'))
+# model.add(tf.keras.models.Conv2D(32, (3, 3)))
+# model.add(tf.keras.models.Activation('relu'))
+# model.add(tf.keras.models.MaxPooling2D(pool_size=(2, 2)))
+# model.add(tf.keras.models.Dropout(0.25))
+#
+# model.add(tf.keras.models.Conv2D(64, (3, 3), padding='same'))
+# model.add(tf.keras.models.Activation('relu'))
+# model.add(tf.keras.models.Conv2D(64, (3, 3)))
+# model.add(tf.keras.models.Activation('relu'))
+# model.add(tf.keras.models.MaxPooling2D(pool_size=(2, 2)))
+# model.add(tf.keras.models.Dropout(0.25))
+#
+# model.add(tf.keras.models.Flatten())
+# model.add(tf.keras.models.Dense(512))
+# model.add(tf.keras.models.Activation('relu'))
+# model.add(tf.keras.models.Dropout(0.5))
+# model.add(tf.keras.models.Dense(10))
+# model.add(tf.keras.models.Activation('softmax'))
+
+# end of model definitions
 
 ternary_model = tf.keras.models.clone_model(model)
 
@@ -135,12 +184,14 @@ for epoch in range(epochs):
                 ternary_model.layers[cnt].set_weights(ws)
             cnt += 1
         train_step(x_train[n:n + batch_size], y_train[n:n + batch_size])
-    model.evaluate(x_test, y_test, verbose=0)
-    print('\nEvaluating and saving models...')
+    print('Evaluating and saving models...')
     tn_results = ternary_model.evaluate(x_test, y_test, verbose=0)
     fp_results = model.evaluate(x_test, y_test, verbose=0)
     save_weights(models_dir, ternary_model, epoch+1, epochs, tn_results[1], True)
     save_weights(models_dir, model, epoch+1, epochs, fp_results[1], False)
+    print('Saving session configuration...')
+    sess_config['completed_epochs'] = epoch+1
+    save_config(sess_config, log_dir)
     print('32 bit scores:\n', fp_results)
     print('2 bit scores:\n', tn_results)
 
