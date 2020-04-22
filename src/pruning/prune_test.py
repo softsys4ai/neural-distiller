@@ -11,6 +11,7 @@ from pruning import prune_util
 import tensorflow as tf
 
 
+# Test of taylor_first_order using pruning framework
 def test_prune_taylor_first_order_impl():
     model = prune_util.load_model("mnist")
     (X_train, Y_train), (X_test, Y_test) = prune_util.load_dataset(dataset="mnist", test_size=800)
@@ -30,8 +31,7 @@ def test_prune_taylor_first_order_impl():
     print(prune_util.evaluate_percentage_of_zeros(pruned_model))
 
 
-# TODO:// Implement into proper classes
-# TODO:// Implement Prune Schedule
+# Test of taylor_first_order without using pruning framework for reference
 def test_prune_taylor_first_order():
     model = prune_util.load_model("mnist")
     (X_train, Y_train), (X_test, Y_test) = prune_util.load_dataset(dataset="mnist", test_size=800)

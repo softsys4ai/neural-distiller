@@ -16,8 +16,6 @@
 # Implement pruning functionality for neural network
 # Package: TensorFlow_model_optimization
 
-# Tie it all together: rank -> prune -> fine tune -> repeat
-
 from pruning.prune_config import get_supported_prune_levels, get_supported_prune_methods
 from pruning.prune_wrapper import PruneWrapper
 from pruning.ranker import Ranker
@@ -25,26 +23,32 @@ from pruning import prune_util
 
 import tensorflow as tf
 
-from tensorflow.python.keras.layers import Layer, Conv2D
 from tensorflow.python.keras.models import Model
 
 import tensorflow_model_optimization as tfmot
 
-from pprint import pprint as pprint
-
 
 class Pruner(object):
     def __init__(self, model: Model, X_train, Y_train, X_test, Y_test, prune_level: str, prune_method: str):
+        """
+        Class to implement pruning of Sequential or Functional models
+        :param model: Model to be pruned
+        :param X_train: Training examples
+        :param Y_train: Training labels
+        :param X_test: Test examples
+        :param Y_test: Test labels
+        :param prune_level: Level to prune
+        :param prune_method: Method to use while pruning
+        """
         assert model is not None
         self.model = model
 
         if prune_level not in get_supported_prune_levels():
             raise ValueError("Unsupported prune_level")
-        # if prune_method not in get_supported_prune_methods():
-        #    raise ValueError("Unsupported prune_method")
 
         self.prune_level = prune_level
         self.prune_method = prune_method
+        # Set pruned model as copy of model, with PruningWrapper applied
         self.pruned_model = self.copy_model(model)
 
         self.X_train = X_train
@@ -53,6 +57,12 @@ class Pruner(object):
         self.Y_test = Y_test
 
     def copy_model(self, model):
+        """
+        Function used to create clone of keras model with PruningWrappers applied to appropriate layers
+        :param model: Keras Model
+        :return: Keras model, with appropriate layers wrapped
+        #TODO:// Extend for more options to fit new pruning algorithms
+        """
         def _wrap_model(layer):
             # If layer is input layer, output layer, or layer that has no weights
             if (isinstance(layer, tf.keras.layers.InputLayer)) \
@@ -92,13 +102,24 @@ class Pruner(object):
         self.pruned_model = pruned_model
 
     def evaluate_pruned_model(self, verbose=0):
+        """
+        Evaluate pruned model
+        :param verbose: Verbose for evaluation
+        :return: Score of model evaluation
+        """
         pruned_model = self.pruned_model
         X_test = self.X_test
         Y_test = self.Y_test
         return pruned_model.evaluate(X_test, Y_test, verbose=verbose)
 
     def _prune_taylor_first_order(self, **kwargs):
-
+        """
+        Implementation of Global Filter Taylor First Order Pruning
+        :param kwargs:
+                    continue_epochs: Epochs to train model after it is wrapped, before pruning
+                    prune_n_lowest: Number of weights to prune from model TODO:// Create function for this
+        :return:
+        """
         def _wrap_model(layer):
             if isinstance(layer, tf.keras.layers.InputLayer) or layer == model.layers[-1] or len(layer.get_weights()) == 0:
                 return layer.__class__.from_config(layer.get_config())
@@ -112,9 +133,11 @@ class Pruner(object):
         model = self.model
         (X_train, Y_train), (X_test, Y_test) = (self.X_train, self.Y_train), (self.X_test, self.Y_test)
 
+        # Create clone of model, with PruningWrapper applied to relevant layers
         wrapped_model = tf.keras.models.clone_model(model, input_tensors=model.inputs, clone_function=_wrap_model)
         prune_util.compile_model(wrapped_model)
 
+        # Train model for continue_epochs after wrappers have been applied
         callbacks = kwargs.get("callbacks", None)
         if callbacks is None:
             prune_util.train_model(wrapped_model, X_train, Y_train, X_test, Y_test,
@@ -122,10 +145,15 @@ class Pruner(object):
         else:
             prune_util.train_model(wrapped_model, X_train, Y_train, X_test, Y_test,
                                    epochs=continue_epochs, callbacks=callbacks)
+
+        # Rank filters of model based of taylor first order criteria
         model_ranker = Ranker(wrapped_model)
         sorted_ranks = model_ranker.rank_taylor_first_order(X_test, Y_test, "filter")
 
+        # Collect lowest n ranked filters
         lowest_n_ranks = sorted_ranks[:prune_n_lowest]
+
+        # Prune each of the lowest n ranked filters
         for (score, (layer, channel, filter_index)) in lowest_n_ranks:
             mask = wrapped_model.layers[layer].get_mask()
             new_mask_vals = mask.numpy()
@@ -133,6 +161,7 @@ class Pruner(object):
             wrapped_model.layers[layer].set_mask(new_mask_vals)
             wrapped_model.layers[layer].prune()
 
+        # Strip PruningWrappers from model
         stripped_model = tf.keras.models.clone_model(wrapped_model,
                                                      input_tensors=wrapped_model.inputs,
                                                      clone_function=self._strip_wrappers)

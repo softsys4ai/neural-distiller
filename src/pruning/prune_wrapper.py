@@ -5,37 +5,22 @@
 """
 
 import tensorflow as tf
-
-from tensorflow.python.keras.applications import ResNet50
-from tensorflow.python.keras import backend as K
 from tensorflow.python.keras.layers import Layer, Conv2D, Wrapper
-from tensorflow.python.keras.models import Model, Sequential
-
-from tensorflow_model_optimization.python.core.sparsity import keras as pruning
 
 import numpy as np
-from scipy import stats
-
-import os
-import sys
-import re
-
-"""
-Wrapper implementation notes:
-def build(self, input_shape): -> 
-"""
 
 
 class PruneWrapper(Wrapper):
     """
-    Tensorflow Layer Wrapper, to add pruning_functionality
-    :param
-    layer - Tensorflow keras Layer that will be wrapped
-    prune_level - The level of the neural network in which the pruning will be applied to
-    prune_method - The method that will be used to evaluate and rank model at the prune_level
+    __init__, build, and call functions required to properly wrap layer
     """
-
     def __init__(self, layer: Layer, prune_level: str = "weights", **kwargs):
+        """
+        Tensorflow Layer Wrapper that adds pruning functionality
+        :param layer: Layer to be wrapped
+        :param prune_level: Level at which pruning will occur
+        :param kwargs: scope
+        """
         super(PruneWrapper, self).__init__(layer, **kwargs)
 
         # Setting layer variable and saving original weights for possible reversion
@@ -46,7 +31,6 @@ class PruneWrapper(Wrapper):
             raise ValueError("Incompatible prune_level:\n\n"
                              "Supported Levels:\n"
                              "weights\nfilter")
-
         self.prune_level = prune_level
 
         # Kwargs
@@ -54,9 +38,14 @@ class PruneWrapper(Wrapper):
 
     # Build function to add mask variable to graph
     def build(self, input_shape):
+        """
+        Initializes all tensorflow variables and builds layer for training and inference
+        :param input_shape: Input shape of layer (typically we won't be calling this function directly)
+        :return:
+        """
         super(PruneWrapper, self).build(input_shape)
-
         layer = self.layer
+
         # Mask to track weight pruning
         wandb = layer.get_weights()
         weights = wandb[0]
@@ -69,18 +58,38 @@ class PruneWrapper(Wrapper):
         self.built = True
 
     def call(self, inputs, training=None, **kwargs):
+        """
+        Calls layer's call function
+        """
         return self.layer.call(inputs)
 
     def get_filters(self):
-        return self.layer.filters
+        """
+        Number of filters in layer
+        :return: integer presenting number of filters in layer (0 if not convolutional)
+        """
+        if self.layer.__class__ == Conv2D:
+            return self.layer.filters
+        return 0
 
     def get_channels(self):
+        """
+        Number of Channels in layer
+        :return: integer representing number of channels in layer
+        """
         return self.get_weights()[0].shape[-2]
 
     def get_biases(self):
+        """
+        Biases of layer
+        """
         return self.layer.get_weights()[1]
 
     def get_original_wandb(self):
+        """
+        Original weights and biases of layer before it was wrapped
+        :return: original weights and biases of layer
+        """
         return self.original_wandb
 
     def get_original_weights(self):
@@ -100,19 +109,36 @@ class PruneWrapper(Wrapper):
         self.prune_level = prune_level
 
     def get_mask(self):
+        """
+        Returns tensor representation of mask
+        :return: Tensor
+        """
         return tf.convert_to_tensor(self.mask, dtype=self.mask.dtype, name=self.mask.name)
 
     def set_mask(self, new_mask_vals: np.ndarray):
+        """
+        Assign new values to the layer Wrapper's mask
+        :param new_mask_vals: ndarray containing new values for layer's mask
+        :return:
+        """
         if new_mask_vals.shape != self.mask.shape:
             raise ValueError("new_mask_vals must be same size as mask")
         self.mask.assign(new_mask_vals)
 
     def reset_mask(self):
+        """
+        Resets mask to all ones (A.K.A. no weights are pruned)
+        :return:
+        """
         mask = self.mask
         new_mask = tf.ones_like(mask)
         self.set_mask(new_mask)
 
     def revert_layer(self):
+        """
+        Revert layer to original weights and biases, prior to being Wrapped
+        :return:
+        """
         self.reset_mask()
         layer = self.layer
         wandb = layer.get_weights()
@@ -122,11 +148,16 @@ class PruneWrapper(Wrapper):
         self.layer = layer
 
     def prune(self):
+        """
+        Prune layer
+        :return:
+        """
+        # Collect weights and mask of layer
         wandb = self.layer.get_weights()
         weights = wandb[0]
         mask = self.get_mask()
-        print(weights.shape)
 
+        # Multiply weights by mask to set pruned values to 0
         new_weights = weights * mask
         wandb[0] = new_weights
         self.layer.set_weights(wandb)

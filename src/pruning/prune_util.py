@@ -12,7 +12,13 @@ import zipfile
 import os
 
 
-def load_dataset(dataset: str, test_size=10000):
+def load_dataset(dataset: str, train_size=10000, test_size=5000):
+    """
+    Load dataset from keras datasets
+    :param dataset: dataset to be loaded
+    :param test_size: size of training
+    :return:
+    """
     if dataset is None:
         raise ValueError("Must include a string value to indicate dataset")
 
@@ -26,7 +32,8 @@ def load_dataset(dataset: str, test_size=10000):
     (X_train, Y_train), (X_test, Y_test) = ds.load_data()
     X_train, X_test = X_train / 255.0, X_test / 255.0
     X_train, X_test = np.expand_dims(X_train, axis=-1), np.expand_dims(X_test, axis=-1)
-    (X_train, Y_train) = (X_train[:test_size], Y_train[:test_size])
+    (X_train, Y_train) = (X_train[:train_size], Y_train[:train_size])
+    (X_test, Y_test) = (X_test[:test_size], Y_test[:test_size])
     return (X_train, Y_train), (X_test, Y_test)
 
 
