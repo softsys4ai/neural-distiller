@@ -61,6 +61,7 @@ class PruneWrapper(Wrapper):
         """
         Calls layer's call function
         """
+
         return self.layer.call(inputs)
 
     def get_filters(self):
@@ -157,7 +158,7 @@ class PruneWrapper(Wrapper):
         weights = wandb[0]
         mask = self.get_mask()
 
-        # Multiply weights by mask to set pruned values to 0
+        # Multiply weights by mask and set pruned values to 0
         new_weights = weights * mask
         wandb[0] = new_weights
         self.layer.set_weights(wandb)

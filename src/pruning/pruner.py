@@ -84,7 +84,6 @@ class Pruner(object):
             TODO:// Reference config for supported methods and corresponding keyword arguments
         :return:
         """
-
         model = self.get_model()
         assert model is not None
         pruned_model = self.pruned_model

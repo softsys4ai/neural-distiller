@@ -93,9 +93,9 @@ class Ranker(object):
                     Store {estimated_cost: (layer, channel, filter_index)}
                     
                     """
+                    print(f"Pruning layer {layer.name} with {filters} filters and {channels} channels")
                     for channel in channels:
                         for conv_filter_index in filters:
-                            print(index, layer.name, channel, conv_filter_index)
                             new_mask_vals = mask.numpy()
                             new_mask_vals[:, :, channel, conv_filter_index] = 0.0
                             layer.set_mask(new_mask_vals)

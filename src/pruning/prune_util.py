@@ -56,7 +56,8 @@ def compile_model(model: Model, optimizer="adam", loss="sparse_categorical_cross
 def train_model(model, X_train, Y_train, X_test, Y_test, callbacks=None, epochs=5, verbose=1):
     if callbacks is not None:
         model.fit(X_train, Y_train, epochs=epochs, callbacks=callbacks, validation_data=(X_test, Y_test))
-    model.fit(X_train, Y_train, epochs=epochs, validation_data=(X_test, Y_test), verbose=verbose)
+    else:
+        model.fit(X_train, Y_train, epochs=epochs, validation_data=(X_test, Y_test), verbose=verbose)
 
 
 def save_model_h5(model: Model, file_path=None, include_optimizer=True):
