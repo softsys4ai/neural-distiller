@@ -5,7 +5,7 @@
 
 
 def get_supported_prune_levels():
-    return "layer", "filter", "weight"
+    return {"taylor_first_order": "filter", "prune_low_magnitude": "weight"}
 
 
 def get_supported_prune_methods():

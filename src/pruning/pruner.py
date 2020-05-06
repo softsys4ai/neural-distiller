@@ -22,8 +22,9 @@ from pruning.ranker import Ranker
 from pruning import prune_util
 
 import tensorflow as tf
-
 from tensorflow.python.keras.models import Model
+
+import numpy as np
 
 import tensorflow_model_optimization as tfmot
 
@@ -43,13 +44,13 @@ class Pruner(object):
         assert model is not None
         self.model = model
 
-        if prune_level not in get_supported_prune_levels():
+        if prune_level not in get_supported_prune_levels().get(prune_method):
             raise ValueError("Unsupported prune_level")
 
         self.prune_level = prune_level
         self.prune_method = prune_method
         # Set pruned model as copy of model, with PruningWrapper applied
-        self.pruned_model = self.copy_model(model)
+        self.pruned_model = None
 
         self.X_train = X_train
         self.Y_train = Y_train
@@ -63,6 +64,7 @@ class Pruner(object):
         :return: Keras model, with appropriate layers wrapped
         #TODO:// Extend for more options to fit new pruning algorithms
         """
+        # Cloning function used for copying model
         def _wrap_model(layer):
             # If layer is input layer, output layer, or layer that has no weights
             if (isinstance(layer, tf.keras.layers.InputLayer)) \
@@ -74,7 +76,6 @@ class Pruner(object):
             return PruneWrapper(layer)
         return tf.keras.models.clone_model(model, input_tensors=model.inputs, clone_function=_wrap_model)
 
-    # sparsity is percentage of network params that should remain after prune
     def prune(self, **kwargs):
         """
         Executes pruning method on model
@@ -92,6 +93,7 @@ class Pruner(object):
         for data in [X_train, Y_train, X_test, Y_test]:
             assert data is not None
 
+        # Call prune method
         prune_method = self.get_prune_method()
         if prune_method == "low_magnitude":
             pruned_model = self._prune_low_magnitude(model, X_train, Y_train, X_test, Y_test, **kwargs)
@@ -119,6 +121,7 @@ class Pruner(object):
                     prune_n_lowest: Number of weights to prune from model TODO:// Create function for this
         :return:
         """
+        # Function used to wrap Conv2D layers in model
         def _wrap_model(layer):
             if isinstance(layer, tf.keras.layers.InputLayer) or layer == model.layers[-1] or len(layer.get_weights()) == 0:
                 return layer.__class__.from_config(layer.get_config())
@@ -126,30 +129,23 @@ class Pruner(object):
                 return PruneWrapper(layer, prune_level="filter")
             return layer.__class__.from_config(layer.get_config())
 
-        continue_epochs = kwargs.get("continue_epochs", 5)
-        prune_n_lowest = kwargs.get("prune_n_lowest", 10)
+        # Percentage of filters to prune
+        sparsity = kwargs.get("sparsity", 0.8)
 
         model = self.model
         (X_train, Y_train), (X_test, Y_test) = (self.X_train, self.Y_train), (self.X_test, self.Y_test)
 
-        # Create clone of model, with PruningWrapper applied to relevant layers
+        # Create clone of model, with PruningWrapper applied to Conv2D layers
         wrapped_model = tf.keras.models.clone_model(model, input_tensors=model.inputs, clone_function=_wrap_model)
         prune_util.compile_model(wrapped_model)
-
-        # Train model for continue_epochs after wrappers have been applied
-        callbacks = kwargs.get("callbacks", None)
-        if callbacks is None:
-            prune_util.train_model(wrapped_model, X_train, Y_train, X_test, Y_test,
-                                   epochs=continue_epochs)
-        else:
-            prune_util.train_model(wrapped_model, X_train, Y_train, X_test, Y_test,
-                                   epochs=continue_epochs, callbacks=callbacks)
 
         # Rank filters of model based of taylor first order criteria
         model_ranker = Ranker(wrapped_model)
         sorted_ranks = model_ranker.rank_taylor_first_order(X_test, Y_test, "filter")
 
         # Collect lowest n ranked filters
+        prune_n_lowest = self.calculate_n_lowest_filters(sparsity)
+        print(prune_n_lowest)
         lowest_n_ranks = sorted_ranks[:prune_n_lowest]
 
         # Prune each of the lowest n ranked filters
@@ -160,13 +156,7 @@ class Pruner(object):
             wrapped_model.layers[layer].set_mask(new_mask_vals)
             wrapped_model.layers[layer].prune()
 
-        # Strip PruningWrappers from model
-        stripped_model = tf.keras.models.clone_model(wrapped_model,
-                                                     input_tensors=wrapped_model.inputs,
-                                                     clone_function=self._strip_wrappers)
-        prune_util.compile_model(stripped_model)
-
-        return stripped_model
+        return wrapped_model
 
     @staticmethod
     def _strip_wrappers(layer):
@@ -226,3 +216,57 @@ class Pruner(object):
 
     def set_prune_method(self, prune_method):
         self.prune_method = prune_method
+
+    def export_pruned_model(self):
+        """
+        :return: Copy of pruned model with prune_wrappers stripped
+        """
+        def _strip_pruning_wrappers(layer):
+            if isinstance(layer, PruneWrapper):
+                return layer.layer
+            return layer
+
+        pruned_model = self.pruned_model
+        return tf.keras.models.clone_model(pruned_model,
+                                           input_tensors=pruned_model.input,
+                                           clone_function=_strip_pruning_wrappers)
+
+    def calculate_n_lowest_filters(self, target_sparsity):
+        _model = self.model
+        conv_layers = []
+        total_filters = 0
+        # Collect convolutional layers and total filters
+        for layer in _model.layers:
+            if isinstance(layer, PruneWrapper):
+                if isinstance(layer.layer, tf.keras.layers.Conv2D):
+                    conv_layers.append(layer)
+                    channels = layer.get_channels()
+                    total_filters += (layer.get_filters() * channels)
+            else:
+                if isinstance(layer, tf.keras.layers.Conv2D):
+                    conv_layers.append(layer)
+                    channels = layer.get_weights()[0].shape[-2]
+                    total_filters += (layer.filters * channels)
+        # Determine how many filters are already sparse
+        sparse_filters = 0
+        for layer in conv_layers:
+            weights = layer.get_weights()[0]
+            channels = weights.shape[-2]
+            if isinstance(layer, PruneWrapper):
+                for channel in range(channels):
+                    for conv_filter in layer.get_filters():
+                        filter_vals = weights[:, :, channel, conv_filter]
+                        if np.array_equal(filter_vals, np.zeros_like(filter_vals)):
+                            sparse_filters += 1
+            if isinstance(layer, tf.keras.layers.Conv2D):
+                for channel in range(channels):
+                    for conv_filter in range(layer.filters):
+                        filter_vals = weights[:, :, channel, conv_filter]
+                        if np.array_equal(filter_vals, np.zeros_like(filter_vals)):
+                            sparse_filters += 1
+        current_sparsity = sparse_filters / total_filters
+        sparsity = target_sparsity - current_sparsity
+        return int(total_filters * sparsity)
+
+
+

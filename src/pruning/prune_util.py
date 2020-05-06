@@ -5,6 +5,8 @@ from tensorflow.python.keras.models import Model
 from models.tf_official_models import official
 from official.vision.image_classification import mnist_main
 
+from pruning.prune_wrapper import PruneWrapper
+
 import numpy as np
 
 import tempfile
@@ -12,7 +14,7 @@ import zipfile
 import os
 
 
-def load_dataset(dataset: str, train_size=10000, test_size=5000):
+def load_dataset(dataset: str, train_size=None, test_size=None):
     """
     Load dataset from keras datasets
     :param dataset: dataset to be loaded
@@ -32,8 +34,10 @@ def load_dataset(dataset: str, train_size=10000, test_size=5000):
     (X_train, Y_train), (X_test, Y_test) = ds.load_data()
     X_train, X_test = X_train / 255.0, X_test / 255.0
     X_train, X_test = np.expand_dims(X_train, axis=-1), np.expand_dims(X_test, axis=-1)
-    (X_train, Y_train) = (X_train[:train_size], Y_train[:train_size])
-    (X_test, Y_test) = (X_test[:test_size], Y_test[:test_size])
+    if train_size is not None:
+        (X_train, Y_train) = (X_train[:train_size], Y_train[:train_size])
+    if test_size is not None:
+        (X_test, Y_test) = (X_test[:test_size], Y_test[:test_size])
     return (X_train, Y_train), (X_test, Y_test)
 
 
@@ -99,11 +103,3 @@ def format_experiment_name(prune_method: str, prune_level: str, model_type: str,
     params = params[:-1]
 
     return f"method_{prune_method}_level_{prune_level}_model_type_{model_type}_{params}"
-
-
-def evaluate_percentage_of_zeros(model: Model):
-    evaluation = ""
-    for i, w in enumerate(model.get_weights()):
-        evaluation += f"{model.weights[i].name} -- Total: {w.size}, Zeros: {np.sum(w==0) / w.size * 100}%\n"
-    evaluation += "\n"
-    return evaluation

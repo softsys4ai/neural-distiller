@@ -12,14 +12,13 @@ import numpy as np
 
 class PruneWrapper(Wrapper):
     """
-    __init__, build, and call functions required to properly wrap layer
+    Wraps TensorFlow layer to support pruning of kernel weights
     """
     def __init__(self, layer: Layer, prune_level: str = "weights", **kwargs):
         """
         Tensorflow Layer Wrapper that adds pruning functionality
         :param layer: Layer to be wrapped
         :param prune_level: Level at which pruning will occur
-        :param kwargs: scope
         """
         super(PruneWrapper, self).__init__(layer, **kwargs)
 
@@ -33,35 +32,27 @@ class PruneWrapper(Wrapper):
                              "weights\nfilter")
         self.prune_level = prune_level
 
-        # Kwargs
-        self.scope = kwargs.get("scope", "")
-
     # Build function to add mask variable to graph
     def build(self, input_shape):
         """
         Initializes all tensorflow variables and builds layer for training and inference
-        :param input_shape: Input shape of layer (typically we won't be calling this function directly)
+        :param input_shape: Input shape to layer
         :return:
         """
         super(PruneWrapper, self).build(input_shape)
-        layer = self.layer
 
-        # Mask to track weight pruning
-        wandb = layer.get_weights()
-        weights = wandb[0]
-        self.mask = tf.Variable(initial_value=tf.ones(weights.shape, dtype=tf.float32, name=None),
+        # Collect kernel weights
+        self.prunable_weights = self.layer.trainable_variables[0]
+        # Create mask to allowing sparsifying of kernel weights
+        self.mask = tf.Variable(initial_value=tf.ones(self.prunable_weights.shape, dtype=tf.float32, name=None),
                                 trainable=False,
-                                name=f"{layer.name}_mask",
+                                name=f"{self.layer.name}_mask",
                                 dtype=tf.float32,
                                 aggregation=tf.VariableAggregation.MEAN,
-                                shape=weights.shape)
+                                shape=self.prunable_weights.shape)
         self.built = True
 
     def call(self, inputs, training=None, **kwargs):
-        """
-        Calls layer's call function
-        """
-
         return self.layer.call(inputs)
 
     def get_filters(self):
@@ -72,6 +63,14 @@ class PruneWrapper(Wrapper):
         if self.layer.__class__ == Conv2D:
             return self.layer.filters
         return 0
+
+    def update_weights_op(self):
+        """
+        Operation for updating weights during graph execution. Useful for maintaining sparsity while training.
+        :return:
+        """
+        new_weights = tf.math.multiply(self.prunable_weights, self.mask)
+        self.prunable_weights.assign(new_weights)
 
     def get_channels(self):
         """
@@ -103,10 +102,10 @@ class PruneWrapper(Wrapper):
         return self.prune_level
 
     def set_prune_level(self, prune_level):
-        if prune_level not in ("weights", "filter", "layer"):
+        if prune_level not in ("weight", "filter", "layer"):
             raise ValueError("Incompatible prune_level:\n\n"
                              "Supported Levels:\n"
-                             "weights\nfilter\nlayer")
+                             "weight\nfilter\nlayer")
         self.prune_level = prune_level
 
     def get_mask(self):
@@ -131,8 +130,7 @@ class PruneWrapper(Wrapper):
         Resets mask to all ones (A.K.A. no weights are pruned)
         :return:
         """
-        mask = self.mask
-        new_mask = tf.ones_like(mask)
+        new_mask = tf.ones_like(self.mask)
         self.set_mask(new_mask)
 
     def revert_layer(self):
@@ -141,16 +139,14 @@ class PruneWrapper(Wrapper):
         :return:
         """
         self.reset_mask()
-        layer = self.layer
-        wandb = layer.get_weights()
+        wandb = self.layer.get_weights()
         original_weights = self.get_original_weights()
         wandb[0] = original_weights
-        layer.set_weights(wandb)
-        self.layer = layer
+        self.layer.set_weights(wandb)
 
     def prune(self):
         """
-        Prune layer
+        Prune layer during eager execution
         :return:
         """
         # Collect weights and mask of layer

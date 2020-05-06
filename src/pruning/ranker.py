@@ -10,16 +10,7 @@ from pruning.prune_wrapper import PruneWrapper
 import tensorflow as tf
 
 from tensorflow.python.keras.models import Model
-from tensorflow.python.keras.layers import Layer
-from tensorflow.python.keras.layers import Conv2D
 from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
-
-import tensorflow_model_optimization as tmot
-from tensorflow_model_optimization.python.core.sparsity import keras as sparsity
-
-import numpy as np
-
-from utils import helper_util
 
 """
 TODO: Implement ranking methods -
@@ -50,25 +41,22 @@ class Ranker(object):
 
     def rank_taylor_first_order(self, X_test, Y_test, rank_level: str, **kwargs):
         taylor_funcs = {
-            "layer": self._rank_taylor_first_order_by_layer,
             "filter": self._rank_taylor_first_order_by_filters,
-            "weight": self._rank_taylor_first_order_by_weights
         }
         taylor_func = taylor_funcs.get(rank_level)
         return taylor_func(X_test, Y_test, **kwargs)
 
-
-    def _rank_taylor_first_order_by_layer(self, X_test, Y_test, **kwargs):
+    def rank_low_magnitude(self, X_test, Y_test, **kwargs):
         pass
 
     def _rank_taylor_first_order_by_filters(self, X_test, Y_test, **kwargs):
         model = self._model
         """
-        ranks: {(channel_index, filter_index): score}
         taylor_first_order:
         Delta-Cost is estimated as the absolute product of the gradient of cost function w.r.t activation and the activation
         For multivariate, output:
         Θ(z) = abs(1/m * sum((dc/dAct.) * Act.))
+        :return {score: (layer_index, channel_index, conv_filter_index)}
         """
         # TODO:// Finish implementation and Testing
         ranks = {}
@@ -100,7 +88,7 @@ class Ranker(object):
                             new_mask_vals[:, :, channel, conv_filter_index] = 0.0
                             layer.set_mask(new_mask_vals)
                             layer.prune()
-
+                            # Calculating gradients and activation
                             with tf.GradientTape() as tape:
                                 tape.watch(layer.layer.output)
                                 predictions = model(inputs)
@@ -114,30 +102,18 @@ class Ranker(object):
                             layer.revert_layer()
         return sorted(ranks.items())
 
-    def _rank_taylor_first_order_by_weights(self, X_test, Y_test, **kwargs):
-        pass
-
     def rank_taylor_second_order(self, X_test, Y_test, rank_level: str, **kwargs):
         taylor_funcs = {
-            "layer": self._rank_taylor_second_order_by_layer,
             "filter": self._rank_taylor_second_order_by_filters,
-            "weight": self._rank_taylor_second_order_by_weights
         }
         taylor_func = taylor_funcs.get(rank_level)
         taylor_func(X_test, Y_test, **kwargs)
 
-    def _rank_taylor_second_order_by_layer(self, X_test, Y_test, **kwargs):
-        pass
-
     def _rank_taylor_second_order_by_filters(self, X_test, Y_test, **kwargs):
-        pass
-
-    def _rank_taylor_second_order_by_weights(self, X_test, Y_test, **kwargs):
         pass
 
     def rank_oracle(self, X_test, Y_test, rank_level: str, **kwargs):
         oracle_funcs = {
-            "layer": self._rank_oracle_by_layer,
             "filter": self._rank_oracle_by_filters,
             "weights": self._rank_oracle_by_weights
         }
