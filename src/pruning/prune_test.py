@@ -5,56 +5,49 @@
 """
 
 from pruning.pruner import Pruner
+from pruning import prune_util
+from pruning import prune_callbacks
+from pruning import prune_metrics
 
 import tensorflow as tf
-from tensorflow.python.keras import datasets
 
-from tensorflow.python.keras.layers import Layer, Conv2D, Dense, Flatten, MaxPool2D, Dropout
-from tensorflow.python.keras.models import Model, Sequential
-from models.tf_official_models import official
-from official.vision.image_classification import mnist_main
-
-from tensorflow.python.keras.optimizers import Adam
-from tensorflow.python.keras.losses import SparseCategoricalCrossentropy
-
-import numpy as np
+import datetime
 
 
-def load_dataset(batch_size=10000):
-    mnist_ds = datasets.mnist
-    (X_train, Y_train), (X_test, Y_test) = mnist_ds.load_data()
-    X_train, X_test = X_train / 255.0, X_test / 255.0
-    X_train, X_test = np.expand_dims(X_train, axis=-1), np.expand_dims(X_test, axis=-1)
-    (X_train, Y_train) = (X_train[:batch_size], Y_train[:batch_size])
-    return (X_train, Y_train), (X_test, Y_test)
+# Test of taylor_first_order using pruning framework
+def test_prune_taylor_first_order_impl():
+    # Loading model and dataset
+    model: tf.keras.Model = prune_util.load_model("mnist")
+    (X_train, Y_train), (X_test, Y_test) = prune_util.load_dataset(dataset="mnist", train_size=5000, test_size=1000)
+    prune_util.compile_model(model)
+    prune_util.train_model(model, X_train, Y_train, X_test, Y_test, epochs=8)
 
+    # Evaluate unpruned model
+    print(model.evaluate(X_test, Y_test))
+    print(model.weights)
 
-def load_model():
-    model = mnist_main.build_model()
-    model.summary()
-    return model
+    # Prune model
+    pruner = Pruner(model, X_train, Y_train, X_test, Y_test,
+                    prune_level="filter", prune_method="taylor_first_order")
+    prune_params = {
+        "sparsity": 0.98
+    }
+    pruner.prune(**prune_params)
+    pruned_model = pruner.pruned_model
 
+    # Evaluate prior to fine tuning
+    print(pruned_model.evaluate(X_test, Y_test))
 
-def compile_model(model: Model, optimizer="adam", loss="sparse_categorical_crossentropy", metrics=None):
-    if metrics is None:
-        metrics = ["accuracy"]
-    model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+    # Fine tune model
+    # Callback needed to maintain sparsity through fine tuning
+    callback = [prune_callbacks.MaintainSparsity(), tf.keras.callbacks.TensorBoard(log_dir=f"./pruning/logs/taylor_first_order/{datetime.datetime.now()}")]
+    pruned_model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=6, callbacks=callback)
+    exported_model = pruner.export_pruned_model()
+    prune_util.compile_model(exported_model)
+    print(exported_model.evaluate(X_train, Y_train))
 
-
-def train_model(model, X_train, Y_train, X_test, Y_test, epochs=5):
-    model.fit(X_train, Y_train, epochs=epochs, validation_data=(X_test, Y_test))
-
-
-def test():
-    (X_train, Y_train), (X_test, Y_test) = load_dataset(batch_size=10000)
-    model = load_model()
-    compile_model(model)
-    train_model(model, X_train, Y_train, X_test, Y_test, epochs=5)
-    pruner = Pruner(model, X_train, Y_train, X_test, Y_test, "weight", "low_magnitude")
-    pruner.prune()
-    evaluation = pruner.evaluate_pruned_model()
-    print(evaluation)
+    tf.keras.models.save_model(exported_model, "./pruning/pruned_models/taylor_first_order_98_percent_filter_sparsity.h5")
 
 
 if __name__ == "__main__":
-    test()
+    test_prune_taylor_first_order_impl()

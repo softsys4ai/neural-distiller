@@ -1,0 +1,40 @@
+-------- Scores --------
+unpruned_score: 
+Loss: 0.31617306066416206
+Validation: 0.9110000133514404
+
+pruned_score: 
+Loss: 0.3019760862296447
+Validation: 0.9266999959945679
+
+pruned_fine_tune_score: 
+Loss: 0.3614066794162267
+Validation: 0.9132000207901001
+
+-------- Evaluatioins --------
+Initial Evaluation:
+conv2d_2_1/kernel:0 -- Total: 800, Zeros:0
+conv2d_2_1/bias:0 -- Total: 32, Zeros:0
+conv2d_3/kernel:0 -- Total: 25600, Zeros:0
+conv2d_3/bias:0 -- Total: 32, Zeros:0
+dense_2_1/kernel:0 -- Total: 1605632, Zeros:0
+dense_2_1/bias:0 -- Total: 1024, Zeros:10
+dense_3/kernel:0 -- Total: 10240, Zeros:0
+dense_3/bias:0 -- Total: 10, Zeros:0
+
+Size of  model before compression 6.292381286621094 MB
+Size of  model after compression 5.813214302062988 MB
+
+Pruned_evaluation:
+
+prune_low_magnitude_conv2d_2_2/kernel:0 -- Total: 800, Zeros:400
+prune_low_magnitude_conv2d_2_2/bias:0 -- Total: 32, Zeros:0
+prune_low_magnitude_conv2d_3_1/kernel:0 -- Total: 25600, Zeros:12800
+prune_low_magnitude_conv2d_3_1/bias:0 -- Total: 32, Zeros:0
+prune_low_magnitude_dense_2_2/kernel:0 -- Total: 1605632, Zeros:802816
+prune_low_magnitude_dense_2_2/bias:0 -- Total: 1024, Zeros:1
+prune_low_magnitude_dense_3_1/kernel:0 -- Total: 10240, Zeros:5120
+prune_low_magnitude_dense_3_1/bias:0 -- Total: 10, Zeros:0
+
+Size of  model before compression 6.2924957275390625 MB
+Size of  model after compression 3.5580711364746094 MB
