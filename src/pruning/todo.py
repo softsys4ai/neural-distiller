@@ -6,7 +6,7 @@ TODO:// Clean up code files once testing starts getting solved. i.e. Change note
 TODO:// Implement testing for VGG16 and ResNet50 once basic model begins to pass
 TODO:// Reimplement testing using testing library
 TODO:// Implement ranking algorithms in ranker in following order:
-        taylor_first_order_prune
+        taylor_first_order_prune            - Done
         l1_norm
         l2_norm
         magnitude_based

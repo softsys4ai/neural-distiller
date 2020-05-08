@@ -58,7 +58,6 @@ class Ranker(object):
         Θ(z) = abs(1/m * sum((dc/dAct.) * Act.))
         :return {score: (layer_index, channel_index, conv_filter_index)}
         """
-        # TODO:// Finish implementation and Testing
         ranks = {}
         # TODO:// Make loss obj variable to models
         loss_obj = SparseCategoricalCrossentropy(from_logits=True)
