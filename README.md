@@ -1,5 +1,5 @@
-# QPaKD Model Compression
-<b>Project:</b> Multi-stage Compression of Deep Neural Networks through Quantization, Pruning, and Knowledge Distillation<br>
+# PaKD Q-Model Compression
+<b>Project:</b> Multi-stage Compression of Deep Neural Networks through Pruning, Knowledge Distillation, and Quantization<br>
 <b>Lead Professor:</b> Dr. Pooyan Jamshidi<br>
 <b>Project lead:</b> Blake Edwards<br>
 <b>Contributers:</b> Blake Edwards, Shahriar Iqbal, Stephen Baione<br>
