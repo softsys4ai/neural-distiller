@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 from utils import config_reference as cfg
 
 new_format = True
-with open("resnet_teacher_training_4.txt") as f:
+# resnet_teacher_training_4
+with open(os.path.join(cfg.raw_data_path, "teacher_resnet101_training_3.txt")) as f:
     content = f.readlines()
 # you may also want to remove whitespace characters like `\n` at the end of each line
 content = [x.strip() for x in content]
@@ -18,10 +19,13 @@ intervals = []
 test_accs = []
 train_accs = []
 for model in content:
-    if not new_format:
-        size, interval, test_acc, train_acc = re.findall(rf"model_(\d+)_(\d+)\|\d+_(\d+.\d+)_(\d+.\d+).", model)[0]
-    else:
-        interval, test_acc, train_acc = re.findall(rf"model_(\d+)_(\d+.\d+)_(\d+.\d+).", model)[0]
+    try:
+        if not new_format:
+            size, interval, test_acc, train_acc = re.findall(rf"model_(\d+)_(\d+)\|\d+_\d+_(\d+.\d+)_(\d+.\d+).", model)[0]
+        else:
+            interval, test_acc, train_acc = re.findall(rf"model_(\d+)_(\d+.\d+)_(\d+.\d+).", model)[0]
+    except:
+        print(f"[ERROR] On the following line: {model}")
     print(test_acc)
     if not new_format:
         sizes.append(int(size))

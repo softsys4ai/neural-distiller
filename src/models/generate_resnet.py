@@ -282,5 +282,5 @@ def generate_resnet_model(n, input_shape, num_classes=10, version=2):
         model = resnet_v2(input_shape=input_shape, depth=depth, num_classes=num_classes)
     else:
         model = resnet_v1(input_shape=input_shape, depth=depth, num_classes=num_classes)
-
+    # model.summary()
     return model

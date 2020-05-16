@@ -97,37 +97,38 @@ def run():
         print("[INFO] Loading student model weights...")
         curr_student_model.load_weights(STUDENT_MODEL_WEIGHT_PATHS[j])
         for i in range(max(len(cfg.EPS_VALS), len(cfg.SIGMA_VALS))):
-            if i < len(cfg.EPS_VALS):
-                # evaluating adversarial attack robustness
-                curr_eps = cfg.EPS_VALS[i]
-                print(f"[INFO] Evaluating {STUDENT_MODEL_NAMES[j]} with FGSM at epsilon {format(curr_eps, '.3f')}...")
-                student_art_model = KerasClassifier(model=curr_student_model, clip_values=(dataset_min, dataset_max), use_logits=False)
-                print("[INFO] Generating adversarial examples for the current model...")
-                if cfg.attack_type is "fgm":
-                    attack_student_model = FastGradientMethod(classifier=student_art_model, eps=curr_eps)
-                elif cfg.attack_type is "bim":
-                    attack_student_model = BasicIterativeMethod(classifier=student_art_model, eps_step=0.025, eps=curr_eps,
-                                                            max_iter=4, targeted=False, batch_size=1)
-                else:
-                    print("[WARNING] attack type not supported!")
-                    break
-                X_test_adv = attack_student_model.generate(x=X_test)
-                print("[INFO] Evaluating student model's adversarial accuracy...")
-                predictions = student_art_model.predict(X_test_adv)
-                adv_acc = np.sum(np.argmax(predictions, axis=1) == np.argmax(Y_test, axis=1)) / len(Y_test)
-                df.iloc[j, df.columns.get_loc("eps_" + str(format(curr_eps, '.3f')))] = adv_acc
-                print(f"Adversarial accuracy: {adv_acc}")
-
-            if i < len(cfg.SIGMA_VALS):
-                # evaluating gaussian noise robustness
-                curr_sig = cfg.SIGMA_VALS[i]
-                print(f"[INFO] Evaluating {STUDENT_MODEL_NAMES[j]} with Gaussian Noise at sigma {format(curr_sig, '.3f')}...")
-                predictions2 = curr_student_model.predict(X_test_gauss_noised_sets[i])
-                gauss_acc = np.sum(np.argmax(predictions2, axis=1) == np.argmax(Y_test, axis=1)) / len(Y_test)
-                df.iloc[j, df.columns.get_loc("sig_"+str(format(curr_sig, '.3f')))] = gauss_acc
-                print("[INFO] Completed adversarial evaluation...")
-                print(f"Gaussian noise accuracy: {gauss_acc}")
-
+            if cfg.USE_ADV_ATTACK:
+                if i < len(cfg.EPS_VALS):
+                    # evaluating adversarial attack robustness
+                    curr_eps = cfg.EPS_VALS[i]
+                    print(f"[INFO] Evaluating {STUDENT_MODEL_NAMES[j]} with attack at epsilon {format(curr_eps, '.3f')}...")
+                    student_art_model = KerasClassifier(model=curr_student_model, clip_values=(dataset_min, dataset_max), use_logits=False)
+                    print("[INFO] Generating adversarial examples for the current model...")
+                    if cfg.attack_type is "fgm":
+                        attack_student_model = FastGradientMethod(classifier=student_art_model, eps=curr_eps)
+                    elif cfg.attack_type is "bim":
+                        attack_student_model = BasicIterativeMethod(classifier=student_art_model, eps_step=0.025, eps=curr_eps,
+                                                                max_iter=4, targeted=False, batch_size=1)
+                    else:
+                        print("[WARNING] attack type not supported!")
+                        break
+                    X_test_adv = attack_student_model.generate(x=X_test)
+                    print("[INFO] Evaluating student model's adversarial accuracy...")
+                    predictions = student_art_model.predict(X_test_adv)
+                    adv_acc = np.sum(np.argmax(predictions, axis=1) == np.argmax(Y_test, axis=1)) / len(Y_test)
+                    df.iloc[j, df.columns.get_loc("eps_" + str(format(curr_eps, '.3f')))] = adv_acc
+                    print(f"Adversarial accuracy: {adv_acc}")
+            if cfg.USE_GAUSS_NOISE:
+                if i < len(cfg.SIGMA_VALS):
+                    # evaluating gaussian noise robustness
+                    curr_sig = cfg.SIGMA_VALS[i]
+                    print(f"[INFO] Evaluating {STUDENT_MODEL_NAMES[j]} with Gaussian Noise at sigma {format(curr_sig, '.3f')}...")
+                    predictions2 = curr_student_model.predict(X_test_gauss_noised_sets[i])
+                    gauss_acc = np.sum(np.argmax(predictions2, axis=1) == np.argmax(Y_test, axis=1)) / len(Y_test)
+                    df.iloc[j, df.columns.get_loc("sig_"+str(format(curr_sig, '.3f')))] = gauss_acc
+                    print("[INFO] Completed adversarial evaluation...")
+                    print(f"Gaussian noise accuracy: {gauss_acc}")
+        del student_art_model
         print(f"[INFO] Recording adversarial robustness results to {RESULTS_FILE}...")
         df.to_csv(RESULTS_FILE, sep=',')
 

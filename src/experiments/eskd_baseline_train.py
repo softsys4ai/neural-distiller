@@ -155,7 +155,7 @@ def run():
             reset_model_weights(baseline_student_model)
 
         # compile and train network
-        optimizer = SGD(lr=cfg.learning_rate, momentum=0.9, nesterov=True)
+        optimizer = SGD(lr=0.1, momentum=0.9, nesterov=True)
         baseline_student_model.compile(optimizer=optimizer,
                               loss="categorical_crossentropy",
                               metrics=["accuracy"])

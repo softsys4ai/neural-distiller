@@ -13,10 +13,12 @@
 
 # external imports
 import os
+import time
 import pickle
 import numpy as np
 from datetime import datetime
 import tensorflow as tf
+import tensorflow
 from tensorflow.python.keras import backend as K
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.models import load_model
@@ -164,11 +166,14 @@ def run(training_gpu):
         # load logits
         train_logits, test_logits = load_logits(cfg.logits_dir, cfg.teacher_logit_model_size, int(cfg.arr_of_distillation_epochs[i]), cfg.total_teacher_logit_epochs)
         for j in range(len(cfg.arr_of_distillation_temps)):
+            time_start = time.time()
             print("\n--------------------------Starting new KD step--------------------------")
             print(f"teacher network logits {int(cfg.arr_of_distillation_epochs[i])}|{cfg.total_teacher_logit_epochs}, {cfg.model_type} student trained at temperature {cfg.arr_of_distillation_temps[j]}")
             print("[INFO] Creating knowledge distillation targets...")
             # apply temperature to logits and create modified targets for knowledge distillation
             Y_train_new, Y_test_new = modified_kd_targets_from_logits(Y_train, Y_test, train_logits, test_logits, cfg.arr_of_distillation_temps[j])
+            # print("[INFO] Cleaning up previous training session...")
+            # tensorflow.python.keras.backend.clear_session()
             print("[INFO] Loading starting model...")
             # load starting model
             student_model = load_model(starting_model_path)
@@ -206,3 +211,6 @@ def run(training_gpu):
                          format(val_acc[1], '.5f'), format(train_acc[1], '.5f'))
             # upon completion, delete the checkpoint file
             os.remove(checkpoint_filename)
+            time_end = time.time()
+            print(f"Iteration total time (minutes): {(time_end-time_start)/60}")
+
