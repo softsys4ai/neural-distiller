@@ -11,6 +11,8 @@ def get_model(dataset, numClasses, X_train, net_size, net_type="vanilla"):
         return get_model_mnist(numClasses, X_train, net_size)
     elif dataset is "cifar100" and net_type is "vanilla":
         return get_vanilla_model_cifar100(numClasses, X_train, net_size)
+    elif dataset is "cifar10" and net_type is "vanilla":
+        return get_vanilla_model_cifar100(numClasses, X_train, net_size)
     elif dataset is "cifar100" and net_type is "resnet":
         return get_resnet_model_cifar100(numClasses, X_train, net_size)
     else:
@@ -381,18 +383,36 @@ def get_vanilla_model_cifar100(numClasses, X_train, net_size):
         # continue
     elif net_size == 2:
         model = Sequential([
+            Conv2D(64, kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same',
+                   kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
+            # Dropout(0.1),
+            # MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
+            Conv2D(64, kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
+            BatchNormalization(),
+            Activation('relu'),
+            # Dropout(0.1),
+            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
+            Flatten(),
+            Dense(256),
+            Activation('sigmoid'),
+            Dense(256),
+            Activation('sigmoid'),
+            Dense(numClasses, name='logits'),
+            Activation('softmax'),
+        ])
+        model = Sequential([
             Conv2D(32, kernel_size=3, input_shape=X_train.shape[1:], strides=1, padding='same',
                    kernel_initializer='he_normal'),
             BatchNormalization(),
             Activation('relu'),
-            Dropout(0.1),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
-            Conv2D(32, kernel_size=3, strides=1, padding='same', kernel_initializer='he_normal'),
-            BatchNormalization(),
-            Activation('relu'),
-            Dropout(0.1),
-            MaxPooling2D(pool_size=(2, 2), strides=2, padding='same'),
             Flatten(),
+            Dense(100),
+            Activation('sigmoid'),
+            Dense(50),
+            Activation('sigmoid'),
             Dense(numClasses, name='logits'),
             Activation('softmax'),
         ])

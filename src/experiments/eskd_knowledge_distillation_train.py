@@ -13,6 +13,7 @@
 
 # external imports
 import os
+import csv
 import time
 import pickle
 import numpy as np
@@ -145,8 +146,14 @@ def run(training_gpu):
     os.mkdir(models_dir)
 
     # load and normalize
-    X_train, Y_train, X_test, Y_test = load_dataset.load_cifar_100(None)
+    X_train, Y_train, X_test, Y_test = load_dataset.load_dataset_by_name(None, cfg.dataset)
     X_train, X_test = load_dataset.z_standardization(X_train, X_test)
+
+    if cfg.debug1 is True:
+        X_train = X_train[:128]
+        Y_train = Y_train[:128]
+        X_test = X_test[:128]
+        Y_test = Y_test[:128]
 
     # load and save model starting weights to be used for each experiment
     if not cfg.USE_EXPLICIT_START_MODEL:
@@ -158,6 +165,11 @@ def run(training_gpu):
     else:
         starting_model_path = cfg.EXPLICIT_START_MODEL_PATH
         starting_model_weight_path = cfg.EXPLICIT_START_MODEL_WEIGHT_PATH
+
+
+    # create results list to store test generated results
+    #                   student model size,      teacher training epoch used,           distillation temp applied,          test accuracy         training accuracy,         distil. test accuracy,   distil. training accuracy,    distil. step time
+    test_results = [["student model size", "teacher model training epoch used", "applied temperature", "test accuracy", "train accuracy", "distillation test accuracy", "distillation train accuracy", "distillation step cumulative time"]]
 
     # load student model
     student_model = load_and_compile_student(X_train, cfg.student_model_size)
@@ -177,18 +189,19 @@ def run(training_gpu):
             print("[INFO] Loading starting model...")
             # load starting model
             student_model = load_model(starting_model_path)
+            # student_model.summary()
             print("[INFO] Preparing starting model for knowledge distillation...")
             # modify student model for knowledge distillation
             student_model = helper_util.apply_knowledge_distillation_modifications(None, student_model,
                                                                                    cfg.arr_of_distillation_temps[j])
-            student_model = compile_student(student_model, True, cfg.alpha)
+            studentmodel = compile_student(student_model, True, cfg.alpha)
             # load starting model weights
             student_model.load_weights(starting_model_weight_path)
             # train student model on hard and soft targets
-            checkpoint_filename = f"checkpoint_model_{int(training_gpu)}_{cfg.student_model_size}_{int(cfg.arr_of_distillation_epochs[i])}|{cfg.total_teacher_logit_epochs}_{cfg.arr_of_distillation_temps[j]}_.h5"
+            checkpoint_filename = f"checkpoint_model_gpu_{int(training_gpu)}_size_{cfg.student_model_size}_temp_{cfg.arr_of_distillation_temps[j]}.h5"
             callbacks = [
                 EarlyStopping(monitor='val_acc', patience=30, min_delta=0.001),
-                ModelCheckpoint(checkpoint_filename, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+                ModelCheckpoint(checkpoint_filename, monitor='val_acc', verbose=1, save_best_only=True, mode='max', period=1)
             ]
             student_model.fit(X_train, Y_train_new,
                               batch_size=cfg.train_batch_size,
@@ -196,6 +209,9 @@ def run(training_gpu):
                               verbose=1,
                               callbacks=callbacks,
                               validation_data=(X_test, Y_test_new))
+            # calculation of distillation accuracies
+            distillation_train_acc = student_model.evaluate(X_train, Y_train_new, verbose=0)
+            distillation_val_acc = student_model.evaluate(X_test, Y_test_new, verbose=0)
             print("[INFO] Loading starting model...")
             # load starting model
             student_model = load_model(starting_model_path)
@@ -212,5 +228,18 @@ def run(training_gpu):
             # upon completion, delete the checkpoint file
             os.remove(checkpoint_filename)
             time_end = time.time()
-            print(f"Iteration total time (minutes): {(time_end-time_start)/60}")
+            print(f"Iteration total time (minutes): {(time_end - time_start) / 60}")
+            # write result to csv file
+            #                   student model size,      teacher training epoch used,           distillation temp applied,          test accuracy         training accuracy,         distil. test accuracy,   distil. training accuracy,    distil. step time
+            generated_row = [cfg.student_model_size, int(cfg.arr_of_distillation_epochs[i]), cfg.arr_of_distillation_temps[j], format(val_acc[1], '.5f'), format(train_acc[1], '.5f'), distillation_val_acc, distillation_train_acc, (time_end-time_start)]
+            test_results.append(generated_row)
+            # opening the csv file in 'w+' mode
+            file = open('g4g.csv', 'w+', newline='')
+            # writing the data into the file
+            with open(os.path.join(log_dir, "results.csv"), "w+") as result_file:
+                write = csv.writer(result_file)
+                write.writerows(test_results)
+            # print(test_results)
+            K.clear_session()
+
 

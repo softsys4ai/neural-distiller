@@ -12,9 +12,9 @@ def apply_knowledge_distillation_modifications(logger, model, temp):
     # modifying student network for KD
     model.layers.pop()
     logits = model.get_layer('logits').output
-    probs = Activation('softmax')(logits)
+    probs = Activation('softmax', name="hard")(logits)
     logits_T = Lambda(lambda x: x / temp)(logits)
-    probs_T = Activation('softmax')(logits_T)
+    probs_T = Activation('softmax', name="soft")(logits_T)
     output = concatenate([probs, probs_T])
     model = Model(model.input, output)  # modified student model
     return model

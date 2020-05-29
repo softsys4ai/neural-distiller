@@ -1,4 +1,6 @@
 
+# todo save teacher model test and train accuracy to complimentary csv
+
 # STEP 1
 # train the size 10 teacher in 5 epoch intervals
 # harvest logits and save the model weights at each interval
@@ -11,6 +13,8 @@
 
 # external dependencies
 import os
+import re
+import csv
 import glob
 import pickle
 import numpy as np
@@ -24,11 +28,12 @@ from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from data import load_dataset
 from utils import teacher_utils, config_reference as cfg
 from models import knowledge_distillation_models
+tf.compat.v1.disable_eager_execution()
 
 
 # write teacher weights to file
 def save_weights(models_dir, model, curr_epochs, val_acc, train_acc):
-    weight_filename = f"model_{curr_epochs}_{val_acc}_{train_acc}.h5"
+    weight_filename = f"model_{curr_epochs}.h5"
     model_path = os.path.join(models_dir, weight_filename)
     model.save_weights(model_path)
     return model_path
@@ -78,11 +83,11 @@ def run():
     # create experiment run directory for each session's model weights and logits
     now = datetime.now()
     now_datetime = now.strftime("%d-%m-%y_%H:%M:%S")
-    cfg.log_dir = os.path.join(cfg.log_dir, "ESKD_Logit_Harvesting_" + cfg.dataset + f"_{cfg.teacher_model_size}_" + now_datetime)
-    os.mkdir(cfg.log_dir)
-    logits_dir = os.path.join(cfg.log_dir, "logits")
+    log_dir = os.path.join(cfg.log_dir, "ESKD_Logit_Harvesting_" + cfg.dataset + f"_{cfg.teacher_model_size}_" + now_datetime)
+    os.mkdir(log_dir)
+    logits_dir = os.path.join(log_dir, "logits")
     os.mkdir(logits_dir)
-    models_dir = os.path.join(cfg.log_dir, "models")
+    models_dir = os.path.join(log_dir, "models")
     os.mkdir(models_dir)
 
     if (cfg.use_datagen0):
@@ -140,10 +145,9 @@ def run():
     val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)[1]
     save_weights(models_dir, teacher_model, 0, val_acc, train_acc)
     # setup training callbacks and train model
-    chckpnt = os.path.join(models_dir, "model_{epoch}_{val_acc:.5f}_{acc:.5f}.h5")
+    chckpnt = os.path.join(models_dir, "model_{epoch}.h5")
     callbacks = [
-        ModelCheckpoint(chckpnt, verbose=1, save_best_only=False, save_weights_only=True,
-                        mode='max')
+        ModelCheckpoint(chckpnt, verbose=1, save_best_only=False, save_weights_only=True, mode='auto', period=1)
     ]
     if cfg.USE_TEACHER_LR_SCHEDULER:
         print("[INFO] Using learning rate scheduler...")
@@ -170,17 +174,25 @@ def run():
     # remove file path to parse information from model names
     teacher_rm_path = models_dir + "/"
     TEACHER_MODEL_NAMES = [x[len(teacher_rm_path):] for x in TEACHER_MODEL_PATHS]
-    epochs, val_accs, train_accs = teacher_utils.parse_info_from_teacher_names(TEACHER_MODEL_NAMES)
+    epochs = teacher_utils.parse_info_from_teacher_names(TEACHER_MODEL_NAMES)
     print("[INFO] Producing logits with teacher models...")
     # collect logits from all of the teacher models
     print("[INFO] Creating and saving model logits...")
+    test_results = [["teacher model size", "teacher model training epoch", "test loss", "test accuracy", "train loss", "train accuracy"]]
     for i in range(len(TEACHER_MODEL_PATHS)):
+        print(TEACHER_MODEL_PATHS[i])
         teacher_model.load_weights(TEACHER_MODEL_PATHS[i])
         print(f"[INFO] {i+1}/{len(TEACHER_MODEL_PATHS)}...")
-        train_logits, test_logits = teacher_utils.createStudentTrainingData(teacher_model, None, X_train, None, X_test,
-                                                                            None)
+        # evaluate teacher model before collecting logits
+        train_acc = teacher_model.evaluate(X_train, Y_train, verbose=0)
+        val_acc = teacher_model.evaluate(X_test, Y_test, verbose=0)
+
+        generated_row = [cfg.teacher_model_size, re.findall(r"_(\d+).h5", TEACHER_MODEL_PATHS[i])[0], val_acc[0], val_acc[1], train_acc[0], train_acc[1]]
+        test_results.append(generated_row)
+        # todo add results for write to csv
+        with open(os.path.join(log_dir, "results.csv"), "w+") as result_file:
+            write = csv.writer(result_file)
+            write.writerows(test_results)
+        train_logits, test_logits = teacher_utils.createStudentTrainingData(teacher_model, None, X_train, None, X_test,None)
         save_logits(logits_dir, cfg.teacher_model_size, epochs[i], cfg.epoch_max0, train_logits, test_logits)
     print("[COMPLETE]")
-
-
-

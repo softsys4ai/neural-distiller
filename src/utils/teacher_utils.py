@@ -8,15 +8,17 @@ from tensorflow.python.keras.models import Model
 # easily parse student model information from a list of student model names
 def parse_info_from_teacher_names(teacher_names):
     epochs = []
-    val_accs = []
-    train_accs = []
+    # val_accs = []
+    # train_accs = []
     for name in teacher_names:
-        results = re.findall(r"_(\d+)_(\d+.\d+)_(\d+.\d+).", name)
-        epoch, val_acc, train_acc = re.findall(r"_(\d+)_(\d+.\d+)_(\d+.\d+).", name)[0]
+        # results = re.findall(r"_(\d+)_(\d+.\d+)_(\d+.\d+).", name)
+        # epoch, val_acc, train_acc = re.findall(r"_(\d+)_(\d+.\d+)_(\d+.\d+).", name)[0]
+        epoch = re.findall(r"_(\d+).", name)[0]
         epochs.append(int(epoch))
-        val_accs.append(float(val_acc))
-        train_accs.append(float(train_acc))
-    return epochs, val_accs, train_accs
+        # val_accs.append(float(val_acc))
+        # train_accs.append(float(train_acc))
+    # return epochs, val_accs, train_accs
+    return epochs
 
 def find_largest_value(output_distribution):
     pos = 0
