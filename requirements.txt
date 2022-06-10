@@ -1,6 +1,6 @@
 # requirements
 configparser==3.5.0
-cookiecutter==1.7.0
+cookiecutter==2.1.1
 google-auth==1.8.2
 google-auth-oauthlib==0.4.1
 google-pasta==0.1.8
