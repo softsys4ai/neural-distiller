@@ -12,7 +12,7 @@ memory-profiler==0.55.0
 mnist==0.2.2
 numpy==1.16.5
 oauthlib==3.1.0
-protobuf==3.11.1
+protobuf==3.18.3
 psutil==5.6.6
 pylint==1.8.4
 pyparsing==2.4.5
